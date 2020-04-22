@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NgForm, FormGroup } from '@angular/forms';
+import { NgForm} from '@angular/forms';
 import { producto } from '../../interfaces/producto.interface';
 import { FrutasServices } from '../../services/frutas.service';
 
@@ -11,7 +11,7 @@ import { FrutasServices } from '../../services/frutas.service';
 export class ProductosComponent {
   mensaje: string = "";
   proyecto = new producto;
-  
+
   opcionSeleccionado: any[] = [];
   public i;
 
