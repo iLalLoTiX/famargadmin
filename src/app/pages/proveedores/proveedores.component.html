@@ -1,1 +1,227 @@
-<p>proveedores works!</p>
+<!-- Row -->
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header bg-info">
+                <h4 class="m-b-0 text-white">Agregar un Proveedor</h4>
+            </div>
+            <div class="card-body">
+                <form (ngSubmit)="agregarProveedor(f)" #f="ngForm">
+                    <div class="form-body">
+                        <!--/row-->
+                        <div class="row">
+                            <div class="col-md-2" >
+                                <div class="form-group" [class.has-danger]="id.invalid && id.touched">
+                                    <label class="control-label">ID</label>
+
+                                    <input type="text" 
+                                    class="form-control" 
+                                    [class.form-control-danger]="id.touched"
+                                    #id="ngModel" [(ngModel)]="proveedor.id" name="ID"
+                                    required
+                                    minlength="4">
+
+                                    <input type="hidden" 
+                                    class="form-control"
+                                    [(ngModel)]="idproveedor"  
+                                    name="idproveedor">
+
+                                </div>
+                            </div>   
+                            <div class="col-md-5">
+                                <div class="form-group" [class.has-danger]="nombreProveedor.invalid && nombreProveedor.touched">
+                                    <label class="control-label">Nombre Completo</label>
+                                    <input type="text"
+                                    class="form-control"
+                                    #nombreProveedor="ngModel"
+                                    [class.form-control-danger]="nombreProveedor.touched"
+                                    [(ngModel)]="proveedor.nombreProveedor"
+                                    name="nombreProveedor"
+                                    required
+                                    minlength="4">
+                                </div>
+                            </div>   
+                            <!--/span-->
+                            <div class="col-md-5">
+                                <div class="form-group" [class.has-danger]="rfc.invalid && rfc.touched">
+                                    <label class="control-label">RFC</label>
+                                    <input type="text"
+                                    class="form-control"
+                                    #rfc="ngModel"
+                                    [class.form-control-danger]="rfc.touched"
+                                    [(ngModel)]="proveedor.rfc"
+                                    name="RFC"
+                                    required
+                                    minlength="12"
+                                    maxlength="13">
+                                </div>
+                            </div>   
+                            <!--/span-->
+                        </div>
+                        <div class="row p-t-20">
+
+                            <div class="col-md-3">
+                                <div class="form-group" [class.has-danger]="pais.invalid && pais.touched">
+                                    <label class="control-label">Pais</label>
+                                    <input type="text" 
+                                    class="form-control" 
+                                    #pais="ngModel"
+                                    [class.form-control-danger]="pais.touched"
+                                    [(ngModel)]="proveedor.pais"
+                                    name="pais"
+                                    required>
+                                </div>
+                            </div>   
+                            <!--/span-->
+                            <div class="col-md-3">
+                                <div class="form-group" [class.has-danger]="estado.invalid && estado.touched">
+                                    <label class="control-label">Estado</label>
+                                    <input type="text" 
+                                    class="form-control"
+                                    #estado="ngModel"
+                                    [class.form-control-danger]="pais.touched"
+                                    [(ngModel)]="proveedor.estado"  
+                                    name="estado"
+                                    required>
+                                </div>
+                            </div>   
+                            <!--/span-->
+                            <div class="col-md-3">
+                                <div class="form-group" [class.has-danger]="ciudad.invalid && ciudad.touched">
+                                    <label class="control-label">Ciudad</label>
+                                    <input type="text" 
+                                    class="form-control"
+                                    #ciudad="ngModel"
+                                    [class.form-control-danger]="ciudad.touched"
+                                    [(ngModel)]="proveedor.ciudad"  
+                                    name="ciudad"
+                                    required>
+                                </div>
+                            </div>   
+                            <!--/span-->
+                            <div class="col-md-3">
+                                <div class="form-group" [class.has-danger]="direccion.invalid && direccion.touched">
+                                    <label class="control-label">Dirección</label>
+                                    <input type="text" 
+                                    class="form-control"
+                                    #direccion="ngModel"
+                                    [class.form-control-danger]="direccion.touched"
+                                    [(ngModel)]="proveedor.direccion"  
+                                    name="direccion"
+                                    required>
+                                </div>
+                            </div>   
+                            <!--/span-->
+                        </div>
+                        
+                        <div class="row p-t-20">
+                            <div class="col-md-3">
+                                <div class="form-group" [class.has-danger]="colonia.invalid && colonia.touched">
+                                    <label class="control-label">Colonia</label>
+                                    <input type="text" 
+                                    class="form-control"
+                                    #colonia="ngModel"
+                                    [class.form-control-danger]="colonia.touched"
+                                    [(ngModel)]="proveedor.colonia"  
+                                    name="colonia"
+                                    required>
+                                </div>
+                            </div>   
+                            <!--/span-->
+                            <div class="col-md-3">
+                                <div class="form-group" [class.has-danger]="cp.invalid && cp.touched">
+                                    <label class="control-label">CP</label>
+                                    <input type="text" 
+                                    class="form-control"
+                                    #cp="ngModel"
+                                    [class.form-control-danger]="cp.touched"
+                                    [(ngModel)]="proveedor.cp"  
+                                    name="cp"
+                                    required>
+                                </div>
+                            </div>   
+                            <!--/span-->
+                            <div class="col-md-3">
+                                <div class="form-group" [class.has-danger]="factura.invalid && factura.touched">
+                                    <label class="control-label">Factura</label>
+                                    <select class="form-control custom-select"
+                                    #factura="ngModel"
+                                    [class.form-control-danger]="factura.touched"
+                                    [(ngModel)]="proveedor.factura"  
+                                    name="factura"
+                                    required>
+                                        <option value="Si">Si</option>
+                                        <option value="No">No</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-3">
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-success"> <i class="fa fa-check"></i> Save</button>
+                                    <button type="button" class="btn btn-inverse">Cancel</button>
+                                </div>
+                            </div>
+                            <!--/span-->
+                            <div class="col-md-3">
+                                <div class="switch">
+                                    <label class="control-label">Factura</label>
+                                    <label>
+                                        <input 
+                                        type="checkbox" checked><span class="lever switch-col-deep-orange"></span></label>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!--/row-->
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Row -->
+
+<!-- ============================================================== -->
+<!-- Tabla de productos -->
+<!-- ============================================================== -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex">
+                    <div class="table-responsive m-t-20 no-wrap">
+                        <table class="table vm no-th-brd pro-of-month">
+                            <thead>
+                                <tr>
+                                    <th >ID</th>
+                                    <th>Nombre</th>
+                                    <th>RFC</th>
+                                    <th>Ciudad</th>
+                                    <th>Factura</th>
+                                    <th>Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngFor="let proveedor of proveedores; let i = index">
+                                <tr>
+                                    <td style="width:50px;"><span class="round">{{ proveedor.payload.doc.data()['id']}}</span></td>
+                                    <td>{{ proveedor.payload.doc.data()['nombreProveedor']}}</td>
+                                    <td>{{ proveedor.payload.doc.data()['rfc']}}</td>
+                                    <td>{{ proveedor.payload.doc.data()['ciudad']}}</td>
+                                    <td>{{ proveedor.payload.doc.data()['factura']}}</td>
+                                    <td>
+                                    <button (click)="borrarProveedor(proveedor.payload.doc.id)" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                                    <button (click)="mostrarProveedor(proveedor.payload.doc.id)" class="btn btn-info"><i class="fa fa-pencil"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- Tabla de productos -->
+<!-- ============================================================== -->

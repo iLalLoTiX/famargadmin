@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 
 //Servicios
 import { OrdenServicio } from './servicios/ordenes.service'
+import { FormsModule } from '@angular/forms';
 
 //modulos
 import { PagesModule } from './pages/pages.module';
@@ -30,7 +31,8 @@ import { LoginComponent } from './login/login.component';
     AngularFirestoreModule,
     AngularFireStorageModule,
     AngularFireAuthModule,
-    PagesModule
+    PagesModule,
+    FormsModule
   ],
   providers: [
     OrdenServicio

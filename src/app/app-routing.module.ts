@@ -6,7 +6,7 @@ import { LoginComponent } from './login/login.component';
 const routes: Routes = [
   
   {  path: 'login', component: LoginComponent },
-  {  path: '**', redirectTo: '/login'}
+  {  path: '**', redirectTo: '/dashboard'}
 ];
 
 export const AppRoutingModule = RouterModule.forRoot(routes, {useHash: true});
