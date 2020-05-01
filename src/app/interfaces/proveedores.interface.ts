@@ -9,5 +9,5 @@ export class proveedor {
     direccion: string;
     colonia: string;
     cp: number;
-    factura: string;
+    factura: boolean;
 }

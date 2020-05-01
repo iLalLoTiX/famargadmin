@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProveedoresComponent } from './proveedores/proveedores.component';
@@ -10,6 +10,7 @@ import { PagesComponent } from './pages.component';
 import { SharedModule } from '../shared/shared.module';
 
 import { PagesRoutingModule } from './pages-routing.module';
+import { PesajeComponent } from './pesaje/pesaje.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { PagesRoutingModule } from './pages-routing.module';
         DashboardComponent,
         ProveedoresComponent,
         ProductosComponent,
-        PagesComponent
+        PagesComponent,
+        PesajeComponent
     ],
     exports: [
         DashboardComponent,
@@ -28,6 +30,7 @@ import { PagesRoutingModule } from './pages-routing.module';
         FormsModule,
         BrowserModule,
         SharedModule,
+        ReactiveFormsModule,
         PagesRoutingModule
     ]
 })

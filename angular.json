@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "Famarg"
+    }
+  },
+  "defaultProject": "Famarg",
+  "cli": {
+    "analytics": false
+  }
 }
