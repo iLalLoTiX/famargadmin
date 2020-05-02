@@ -11,7 +11,12 @@ export class PesajeComponent implements OnInit {
 
   forma: FormGroup;
   arreglo: FormGroup;
-  public pedido;
+  public pedido  ;
+  public merma;
+  public kilosEx;
+  B: number= 0;
+  totalFacturar: number = 0;
+  Falta: number = 0;
 
   constructor(private fb: FormBuilder) { 
 
@@ -19,21 +24,22 @@ export class PesajeComponent implements OnInit {
     this.crearArreglo();
     this.escucharPedido();
     this.escucharMerma();
+    this.escucharKiloEx();
   }
 
   ngOnInit(): void {
   }
 
-get tarimas()
-{
-  return this.arreglo.get('tarimas') as FormArray;
-}
+  get tarimas()
+  {
+    return this.arreglo.get('tarimas') as FormArray;
+  }
   crearFormulario(){
     this.forma = this.fb.group({
-      pedido : [, Validators.required],
-      merma  : [, Validators.required],
-      kilosEx: [, Validators.required],
-      total  : [,]
+      pedido : [],
+      merma  : [],
+      kilosEx: [],
+      total  : []
     });
   }
 
@@ -41,11 +47,11 @@ get tarimas()
     this.arreglo = this.fb.group({
       tarimas: this.fb.array([
           this.fb.group({
-            tarima: [, Validators.required ],
-            cajas: [, Validators.required ],
-            peso: [, Validators.required ],
-            bascula: [, Validators.required ],
-            destarado: [, Validators.required ],
+            tarima: [],
+            cajas: [],
+            peso: [],
+            bascula: [],
+            destarado: [],
         }),
       ])
     });
@@ -54,11 +60,11 @@ get tarimas()
   agregarTarima(){
     this.tarimas.push(this.fb.group(
       {
-        tarima: [, Validators.required ],
-        cajas: [, Validators.required ],
-        peso: [, Validators.required ],
-        bascula: [, Validators.required ],
-        destarado: [, Validators.required ],
+        tarima: [],
+        cajas: [],
+        peso: [],
+        bascula: [],
+        destarado: [],
       }
     ));
   }
@@ -69,26 +75,41 @@ get tarimas()
 
   escucharPedido() {
     this.pedido = this.forma.get('pedido').valueChanges.subscribe( (pedido: number) => {
-      console.log(this.forma.value.merma = pedido * 0.05);
-      console.log(this.forma.value.kilosEx = Math.floor(pedido / 100));
-      console.log(this.forma.value.total = this.forma.value.kilosEx + pedido + this.forma.value.merma);
-      
+      let total: number;
+      this.forma.value.merma = pedido * 0.05;
+      this.forma.value.kilosEx = pedido / 100;
+      total = this.forma.value.kilosEx + pedido + this.forma.value.merma;
+      console.log(this.forma.value.kilosEx);
       this.forma.patchValue({
         merma  : [this.forma.value.merma],
         kilosEx: [this.forma.value.kilosEx],
-        total  : [this.forma.value.total]
+        total  : [total]
       });
       
     });
   }
 
   escucharMerma(){
-    this.pedido = this.forma.get('merma').valueChanges.subscribe( (merma: number) => {
-      console.log(this.forma.value.kilosEx = Math.floor(this.forma.value.pedido / 100));
-      console.log(this.forma.value.total = this.forma.value.kilosEx + this.forma.value.pedido + merma);
+    this.merma = this.forma.get('merma').valueChanges.subscribe( (merma: number) => {
+      let total: number;
+      let kEx: number= this.forma.value.kilosEx;
+      let pedido: number = this.forma.value.pedido;
+      let merma2: number = this.forma.value.merma;
+      console.log(this.forma.value.kilosEx);
+      console.log(this.forma.value.kilosEx, pedido, merma2);
+      total = this.forma.value.kilosEx + pedido + merma2;
+      console.log(total);
+      this.forma.patchValue({
+        total   : [total]
+      });
+      
+    });
+  }
+
+  escucharKiloEx(){
+    this.kilosEx = this.forma.get('kilosEx').valueChanges.subscribe( (kilosEx: number) => {
       
       this.forma.patchValue({
-        kilosEx : [this.forma.value.kilosEx],
         total   : [this.forma.value.total]
       });
       
@@ -96,22 +117,26 @@ get tarimas()
   }
 
   guardar(){
-    console.log(this.tarimas.controls.length); 
+
+    this.Falta = 0;
+    this.totalFacturar = 0;
+    this.B = 0;
     this.tarimas.controls.forEach(element => {
-
-
-      // tslint:disable-next-line: max-line-length
-      element.value.bascula  = (this.forma.value.pedido / this.tarimas.controls.length) + ((element.value.tarima) + (element.value.cajas * element.value.peso));
-
-      element.setValue(
+      let A = element.value.bascula -  ((element.value.tarima) + (element.value.cajas * element.value.peso));
+      
+      element.patchValue(
         {
           tarima: element.value.tarima,
           cajas: element.value.cajas,
           peso: element.value.peso,
           bascula: element.value.bascula,
-          destarado: element.value.bascula -  ((element.value.tarima) + (element.value.cajas * element.value.peso)),
+          destarado: A,
         }
       );
+      this.B = A + this.B;
+      this.totalFacturar = this.B - ((this.B * 0.05) + 8);
+      
     });
+    this.Falta = this.forma.value.pedido - this.totalFacturar;
   }
 }

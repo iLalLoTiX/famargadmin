@@ -7,35 +7,29 @@
             <form  [formGroup]="forma" class="form-material m-t-40">
                 <div class="form-body">
                     <div class="row p-t-20">
-                        <div class="col-md-3" [class.has-danger]="forma.get('pedido').invalid && forma.get('pedido').touched">
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label class="control-label">Pedido</label>
                                 <input type="number" 
                                 class="form-control"
                                 placeholder="Pedido"
-                                [class.form-control-danger]="forma.get('pedido').touched"
                                 name="Pedido"
                                 formControlName="pedido">
-                                <small *ngIf="forma.get('pedido').invalid && forma.get('pedido').touched"
-                                class="form-text text-danger">Ingresa un valor</small>
                             </div>
                         </div>   
                         <!--/span-->
-                        <div class="col-md-3" [class.has-danger]="forma.get('merma').invalid && forma.get('merma').touched">
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label class="control-label">Merma</label>
                                 <input type="number" 
                                 class="form-control"
                                 placeholder="Merma"
-                                [class.form-control-danger]="forma.get('merma').touched"
                                 name="Merma"
                                 formControlName="merma">
-                                <small *ngIf="forma.get('merma').invalid && forma.get('merma').touched"
-                                class="form-text text-danger">Ingresa un valor</small>
                             </div>
                         </div>   
                         <!--/span-->
-                        <div class="col-md-3" [class.has-danger]="forma.get('kilosEx').invalid && forma.get('kilosEx').touched">
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label class="control-label">Kilos Extra</label>
                                 <input type="number" 
@@ -59,15 +53,6 @@
                             </div>
                         </div>   
                        
-                    </div>
-                    <!--/row-->
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-actions">
-                                <button type="submit" class="btn btn-success"> <i class="fa fa-check"></i> Save</button>
-                            </div>
-                        </div>   
-                        <!--/span-->
                     </div>
                     <div class="table-responsive m-t-20 no-wrap" >
                         <form [formGroup]="arreglo">
@@ -111,6 +96,7 @@
                                                 class="form-control"
                                                 placeholder="Destarado"
                                                 formControlName="destarado"></td>
+
                                             <td>
                                                 <button (click)="borrarTarima(i)" type="button" class="btn btn-danger"><i class="fa fa-trash"></i></button>
                                             </td>
@@ -120,26 +106,26 @@
                                 </tbody>
                             </table>
                         </form>
-                        <div class="row">
-                            <div class="col-2">
-                                <button type="button" (click)="guardar()" class="btn btn-success mt-3 mb-5"> <i class="fa fa-check"></i> Save</button>
+                        <div>
+                            <div class="col-6">
+                                <button (click)="agregarTarima()" type="button" class="btn  btn-info mb-3"><i class="fa fa-plus"></i>Tarima</button>
                             </div>
-                            <div class="col-2">
-                                <button (click)="agregarTarima()" type="button" class="btn mt-3 mb-5 btn-info"><i class="fa fa-plus"></i>Tarima</button>
+                            <div class="col-6">
+                                <button type="button" (click)="guardar()" class="btn btn-success mb-3"> <i class="fa fa-check"></i> Save</button>
                             </div>
+                            
                         </div>
                     </div>
                 </div>
             </form>
 
             <pre>
-                Estado del formulario: {{tarimas.valid}}
+                Total facturado: {{totalFacturar}}
                 <br>
-                Estatus: {{tarimas.status}}
+                te falta: {{Falta}}
             </pre>
 
             <pre>
-                {{tarimas.value | json}}
             </pre>
         </div>
     </div>
