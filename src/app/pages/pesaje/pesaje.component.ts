@@ -15,6 +15,7 @@ export class PesajeComponent implements OnInit {
   public merma;
   public kilosEx;
   B: number= 0;
+  A: number= 0;
   totalFacturar: number = 0;
   Falta: number = 0;
 
@@ -23,17 +24,28 @@ export class PesajeComponent implements OnInit {
     this.crearFormulario();
     this.crearArreglo();
     this.escucharPedido();
-    this.escucharMerma();
-    this.escucharKiloEx();
+    this.escucharPesaje();
   }
 
   ngOnInit(): void {
+  }
+
+  reiniciarForm(){
+
+    this.forma.reset({
+      pedido  : this.forma.get('pedido').value,
+      kilosEx : this.forma.get('kilosEx').value,
+      merma   : this.forma.get('merma').value,
+      total   : this.forma.value.total
+      }
+    );
   }
 
   get tarimas()
   {
     return this.arreglo.get('tarimas') as FormArray;
   }
+
   crearFormulario(){
     this.forma = this.fb.group({
       pedido : [],
@@ -58,6 +70,7 @@ export class PesajeComponent implements OnInit {
   }
 
   agregarTarima(){
+    
     this.tarimas.push(this.fb.group(
       {
         tarima: [],
@@ -67,6 +80,7 @@ export class PesajeComponent implements OnInit {
         destarado: [],
       }
     ));
+    this.escucharPesaje();
   }
 
   borrarTarima(i){
@@ -74,69 +88,52 @@ export class PesajeComponent implements OnInit {
   }
 
   escucharPedido() {
-    this.pedido = this.forma.get('pedido').valueChanges.subscribe( (pedido: number) => {
-      let total: number;
-      this.forma.value.merma = pedido * 0.05;
-      this.forma.value.kilosEx = pedido / 100;
-      total = this.forma.value.kilosEx + pedido + this.forma.value.merma;
-      console.log(this.forma.value.kilosEx);
-      this.forma.patchValue({
-        merma  : [this.forma.value.merma],
-        kilosEx: [this.forma.value.kilosEx],
-        total  : [total]
-      });
+    this.pedido = this.forma.valueChanges.subscribe( (forma: number) => {
+
       
+        if(this.forma.get('pedido').dirty && !this.forma.get('pedido').touched){
+          forma['merma'] = forma['pedido'] * 0.05;
+          forma['kilosEx'] = forma['pedido'] / 100;
+          forma['total'] = forma['kilosEx'] + forma['pedido'] + forma['merma'];
+
+          this.reiniciarForm();
+
+        }
+
+        if((this.forma.get('merma').dirty && !this.forma.get('merma').touched) || (this.forma.get('kilosEx').dirty && !this.forma.get('kilosEx').touched)){
+          forma['total'] = forma['kilosEx'] + forma['pedido'] + forma['merma'];
+          
+          this.reiniciarForm();
+        }
+        
+        this.forma.patchValue({
+          merma  : forma['merma'],
+          kilosEx: forma['kilosEx'],
+          total  : forma['total'],
+        }, {emitEvent: false});
     });
+    
+    
   }
 
-  escucharMerma(){
-    this.merma = this.forma.get('merma').valueChanges.subscribe( (merma: number) => {
-      let total: number;
-      let kEx: number= this.forma.value.kilosEx;
-      let pedido: number = this.forma.value.pedido;
-      let merma2: number = this.forma.value.merma;
-      console.log(this.forma.value.kilosEx);
-      console.log(this.forma.value.kilosEx, pedido, merma2);
-      total = this.forma.value.kilosEx + pedido + merma2;
-      console.log(total);
-      this.forma.patchValue({
-        total   : [total]
-      });
-      
-    });
-  }
-
-  escucharKiloEx(){
-    this.kilosEx = this.forma.get('kilosEx').valueChanges.subscribe( (kilosEx: number) => {
-      
-      this.forma.patchValue({
-        total   : [this.forma.value.total]
-      });
-      
-    });
-  }
-
-  guardar(){
+  escucharPesaje(){
 
     this.Falta = 0;
     this.totalFacturar = 0;
     this.B = 0;
-    this.tarimas.controls.forEach(element => {
-      let A = element.value.bascula -  ((element.value.tarima) + (element.value.cajas * element.value.peso));
-      
-      element.patchValue(
+    this.A = 0;
+    this.tarimas.controls.forEach(arrayTarima => 
+    {
+      arrayTarima.valueChanges.subscribe(tarima => {
+        this.A = tarima.bascula -  (tarima.tarima + ((tarima.cajas) * (tarima.peso)));
+
+        console.log(tarima);
+        arrayTarima.patchValue(
         {
-          tarima: element.value.tarima,
-          cajas: element.value.cajas,
-          peso: element.value.peso,
-          bascula: element.value.bascula,
-          destarado: A,
-        }
-      );
-      this.B = A + this.B;
-      this.totalFacturar = this.B - ((this.B * 0.05) + 8);
-      
+          destarado: this.A
+        }, {emitEvent: false});
+        this.totalFacturar = this.A + this.totalFacturar;
+      });
     });
-    this.Falta = this.forma.value.pedido - this.totalFacturar;
   }
 }

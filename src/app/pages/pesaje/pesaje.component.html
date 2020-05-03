@@ -14,6 +14,7 @@
                                 class="form-control"
                                 placeholder="Pedido"
                                 name="Pedido"
+                                (blur)="reiniciarForm()"
                                 formControlName="pedido">
                             </div>
                         </div>   
@@ -25,6 +26,7 @@
                                 class="form-control"
                                 placeholder="Merma"
                                 name="Merma"
+                                (blur)="reiniciarForm()"
                                 formControlName="merma">
                             </div>
                         </div>   
@@ -35,11 +37,9 @@
                                 <input type="number" 
                                 class="form-control"
                                 placeholder="Kilos Extra"
-                                [class.form-control-danger]="forma.get('kilosEx').touched"
                                 name="Kilos Extra"
+                                (blur)="reiniciarForm()"
                                 formControlName="kilosEx">
-                                <small *ngIf="forma.get('kilosEx').invalid && forma.get('kilosEx').touched"
-                                class="form-text text-danger">Ingresa un valor</small>
                             </div>
                         </div>   
                         <!--/span-->
@@ -49,6 +49,7 @@
                                 <input type="number" 
                                 class="form-control"
                                 placeholder="Total"
+                                disabled
                                 formControlName="total">
                             </div>
                         </div>   
@@ -109,9 +110,6 @@
                         <div>
                             <div class="col-6">
                                 <button (click)="agregarTarima()" type="button" class="btn  btn-info mb-3"><i class="fa fa-plus"></i>Tarima</button>
-                            </div>
-                            <div class="col-6">
-                                <button type="button" (click)="guardar()" class="btn btn-success mb-3"> <i class="fa fa-check"></i> Save</button>
                             </div>
                             
                         </div>
