@@ -11,12 +11,16 @@ export class PesajeComponent implements OnInit {
 
   forma: FormGroup;
   arreglo: FormGroup;
-  public pedido  ;
+  public pedido;
   public merma;
   public kilosEx;
   B: number= 0;
   A: number= 0;
   totalFacturar: number = 0;
+  totalTarimas: number = 0;
+  totalCajas: number = 0;
+  totalBascula: number = 0;
+  totalDestarado: number = 0;
   Falta: number = 0;
 
   constructor(private fb: FormBuilder) { 
@@ -24,7 +28,6 @@ export class PesajeComponent implements OnInit {
     this.crearFormulario();
     this.crearArreglo();
     this.escucharPedido();
-    this.escucharPesaje();
   }
 
   ngOnInit(): void {
@@ -80,7 +83,6 @@ export class PesajeComponent implements OnInit {
         destarado: [],
       }
     ));
-    this.escucharPesaje();
   }
 
   borrarTarima(i){
@@ -116,24 +118,30 @@ export class PesajeComponent implements OnInit {
     
   }
 
-  escucharPesaje(){
-
+  operacionTarima(){
     this.Falta = 0;
     this.totalFacturar = 0;
+    this.totalBascula = 0;
+    this.totalTarimas = 0;
+    this.totalCajas = 0;
+    this.totalDestarado = 0
     this.B = 0;
     this.A = 0;
-    this.tarimas.controls.forEach(arrayTarima => 
-    {
-      arrayTarima.valueChanges.subscribe(tarima => {
-        this.A = tarima.bascula -  (tarima.tarima + ((tarima.cajas) * (tarima.peso)));
-
-        console.log(tarima);
-        arrayTarima.patchValue(
-        {
-          destarado: this.A
-        }, {emitEvent: false});
-        this.totalFacturar = this.A + this.totalFacturar;
-      });
+    this.tarimas.controls.forEach(tarima => {
+      
+      this.A = tarima.get('bascula').value -  ((tarima.get('cajas').value) * (tarima.get('peso').value));
+      this.A = this.A - tarima.get('tarima').value;
+      tarima.patchValue(
+      {
+        destarado: this.A
+      }, {emitEvent: false});
+      this.totalTarimas = tarima.get('tarima').value + this.totalTarimas;
+      this.totalCajas = tarima.get('cajas').value + this.totalCajas;
+      this.totalBascula = tarima.get('bascula').value + this.totalBascula;
+      this.totalDestarado = tarima.get('destarado').value + this.totalDestarado;
+      this.totalFacturar = this.totalDestarado - ((this.totalDestarado)* 0.05) - this.forma.get('kilosEx').value;
+      this.Falta = this.totalFacturar - this.forma.get('pedido').value;
     });
   }
+  
 }

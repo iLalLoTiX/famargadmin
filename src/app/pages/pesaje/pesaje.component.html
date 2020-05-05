@@ -27,6 +27,7 @@
                                 placeholder="Merma"
                                 name="Merma"
                                 (blur)="reiniciarForm()"
+                                disabled
                                 formControlName="merma">
                             </div>
                         </div>   
@@ -76,34 +77,54 @@
                                             <td><input type="number" 
                                                 class="form-control"
                                                 placeholder="Tarima"
+                                                (blur)="operacionTarima()"
                                                 formControlName="tarima"></td>
 
                                             <td><input type="number" 
                                                 class="form-control"
                                                 placeholder="Cajas"
+                                                (blur)="operacionTarima()"
                                                 formControlName="cajas"></td>
 
                                             <td><input type="number" 
                                                 class="form-control"
                                                 placeholder="Peso cajas"
+                                                (blur)="operacionTarima()"
                                                 formControlName="peso"></td>
 
                                             <td><input type="number" 
                                                 class="form-control"
                                                 placeholder="Bascula"
+                                                (blur)="operacionTarima()"
                                                 formControlName="bascula"></td>
 
                                             <td><input type="number" 
                                                 class="form-control"
                                                 placeholder="Destarado"
+                                                (blur)="operacionTarima()"
                                                 formControlName="destarado"></td>
 
                                             <td>
                                                 <button (click)="borrarTarima(i)" type="button" class="btn btn-danger"><i class="fa fa-trash"></i></button>
                                             </td>
-                                        </tr>    
+                                        </tr>  
+                                            
                                     </ng-container>
-                                    
+                                        <tr>
+                                            <td></td>
+                                            <td>{{totalTarimas}}</td>
+
+                                            <td>{{totalCajas}}</td>
+
+                                            <td></td>
+
+                                            <td>{{totalBascula}}</td>
+
+                                            <td>{{totalDestarado}}</td>
+
+                                            <td>
+                                            </td>
+                                        </tr>
                                 </tbody>
                             </table>
                         </form>
