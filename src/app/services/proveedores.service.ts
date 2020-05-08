@@ -9,8 +9,6 @@ import { map } from 'rxjs/operators';
 export class ProveedoresService {
 
   private itemsCollection: AngularFirestoreCollection<any>;
-  public tablaProveedores: proveedor[] = [];
-  public mostrarProveedorAct: proveedor[] = [];
 
   constructor(public afs: AngularFirestore) { }
 
@@ -24,11 +22,9 @@ export class ProveedoresService {
   }
 
   agregarProveedor(proveedor: proveedor)
-    {
+  {
       // tslint:disable-next-line: no-shadowed-variable
-      const enviarNuevoProveedor: proveedor = {
-        ...proveedor
-    }
+      const enviarNuevoProveedor: proveedor = {...proveedor}
       return this.afs.collection('proveedores').add(enviarNuevoProveedor);
   }
 

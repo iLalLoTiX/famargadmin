@@ -1,8 +1,30 @@
 
 <div class="card">
     <div class="card-body">
-        <h4 class="card-title">Simple Editable table</h4>
-        <h6 class="card-subtitle">Just click on word which you want to change and enter</h6>
+        <div class="row p-t-20">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label class="control-label">Tienda</label>
+                    <input type="Text" 
+                    class="form-control"
+                    placeholder="Tienda"
+                    name="tienda"
+                    [(ngModel)]="tienda">
+                </div>
+            </div>   
+            <!--/span-->
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label class="control-label">Producto</label>
+                    <input type="Text" 
+                    class="form-control"
+                    placeholder="Producto"
+                    name="producto"
+                    [(ngModel)]="producto">
+                </div>
+            </div>   
+            <!--/span-->
+        </div>
         <div class="table-responsive">
             <form  [formGroup]="forma" class="form-material m-t-40">
                 <div class="form-body">
@@ -64,6 +86,7 @@
                                         <th>#</th>
                                         <th>Peso Tarima</th>
                                         <th>Cajas</th>
+                                        <th>Tipo</th>
                                         <th>Peso Caja</th>
                                         <th>Bascula</th>
                                         <th>Destarado</th>
@@ -85,6 +108,17 @@
                                                 placeholder="Cajas"
                                                 (blur)="operacionTarima()"
                                                 formControlName="cajas"></td>
+
+                                            <td><select type="number" 
+                                                class="form-control"
+                                                placeholder="Tipo de Caja"
+                                                (blur)="operacionTarima()"
+                                                formControlName="tipo">
+                                                <ng-container *ngFor="let tipo of llenarCajasSelect; let j = index;">
+                                                    <option value="{{tipo.payload.doc.id}}">{{tipo.payload.doc.data()['tipo']}}</option>
+                                                </ng-container>
+                                                </select>
+                                            </td>
 
                                             <td><input type="number" 
                                                 class="form-control"
@@ -117,6 +151,7 @@
                                             <td>{{totalCajas}}</td>
 
                                             <td></td>
+                                            <td></td>
 
                                             <td>{{totalBascula}}</td>
 
@@ -130,7 +165,10 @@
                         </form>
                         <div>
                             <div class="col-6">
-                                <button (click)="agregarTarima()" type="button" class="btn  btn-info mb-3"><i class="fa fa-plus"></i>Tarima</button>
+                                <button (click)="imprimir()" type="button" class="btn btn-success mb-3"><i class="fa fa-print"></i> Imprimir</button>
+                            </div>
+                            <div class="col-6">
+                                <button (click)="agregarTarima()" type="button" class="btn  btn-info mb-3"><i class="fa fa-plus"></i> Tarima</button>
                             </div>
                             
                         </div>

@@ -11,6 +11,7 @@ import { SharedModule } from '../shared/shared.module';
 
 import { PagesRoutingModule } from './pages-routing.module';
 import { PesajeComponent } from './pesaje/pesaje.component';
+import { CajasComponent } from './cajas/cajas.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { PesajeComponent } from './pesaje/pesaje.component';
         ProveedoresComponent,
         ProductosComponent,
         PagesComponent,
-        PesajeComponent
+        PesajeComponent,
+        CajasComponent
     ],
     exports: [
         DashboardComponent,

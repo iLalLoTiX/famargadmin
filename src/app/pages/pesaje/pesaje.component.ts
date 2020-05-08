@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, NgForm, FormArray } from '@angular/forms';
 import { element } from 'protractor';
+import { CajasService } from 'src/app/services/cajas.service';
+import { PdfMakeWrapper, Table } from 'pdfmake-wrapper';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
 
 @Component({
   selector: 'app-pesaje',
@@ -14,8 +17,10 @@ export class PesajeComponent implements OnInit {
   public pedido;
   public merma;
   public kilosEx;
-  B: number= 0;
-  A: number= 0;
+  B: number = 0;
+  A: number = 0;
+  producto: string;
+  tienda: string;
   totalFacturar: number = 0;
   totalTarimas: number = 0;
   totalCajas: number = 0;
@@ -23,14 +28,52 @@ export class PesajeComponent implements OnInit {
   totalDestarado: number = 0;
   Falta: number = 0;
 
-  constructor(private fb: FormBuilder) { 
+  public llenarCajasSelect;
+
+  constructor(private fb: FormBuilder, public cs_: CajasService) { 
 
     this.crearFormulario();
     this.crearArreglo();
     this.escucharPedido();
+    this.cs_.cargarCajas().subscribe(a => this.llenarCajasSelect = a);
   }
 
   ngOnInit(): void {
+  }
+
+  imprimir(){
+    PdfMakeWrapper.setFonts(pdfFonts);
+ 
+    const pdf = new PdfMakeWrapper();
+    
+    pdf.add('Tienda: ' + this.tienda);
+    pdf.add('producto: ' + this.producto);
+    pdf.add('Total a facturar: ' + this.totalFacturar);
+    pdf.add('Total Destarado: ' + this.totalDestarado);
+    pdf.add('Total de cajas: ' + this.totalCajas);
+    
+    
+    // let B = new Table([
+    //   [ 'Tarima', 'Cajas','Bascula','Destarado']
+    // ]).end;
+    // let C;
+    // pdf.add( B);
+    // this.tarimas.controls.forEach(tarima => {
+    //   C = new Table([
+    //     [ tarima.get('tarima').value, tarima.get('cajas').value, tarima.get('bascula').value, tarima.get('destarado').value]
+        
+    //   ]).widths([ 100 , 100 ]).end;
+    //   pdf.add( C);
+      
+    // });
+      
+      
+    pdf.create().open();
+    this.tarimas.controls.forEach(tarima => {
+      
+      this.cs_.prueba(tarima.get('tipo').value, tarima.get('cajas').value);
+
+    });
   }
 
   reiniciarForm(){
@@ -64,6 +107,7 @@ export class PesajeComponent implements OnInit {
           this.fb.group({
             tarima: [],
             cajas: [],
+            tipo: [],
             peso: [],
             bascula: [],
             destarado: [],
@@ -78,6 +122,7 @@ export class PesajeComponent implements OnInit {
       {
         tarima: [],
         cajas: [],
+        tipo: [],
         peso: [],
         bascula: [],
         destarado: [],

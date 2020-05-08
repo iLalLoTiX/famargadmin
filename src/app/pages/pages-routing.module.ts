@@ -7,6 +7,7 @@ import { ProductosComponent } from './productos/productos.component';
 import { ProveedoresComponent } from './proveedores/proveedores.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PesajeComponent } from './pesaje/pesaje.component';
+import { CajasComponent } from './cajas/cajas.component';
 
 const pagesRoutes: Routes = [
   {
@@ -14,6 +15,7 @@ const pagesRoutes: Routes = [
     component: PagesComponent ,
     children: [
       {  path: 'productos', component: ProductosComponent },
+      {  path: 'cajas', component: CajasComponent },
       {  path: 'pesaje', component: PesajeComponent },
       {  path: 'proveedores', component: ProveedoresComponent },
       {  path: 'dashboard', component: DashboardComponent  },

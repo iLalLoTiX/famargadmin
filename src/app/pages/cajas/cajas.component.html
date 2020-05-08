@@ -1,0 +1,195 @@
+ <!-- Column -->
+ <div class="col-lg-12">
+    <div class="card">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs profile-tab" role="tablist">
+            <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#agregar" role="tab">Agregar</a> </li>
+            <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#productos" role="tab">Productos</a> </li>
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div class="tab-pane active" id="agregar" role="tabpanel">
+                <div class="card-body">
+                    <!-- Row -->
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-header bg-info">
+                                    <h4 class="m-b-0 text-white">Agregar un Proveedor</h4>
+                                </div>
+                                <div class="card-body">
+                                    <form (ngSubmit)="agregarCaja(f)" #f="ngForm">
+                                        <div class="form-body">
+                                            <div class="row">
+                                                <div class="col-md-1" >
+                                                    <div class="form-group" [class.has-danger]="id.invalid && id.touched">
+                                                        <label class="control-label">ID</label>
+
+                                                        <input type="number"
+                                                        class="form-control" 
+                                                        [class.form-control-danger]="id.touched"
+                                                        #id="ngModel" [(ngModel)]="cajaItem.id" name="ID"
+                                                        required>
+
+                                                        <input type="hidden" 
+                                                        class="form-control"
+                                                        [(ngModel)]="idCaja"
+                                                        name="idCaja">
+
+                                                    </div>
+                                                </div>   
+                                                <div class="col-md-3">
+                                                    <div class="form-group" [class.has-danger]="tipo.invalid && tipo.touched">
+
+                                                        <label class="control-label">Tipo</label>
+                                                        <input type="text"
+                                                        class="form-control"
+                                                        #tipo="ngModel"
+                                                        [class.form-control-danger]="tipo.touched"
+                                                        [(ngModel)]="cajaItem.tipo"
+                                                        name="tipo"
+                                                        required
+                                                        minlength="4">
+
+                                                        <small *ngIf="tipo.invalid && tipo.touched"
+                                                        class="form-text text-danger">Indique el tipo</small>
+
+                                                    </div>
+                                                </div>   
+                                                <div class="col-md-2">
+                                                    <div class="form-group" [class.has-danger]="cantidad.invalid &&cantidad.touched">
+                                                        <label class="control-label">Cantidad</label>
+                                                        <input type="number"
+                                                        class="form-control"
+                                                        #cantidad="ngModel"
+                                                        [class.form-control-danger]="cantidad.touched"
+                                                        [(ngModel)]="cajaItem.cantidad"
+                                                        name="cantidad"
+                                                        required>
+                                                        <small *ngIf="cantidad.invalid && cantidad.touched"
+                                                        class="form-text text-danger">Cuantos hay?</small>
+                                                    </div>
+                                                </div>   
+
+                                                <div class="col-md-3">
+                                                    <div class="form-group" [class.has-danger]="afuera.invalid && afuera.touched">
+                                                        <label class="control-label">De viaje</label>
+                                                        <input type="number" 
+                                                        class="form-control" 
+                                                        #afuera="ngModel"
+                                                        [class.form-control-danger]="afuera.touched"
+                                                        [(ngModel)]="cajaItem.afuera"
+                                                        name="afuera"
+                                                        min="0"
+                                                        required>
+                                                        <small *ngIf="afuera.invalid && afuera.touched"
+                                                        class="form-text text-danger">Si no hay cajas de viaje ingresa 0</small>
+                                                    </div>
+                                                </div> 
+
+                                                <div class="col-md-3">
+                                                    <div class="form-group" [class.has-danger]="adentro.invalid && adentro.touched">
+                                                        <label class="control-label">En inventario</label>
+                                                        <input type="number" 
+                                                        class="form-control" 
+                                                        #adentro="ngModel"
+                                                        [class.form-control-danger]="afuera.touched"
+                                                        [(ngModel)]="cajaItem.adentro"
+                                                        name="adentro"
+                                                        min="0"
+                                                        required>
+                                                        <small *ngIf="adentro.invalid && adentro.touched"
+                                                        class="form-text text-danger">Si no hay cajas en el inventario ingresa 0</small>
+                                                    </div>
+                                                </div> 
+
+                                            </div>
+                                            <div class="row p-t-20">
+
+                                                <div class="col-md-3">
+                                                    <div class="form-group" [class.has-danger]="precio.invalid && precio.touched">
+                                                        <label class="control-label">Precio</label>
+                                                        <input type="number" 
+                                                        class="form-control" 
+                                                        #precio="ngModel"
+                                                        [class.form-control-danger]="precio.touched"
+                                                        [(ngModel)]="cajaItem.precio"
+                                                        name="precio"
+                                                        required>
+                                                        <small *ngIf="precio.invalid && precio.touched"
+                                                        class="form-text text-danger">Ingresa el precio</small>
+                                                    </div>
+                                                </div> 
+
+                                                
+                                            </div>
+                                            
+                                            <div class="row p-t-20">
+                                                <div class="col-md-3">
+                                                    <div class="form-actions">
+                                                        <button type="submit" class="btn btn-success"> <i class="fa fa-check"></i> Save</button>
+                                                        <div (click)="limpiar(f)"
+                                                        class="btn btn-inverse"><i class="fa fa-leaf"></i> Limpiar</div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <h3>Total de cajas {{cs_.B}}</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--second tab-->
+            <div class="tab-pane" id="productos" role="tabpanel">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex">
+                                        <div class="table-responsive m-t-20 no-wrap">
+                                            <table class="table vm no-th-brd pro-of-month">
+                                                <thead>
+                                                    <tr>
+                                                        <th >ID</th>
+                                                        <th>Tipo</th>
+                                                        <th>Cantidad</th>
+                                                        <th>Afuera</th>
+                                                        <th>Adentro</th>
+                                                        <th>Precio</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody *ngFor="let caja of cajas; let i = index">
+                                                    <tr>
+                                                        <td style="width:50px;"><span class="round">{{ caja.payload.doc.data()['id']}}</span></td>
+                                                        <td>{{ caja.payload.doc.data()['tipo']}}</td>
+                                                        <td>{{ caja.payload.doc.data()['cantidad']}}</td>
+                                                        <td>{{ caja.payload.doc.data()['afuera']}}</td>
+                                                        <td>{{ caja.payload.doc.data()['adentro']}}</td>
+                                                        <td>{{ caja.payload.doc.data()['precio']}}</td>
+                                                        <td>
+                                                        <button type="button" (click)="borrarCaja(caja.payload.doc.id)"  class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                                                        <button type="button" (click)="mostrarCaja(caja.payload.doc.id)"  class="btn btn-info"><i class="fa fa-pencil"></i></button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Column -->
+
