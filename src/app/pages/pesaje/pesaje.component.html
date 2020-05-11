@@ -16,11 +16,14 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label class="control-label">Producto</label>
-                    <input type="Text" 
-                    class="form-control"
-                    placeholder="Producto"
-                    name="producto"
-                    [(ngModel)]="producto">
+                    <select type="number" 
+                        class="form-control"
+                        placeholder="Tipo de Caja"
+                        [(ngModel)]="producto">
+                        <ng-container *ngFor="let producto of llenarProductosSelect; let j = index;">
+                            <option value="{{producto.payload.doc.data()['producto']}}">{{producto.payload.doc.data()['producto']}}</option>
+                        </ng-container>
+                    </select>
                 </div>
             </div>   
             <!--/span-->
@@ -29,44 +32,41 @@
             <form  [formGroup]="forma" class="form-material m-t-40">
                 <div class="form-body">
                     <div class="row p-t-20">
-                        <div class="col-md-3">
+                        <div class="col-md-1">
                             <div class="form-group">
                                 <label class="control-label">Pedido</label>
                                 <input type="number" 
                                 class="form-control"
                                 placeholder="Pedido"
                                 name="Pedido"
-                                (blur)="reiniciarForm()"
                                 formControlName="pedido">
                             </div>
                         </div>   
                         <!--/span-->
-                        <div class="col-md-3">
+                        <div class="col-md-1">
                             <div class="form-group">
                                 <label class="control-label">Merma</label>
                                 <input type="number" 
                                 class="form-control"
                                 placeholder="Merma"
                                 name="Merma"
-                                (blur)="reiniciarForm()"
                                 disabled
                                 formControlName="merma">
                             </div>
                         </div>   
                         <!--/span-->
-                        <div class="col-md-3">
+                        <div class="col-md-1">
                             <div class="form-group">
-                                <label class="control-label">Kilos Extra</label>
+                                <label class="control-label">Kg Extra</label>
                                 <input type="number" 
                                 class="form-control"
-                                placeholder="Kilos Extra"
+                                placeholder="Kg Extra"
                                 name="Kilos Extra"
-                                (blur)="reiniciarForm()"
                                 formControlName="kilosEx">
                             </div>
                         </div>   
                         <!--/span-->
-                        <div class="col-md-3">
+                        <div class="col-md-1">
                             <div class="form-group">
                                 <label class="control-label">Total</label>
                                 <input type="number" 
@@ -75,115 +75,122 @@
                                 disabled
                                 formControlName="total">
                             </div>
-                        </div>   
-                       
-                    </div>
-                    <div class="table-responsive m-t-20 no-wrap" >
-                        <form [formGroup]="arreglo">
-                            <table class="table vm no-th-brd pro-of-month">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Peso Tarima</th>
-                                        <th>Cajas</th>
-                                        <th>Tipo</th>
-                                        <th>Peso Caja</th>
-                                        <th>Bascula</th>
-                                        <th>Destarado</th>
-                                        <th>Borrar</th>
-                                    </tr>
-                                </thead>
-                                <tbody formArrayName="tarimas">
-                                    <ng-container *ngFor="let control of tarimas.controls; let i = index;">
-                                        <tr [formGroupName]="i">
-                                            <td>{{i + 1}}</td>
-                                            <td><input type="number" 
-                                                class="form-control"
-                                                placeholder="Tarima"
-                                                (blur)="operacionTarima()"
-                                                formControlName="tarima"></td>
-
-                                            <td><input type="number" 
-                                                class="form-control"
-                                                placeholder="Cajas"
-                                                (blur)="operacionTarima()"
-                                                formControlName="cajas"></td>
-
-                                            <td><select type="number" 
-                                                class="form-control"
-                                                placeholder="Tipo de Caja"
-                                                (blur)="operacionTarima()"
-                                                formControlName="tipo">
-                                                <ng-container *ngFor="let tipo of llenarCajasSelect; let j = index;">
-                                                    <option value="{{tipo.payload.doc.id}}">{{tipo.payload.doc.data()['tipo']}}</option>
-                                                </ng-container>
-                                                </select>
-                                            </td>
-
-                                            <td><input type="number" 
-                                                class="form-control"
-                                                placeholder="Peso cajas"
-                                                (blur)="operacionTarima()"
-                                                formControlName="peso"></td>
-
-                                            <td><input type="number" 
-                                                class="form-control"
-                                                placeholder="Bascula"
-                                                (blur)="operacionTarima()"
-                                                formControlName="bascula"></td>
-
-                                            <td><input type="number" 
-                                                class="form-control"
-                                                placeholder="Destarado"
-                                                (blur)="operacionTarima()"
-                                                formControlName="destarado"></td>
-
-                                            <td>
-                                                <button (click)="borrarTarima(i)" type="button" class="btn btn-danger"><i class="fa fa-trash"></i></button>
-                                            </td>
-                                        </tr>  
-                                            
-                                    </ng-container>
-                                        <tr>
-                                            <td></td>
-                                            <td>{{totalTarimas}}</td>
-
-                                            <td>{{totalCajas}}</td>
-
-                                            <td></td>
-                                            <td></td>
-
-                                            <td>{{totalBascula}}</td>
-
-                                            <td>{{totalDestarado}}</td>
-
-                                            <td>
-                                            </td>
-                                        </tr>
-                                </tbody>
-                            </table>
-                        </form>
-                        <div>
-                            <div class="col-6">
-                                <button (click)="imprimir()" type="button" class="btn btn-success mb-3"><i class="fa fa-print"></i> Imprimir</button>
+                        </div>  
+                        <!--/span-->
+                        <div class="col-md-1">
+                            <div class="form-group">
+                                <label class="control-label">Facturado</label>
+                                <input type="number" style="background-color: #7cd5ff; color: white;"
+                                class="form-control pl-2"
+                                placeholder="Total" 
+                                value="{{totalFacturar}}"
+                                disabled>
                             </div>
-                            <div class="col-6">
-                                <button (click)="agregarTarima()" type="button" class="btn  btn-info mb-3"><i class="fa fa-plus"></i> Tarima</button>
+                        </div> 
+                        <!--/span-->
+                        <div class="col-md-1">
+                            <div class="form-group">
+                                
+                                <label *ngIf="Falta <= 0" class="control-label">Falta</label>
+                                <label *ngIf="Falta > 0" class="control-label">Sobra</label>
+                                <input [ngStyle]="{'background-color':Falta <= 0 ? 'red' : 'green' }" style="color: white;" type="number" 
+                                class="form-control pl-2"
+                                value="{{Sobra}}"
+                                disabled>
                             </div>
-                            
-                        </div>
-                    </div>
+                        </div>       
+                        <div class="col-md-1">
+                            <label for=""></label>
+                            <button (click)="altaCajas()" type="button" class="btn btn-success mb-3"><i class="fa fa-check"></i> Listo</button>
+                        </div> 
+                        <div class="col-md-1">
+                            <label for=""></label>
+                            <button (click)="imprimir()" type="button" class="btn btn-success mb-3"><i class="fa fa-print"></i> Imprimir</button>
+                        </div>           
+                    </div>                    
                 </div>
             </form>
+            <div class="table-responsive m-t-20 no-wrap" >
+                <form [formGroup]="arreglo" class="form-material">
+                    <table class="table vm no-th-brd pro-of-month">
+                        <thead>
+                            <tr>
+                                <th>Peso Tarima</th>
+                                <th>Cajas</th>
+                                <th>Tipo</th>
+                                <th>Peso Caja</th>
+                                <th>Bascula</th>
+                                <th>Destarado</th>
+                                <th>Borrar</th>
+                            </tr>
+                        </thead>
+                        <tbody formArrayName="tarimas">
+                            <ng-container *ngFor="let control of tarimas.controls; let i = index;">
+                            <tr [formGroupName]="i">
+                                <td><input type="number" 
+                                    class="form-control"
+                                    placeholder="Tarima"
+                                    formControlName="tarima"></td>
 
-            <pre>
-                Total facturado: {{totalFacturar}}
-                <br>
-                te falta: {{Falta}}
-            </pre>
+                                <td><input type="number" 
+                                    class="form-control"
+                                    placeholder="Cajas"
+                                    formControlName="cajas"></td>
 
-            <pre>
-            </pre>
+                                <td><select type="number" 
+                                    class="form-control"
+                                    placeholder="Tipo de Caja"
+                                    formControlName="tipo">
+                                    <ng-container *ngFor="let tipo of llenarCajasSelect; let j = index;">
+                                        <option value="{{tipo.payload.doc.id}}">{{tipo.payload.doc.data()['tipo']}}</option>
+                                    </ng-container>
+                                    </select>
+                                </td>
+
+                                <td><input type="number" 
+                                    class="form-control"
+                                    placeholder="Peso cajas"
+                                    formControlName="peso"></td>
+
+                                <td><input type="number" 
+                                    class="form-control"
+                                    placeholder="Bascula"
+                                    formControlName="bascula"></td>
+
+                                <td><input type="number"  
+                                        class="form-control"
+                                        placeholder="Destarado"
+                                        formControlName="destarado"></td>
+
+                                <td>
+                                    <button (click)="borrarTarima(i)" type="button" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                                </td>
+                            </tr>  
+                            </ng-container>
+                            <tr>
+                                <td style="background-color: #7cd5ff; color: white;">{{totalTarimas}}</td>
+
+                                <td style="background-color: #7cd5ff; color: white;">{{totalCajas}}</td>
+
+                                <td></td>
+                                <td></td>
+
+                                <td style="background-color: #7cd5ff; color: white;">{{totalBascula}}</td>
+
+                                <td style="background-color: #7cd5ff; color: white;">{{totalDestarado}}</td>
+
+                                <td>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+        <div>
+            <div class="col-6">
+                <button (click)="agregarTarima()" type="button" class="btn  btn-info mt-3"><i class="fa fa-plus"></i> Tarima</button>
+            </div>
         </div>
     </div>
 </div>
