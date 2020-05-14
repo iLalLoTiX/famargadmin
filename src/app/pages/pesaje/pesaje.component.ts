@@ -49,6 +49,7 @@ export class PesajeComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  //preparar PDF para impresion
   imprimir(){
     if(this.producto === undefined || this.tienda === undefined ){
       swal("Falta especificar la tienda o el producto", {
@@ -79,6 +80,7 @@ export class PesajeComponent implements OnInit {
     }
   }
 
+  //realiza cambios en el inventario de cajas de acuerdo al tipo de caja ingresado por el usuario
   altaCajas(){
     swal({
       title: "Estas seguro?",

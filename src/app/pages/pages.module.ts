@@ -7,11 +7,15 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProveedoresComponent } from './proveedores/proveedores.component';
 import { ProductosComponent } from './productos/productos.component';
 import { PagesComponent } from './pages.component';
-import { SharedModule } from '../shared/shared.module';
-
-import { PagesRoutingModule } from './pages-routing.module';
+import { EntradasComponent } from './entradas/entradas.component';
 import { PesajeComponent } from './pesaje/pesaje.component';
 import { CajasComponent } from './cajas/cajas.component';
+import { ModalEntradaComponent } from './entradas/modal-entrada/modal-entrada.component';
+
+import { SharedModule } from '../shared/shared.module';
+import { PagesRoutingModule } from './pages-routing.module';
+
+
 
 
 @NgModule({
@@ -21,7 +25,9 @@ import { CajasComponent } from './cajas/cajas.component';
         ProductosComponent,
         PagesComponent,
         PesajeComponent,
-        CajasComponent
+        CajasComponent,
+        EntradasComponent,
+        ModalEntradaComponent
     ],
     exports: [
         DashboardComponent,

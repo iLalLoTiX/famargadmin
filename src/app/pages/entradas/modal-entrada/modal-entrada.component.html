@@ -1,0 +1,158 @@
+<div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title text-left">12 de mayo</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+        </div>
+        <div class="modal-body">
+            <form [formGroup]="formEntrada" (ngSubmit)="altaEntrada()" class="form-material">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-3 col-sm-3">
+                            <div class="form-group">
+                                <label>Proveedor</label>
+                                <input type="text" class="form-control"
+                                placeholder="Proveedor"
+                                name="proveedor"
+                                formControlName="proveedor">
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-sm-2">
+                            <div class="form-group">
+                                <label>Producto</label>
+                                <input type="text" class="form-control" 
+                                placeholder="Producto"
+                                name="producto"
+                                formControlName="producto">
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-sm-2">
+                            <div class="form-group">
+                                <label>Cajas</label>
+                                <input type="number" class="form-control" 
+                                placeholder="Cajas"
+                                name="cajas"
+                                formControlName="cajas">
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-3">
+                            <label class="control-label">Nuestras</label>
+                            <div class="switch">
+                                <label class="control-label">Sí</label>
+                                <label>
+                                <input class="form-control custom-select"
+                                type="checkbox"
+                                name="nuestrasCajas"
+                                formControlName="nuestrasCajas"><span class="lever switch-col-deep-orange"></span></label>
+                                <label class="control-label">No</label>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-sm-2">
+                            <div class="form-group">
+                                <label>Tipo</label>
+                                <input type="text" class="form-control" 
+                                placeholder="Tipo"
+                                name="pesoCaja"
+                                formControlName="pesoCaja">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2 col-sm-2">
+                            <div class="form-group">
+                                <label>Tarima</label>
+                                <input type="number" class="form-control" 
+                                placeholder="Peso"
+                                name="pesoTarima"
+                                formControlName="pesoTarima">
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-sm-2">
+                            <div class="form-group">
+                                <label>Bascula</label>
+                                <input type="number" class="form-control" 
+                                placeholder="Peso"
+                                name="pesoBascula"
+                                formControlName="pesoBascula">
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-sm-2">
+                            <div class="form-group">
+                                <label>$</label>
+                                <input type="number" class="form-control" 
+                                placeholder="$"
+                                name="pago"
+                                formControlName="pago">
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-3">
+                            <label class="control-label">$ por</label>
+                            <div class="switch">
+                                <label class="control-label">C</label>
+                                <label>
+                                <input class="form-control custom-select"
+                                type="checkbox"
+                                name="CoKg"
+                                formControlName="CoKg"><span class="lever switch-col-deep-orange"></span></label>
+                                <label class="control-label">Kg</label>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-sm-2">
+                            <div class="form-group">
+                                <label>Destarado</label>
+                                <input type="text" class="form-control" 
+                                placeholder="Tipo"
+                                name="destarado"
+                                formControlName="destarado">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2 col-sm-2">
+                            <div class="form-group">
+                                <label>Peso/Caja</label>
+                                <input type="text" class="form-control" 
+                                placeholder="Tipo"
+                                value="{{pesoPorCaja}}">
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <button (click)="agregarProducto()"type="button" class="btn btn-info"><i class="fa fa-plus"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive m-t-20 no-wrap" >
+                    <table class="table vm no-th-brd pro-of-month">
+                        <thead>
+                            <tr>
+                                <th>Producto</th>
+                                <th>Destarado</th>
+                                <th>P/C</th>
+                                <th>P/K</th>
+                                <th>$</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngFor="let producto of arrayProducto; let i = index;">
+                            <tr>
+                                <td>{{producto[0]}}</td>
+                                <td>{{producto[1]}}</td>
+                                <td>{{producto[2]}}</td>
+                                <td>{{producto[3]}}</td>
+                                <td>{{producto[4]}}</td>
+                            </tr>
+                            </ng-container>
+                        </tbody>
+                    </table>
+                </div>
+                
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button (click)="reiniciarFormEntrada()"type="button" class="btn btn-secondary">Close</button>
+            <button (click)="altaEntrada()" type="submit" class="btn btn-success">Submit</button>
+        </div>
+    </div>
+    <!-- /.modal-content -->
+</div>
+<!-- /.modal-dialog -->

@@ -8,16 +8,18 @@ import { ProveedoresComponent } from './proveedores/proveedores.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PesajeComponent } from './pesaje/pesaje.component';
 import { CajasComponent } from './cajas/cajas.component';
+import { EntradasComponent } from './entradas/entradas.component';
 
 const pagesRoutes: Routes = [
   {
     path: '',
     component: PagesComponent ,
     children: [
-      {  path: 'productos', component: ProductosComponent },
-      {  path: 'cajas', component: CajasComponent },
-      {  path: 'pesaje', component: PesajeComponent },
       {  path: 'proveedores', component: ProveedoresComponent },
+      {  path: 'productos', component: ProductosComponent },
+      {  path: 'pesaje', component: PesajeComponent },
+      {  path: 'cajas', component: CajasComponent },
+      {  path: 'entradas', component: EntradasComponent },
       {  path: 'dashboard', component: DashboardComponent  },
       {  path: '', redirectTo: '/dashboard', pathMatch: 'full'},
     ]
