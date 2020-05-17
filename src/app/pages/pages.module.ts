@@ -14,6 +14,7 @@ import { ModalEntradaComponent } from './entradas/modal-entrada/modal-entrada.co
 
 import { SharedModule } from '../shared/shared.module';
 import { PagesRoutingModule } from './pages-routing.module';
+import { ModalproductosComponent } from './productos/modalproductos/modalproductos.component';
 
 
 
@@ -27,7 +28,8 @@ import { PagesRoutingModule } from './pages-routing.module';
         PesajeComponent,
         CajasComponent,
         EntradasComponent,
-        ModalEntradaComponent
+        ModalEntradaComponent,
+        ModalproductosComponent
     ],
     exports: [
         DashboardComponent,

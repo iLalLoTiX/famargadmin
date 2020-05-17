@@ -1,6 +1,15 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 
+// Servicios
+import { EntradasService } from '../../../services/entradas.service';
+import { ProveedoresService } from '../../../services/proveedores.service';
+
+// Modelos
+import { EntradaProducto } from 'src/app/interfaces/entradaProducto.interface';
+import { EntradaProveedor } from 'src/app/interfaces/entradaProveedor.interface';
+import { proveedor } from '../../../interfaces/proveedores.interface';
+
 @Component({
   selector: 'app-modal-entrada',
   templateUrl: './modal-entrada.component.html',
@@ -8,6 +17,9 @@ import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
   ]
 })
 export class ModalEntradaComponent{
+
+  // Objetos
+  public enviarProveedor = new EntradaProveedor;
 
   // Creacion de los Formularios
   formEntrada: FormGroup;
@@ -20,33 +32,43 @@ export class ModalEntradaComponent{
   pesoEsperado: number;
   pesoTarima: number;
   pesoBascula: number;
-  pagoC: number;
-  pagoKg: number;
+  pago: number;
 
-  // Variables
+  // Variables temporales Pesaje
   destarado: number;
   pesoPorCaja: number;
   totalEsperado: number;
   difDestTotlEsp: number;
-  pagoTotalKg: number;
-  pagoTotalC: number;
+  pagoTotal: number;
   idProducto: number;
+  fecha: Date;
+
+  // Variables temporales Proveedor
+
+  proveedorIdSeleccionado: string;
+  proveedorNombre: string;
+  TotalProveedor: number;
 
   // Array
   public arrayProducto: any [] = [];
+  public buscarProveedor;
+  public mostrarProveedores;
 
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, 
+              private es_: EntradasService,
+              private ps_: ProveedoresService,){
+
+    this.fecha = new Date();
     this.crearFormulario();
-    this.crearProductoProveedor();
     this.escucharNumeroCajas();
     this.escucharPesoCajas();
     this.escucharPesoTarima();
     this.escucharPesoBascula();
     this.escucharPesoEsperado();
-    this.escucharPagoC();
-    this.escucharPagoKg();
-    console.log(this.idProducto);
+    this.escucharPago();
+    this.escucharCoKg();
+    this.ps_.cargarProveeores().subscribe(a => { this.mostrarProveedores = a; });
   }
 
   reiniciarFormEntrada(){
@@ -54,26 +76,15 @@ export class ModalEntradaComponent{
     this.pesoPorCaja = 0 ;
     this.totalEsperado = 0 ;
     this.difDestTotlEsp = 0 ;
-    this.pagoTotalKg = 0 ;
-    this.pagoTotalC = 0 ;
+    this.pagoTotal = 0 ;
     this.formEntrada.reset({
-      proveedor     : '',
-      producto      : '',
-      cajas         : 0,
-      pesoEsperado  : 0,
       nuestrasCajas : false,
-      pesoCaja      : 0,
-      pesoTarima    : 0,
-      pesoBascula   : 0,
-      pagoC         : 0,
-      pagoKg        : 0,
       CoKg          : false
     }, {emitEvent: false});
   }
 
   crearFormulario(){
     this.formEntrada = this.fb.group({
-      proveedor     : [],
       producto      : [],
       cajas         : [],
       pesoEsperado  : [],
@@ -81,8 +92,7 @@ export class ModalEntradaComponent{
       pesoCaja      : [],
       pesoTarima    : [],
       pesoBascula   : [],
-      pagoC         : [],
-      pagoKg        : [],
+      pago          : [],
       CoKg          : [false],
     });
   }
@@ -158,23 +168,30 @@ export class ModalEntradaComponent{
     });
   }
 
-  escucharPagoC() {
-    this.formEntrada.get('pagoC').valueChanges.subscribe( pagoC => {
+  escucharPago() {
+    this.formEntrada.get('pago').valueChanges.subscribe( pagoC => {
       this.calcularDifDestTotlEsp();
       this.calcularTotalPago();
     });
   }
 
-  escucharPagoKg() {
-    this.formEntrada.get('pagoKg').valueChanges.subscribe( pagoC => {
-      this.calcularDifDestTotlEsp();
-      this.calcularTotalPago();
+  escucharCoKg(){
+    this.formEntrada.get('CoKg').valueChanges.subscribe( CoKg => {
+      console.log(CoKg);
+      if (!CoKg){
+        this.pagoTotal = this.formEntrada.get('cajas').value * this.formEntrada.get('pago').value;
+      }else{
+        this.pagoTotal = this.destarado * this.formEntrada.get('pago').value;
+      }
     });
   }
 
   calcularTotalPago(){
-    this.pagoTotalC = this.formEntrada.get('cajas').value * this.formEntrada.get('pagoC').value;
-    this.pagoTotalKg = this.destarado * this.formEntrada.get('pagoKg').value;
+    if ( !this.formEntrada.get('CoKg').value ){
+      this.pagoTotal = this.formEntrada.get('cajas').value * this.formEntrada.get('pago').value;
+    }else{
+      this.pagoTotal = this.destarado * this.formEntrada.get('pago').value;
+    }
   }
 
   calcularDifDestTotlEsp(){
@@ -186,22 +203,35 @@ export class ModalEntradaComponent{
     this.difDestTotlEsp = this.destarado - this.totalEsperado;
   }
 
-  agregarTarima(){
+  seleccionarProveedor(id: string, nombre: string){
+
+    this.proveedorIdSeleccionado = id;
+    this.proveedorNombre = nombre;
 
   }
 
-  crearProductoProveedor(){
+  regresar(){
+
+    this.proveedorIdSeleccionado = undefined;
 
   }
 
   // Cambios en la base de datos
   altaEntrada(){
-console.log(this.destarado);
+
+    this.es_.recuperar().subscribe();
+
+    this.enviarProveedor.fecha = new Date();
+    this.enviarProveedor.nombreProveedor = this.proveedorNombre;
+    this.enviarProveedor.idNombreProveedor = this.proveedorIdSeleccionado;
+    this.enviarProveedor.total = this.TotalProveedor;
+
+    this.es_.agregarEntradaProveedor(this.enviarProveedor, this.arrayProducto);
+
   }
 
   agregarProducto(){
     this.arrayProducto.push([
-      this.formEntrada.get('proveedor').value,
       this.formEntrada.get('producto').value,
       this.destarado,
       this.formEntrada.get('cajas').value,
@@ -210,49 +240,56 @@ console.log(this.destarado);
       this.formEntrada.get('pesoCaja').value,
       this.formEntrada.get('pesoTarima').value,
       this.formEntrada.get('pesoBascula').value,
-      this.formEntrada.get('pagoC').value,
-      this.formEntrada.get('pagoKg').value,
+      this.formEntrada.get('pago').value,
       this.formEntrada.get('CoKg').value,
+      this.pagoTotal
     ]);
     this.reiniciarFormEntrada();
+    this.sumarProductosProveedor();
+  }
+
+  sumarProductosProveedor(){
+    this.TotalProveedor = 0;
+    this.arrayProducto.forEach( a => {
+    this.TotalProveedor = this.TotalProveedor + a[10];
+    });
   }
 
   borrarProducto(i: number){
     this.arrayProducto.splice(i , 1);
+    this.sumarProductosProveedor();
   }
 
   editarProducto(i: number){
     this.idProducto = i;
     this.formEntrada.setValue({
-      proveedor     : this.arrayProducto[i][0],
-      producto      : this.arrayProducto[i][1],
-      cajas         : this.arrayProducto[i][3],
-      pesoEsperado  : this.arrayProducto[i][4],
-      nuestrasCajas : this.arrayProducto[i][5],
-      pesoCaja      : this.arrayProducto[i][6],
-      pesoTarima    : this.arrayProducto[i][7],
-      pesoBascula   : this.arrayProducto[i][8],
-      pagoC         : this.arrayProducto[i][9],
-      pagoKg        : this.arrayProducto[i][10],
-      CoKg          : this.arrayProducto[i][11]
+      producto      : this.arrayProducto[i][0],
+      cajas         : this.arrayProducto[i][2],
+      pesoEsperado  : this.arrayProducto[i][3],
+      nuestrasCajas : this.arrayProducto[i][4],
+      pesoCaja      : this.arrayProducto[i][5],
+      pesoTarima    : this.arrayProducto[i][6],
+      pesoBascula   : this.arrayProducto[i][7],
+      pago          : this.arrayProducto[i][8],
+      CoKg          : this.arrayProducto[i][9]
     }, {emitEvent: false});
   }
 
   actualizarProducto(){
-    this.arrayProducto[this.idProducto][0] = this.formEntrada.get('proveedor').value;
-    this.arrayProducto[this.idProducto][1] = this.formEntrada.get('producto').value;
-    this.arrayProducto[this.idProducto][2] = this.destarado;
-    this.arrayProducto[this.idProducto][3] = this.formEntrada.get('cajas').value;
-    this.arrayProducto[this.idProducto][4] = this.formEntrada.get('pesoEsperado').value;
-    this.arrayProducto[this.idProducto][5] = this.formEntrada.get('nuestrasCajas').value;
-    this.arrayProducto[this.idProducto][6] = this.formEntrada.get('pesoCaja').value;
-    this.arrayProducto[this.idProducto][7] = this.formEntrada.get('pesoTarima').value;
-    this.arrayProducto[this.idProducto][8] = this.formEntrada.get('pesoBascula').value;
-    this.arrayProducto[this.idProducto][9] = this.formEntrada.get('pagoC').value;
-    this.arrayProducto[this.idProducto][10] = this.formEntrada.get('pagoKg').value;
-    this.arrayProducto[this.idProducto][11] = this.formEntrada.get('CoKg').value;
+    this.arrayProducto[this.idProducto][0] = this.formEntrada.get('producto').value;
+    this.arrayProducto[this.idProducto][1] = this.destarado;
+    this.arrayProducto[this.idProducto][2] = this.formEntrada.get('cajas').value;
+    this.arrayProducto[this.idProducto][3] = this.formEntrada.get('pesoEsperado').value;
+    this.arrayProducto[this.idProducto][4] = this.formEntrada.get('nuestrasCajas').value;
+    this.arrayProducto[this.idProducto][5] = this.formEntrada.get('pesoCaja').value;
+    this.arrayProducto[this.idProducto][6] = this.formEntrada.get('pesoTarima').value;
+    this.arrayProducto[this.idProducto][7] = this.formEntrada.get('pesoBascula').value;
+    this.arrayProducto[this.idProducto][8] = this.formEntrada.get('pago').value;
+    this.arrayProducto[this.idProducto][9] = this.formEntrada.get('CoKg').value;
+    this.arrayProducto[this.idProducto][10] = this.pagoTotal;
 
     this.reiniciarFormEntrada();
+    this.sumarProductosProveedor();
     this.idProducto = undefined;
   }
 

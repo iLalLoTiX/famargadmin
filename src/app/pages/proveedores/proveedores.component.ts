@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { proveedor } from '../../interfaces/proveedores.interface';
-import { NgForm} from '@angular/forms';  
+import { NgForm} from '@angular/forms';
 import { ProveedoresService } from 'src/app/services/proveedores.service';
 
 @Component({
@@ -14,7 +14,6 @@ export class ProveedoresComponent{
   idproveedor: string;
   opcionSeleccionado: any[] = [];
   facturados: boolean;
-  
 
   constructor(public ps_: ProveedoresService) {
     this.ps_.cargarProveeores().subscribe( a => {this.proveedores = a;});

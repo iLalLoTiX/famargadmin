@@ -3,121 +3,47 @@
 <div class="row">
     <div class="col-lg-12">
         <div class="card">
-            <div class="card-header bg-info">
-                <h4 class="m-b-0 text-white">Agregar un producto</h4>
+            <div class="d-flex card-header bg-info">
+                
+                <div>
+                    <h4 class="m-b-0 text-white">Productos</h4>
+                </div>
+                
+                <div class="ml-auto">
+                    <button class="pull-right btn btn-circle btn-success" data-toggle="modal" data-target="#myModal"><i class="ti-plus"></i></button>
+                </div>
             </div>
-            <div class="card-body">
-                <form  (ngSubmit)="agregarFruta(h)" #h="ngForm">
-                    <div class="form-body">
-                        <div class="row p-t-20">
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label class="control-label">IDinterno</label>
-                                    <input type="text" 
-                                    class="form-control"
-                                    placeholder="mensaje"
-                                    [(ngModel)]="proyecto.idInterno"  
-                                    name="mensaje">
-                                </div>
-                            </div>   
-                            <!--/span-->
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label class="control-label">SKU</label>
-                                    <input type="text" 
-                                    class="form-control"
-                                    placeholder="mensaje"
-                                    [(ngModel)]="proyecto.sku"  
-                                    name="mensaje">
-                                </div>
-                            </div>   
-                            <!--/span-->
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label class="control-label">Producto</label>
-                                    <input type="text" 
-                                    class="form-control"
-                                    placeholder="mensaje"
-                                    [(ngModel)]="proyecto.producto"  
-                                    name="mensaje">
-                                </div>
-                            </div>   
-                            <!--/span-->
-                            <div class="col-md-3">
-                                    <div class="form-group has-success">
-                                        <label class="control-label">Categoria</label>
-                                        <select class="form-control custom-select"
-                                        placeholder="mensaje"
-                                        [(ngModel)]="proyecto.categoria"  
-                                        name="mensaje">>
-                                            <option value="Citrico">Citrico</option>
-                                            <option value="Verdura">Verdura</option>
-                                            <option value="Fruta">Fruta</option>
-                                            <option value="Tuberculo">Tuberculo</option>
-                                        </select>
-                                        <small class="form-control-feedback"> Selecciona una categoria </small>
-                                    </div>
-                            </div>
-                        </div>
-                        <!--/row-->
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label">Clave SAT</label>
-                                    <input type="text"
-                                    class="form-control"
-                                    placeholder="mensaje"
-                                    [(ngModel)]="proyecto.sat"  
-                                    name="mensaje">
-                                </div>
-                            </div>   
-                            <!--/span-->
-                            <div class="col-md-6">
-                                <div class="form-actions">
-                                    <button type="submit" class="btn btn-success"> <i class="fa fa-check"></i> Save</button>
-                                    <button type="button" class="btn btn-inverse">Cancel</button>
-                                </div>
-                            </div>   
-                            <!--/span-->
-                        </div>
-                        
-                    </div>
-                </form>
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+                <!-- <app-modal-entrada></app-modal-entrada> -->
+                <app-modalproductos></app-modalproductos>
             </div>
-        </div>
-    </div>
-</div>
-<!-- Row -->
-
-<!-- ============================================================== -->
-<!-- Tabla de productos -->
-<!-- ============================================================== -->
-<div class="row">
-    <div class="col-md-12">
-        <div class="card">
+            
             <div class="card-body">
                 <div class="d-flex">
                     <div class="table-responsive m-t-20 no-wrap">
                         <table class="table vm no-th-brd pro-of-month">
                             <thead>
                                 <tr>
-                                    <th colspan="2">ID</th>
+                                    <th>ID</th>
                                     <th>Nombre</th>
-                                    <th>Categoria</th>
+                                    <th>SKU</th>
                                     <th>Clave SAT</th>
+                                    <th>Inventario</th>
                                     <th>Acción</th>
                                 </tr>
                             </thead>
-                            <tbody *ngFor="let orden of i; let i = index">
+                            <tbody *ngFor="let producto of tablaProductos; let i = index">
                                 <tr>
-                                    <td style="width:50px;"><span class="round">S</span></td>
                                     <td>
-                                        <h6>{{ orden.payload.doc.data()['idInterno']}}</h6><small class="text-muted">{{ orden.payload.doc.data()['sku']}}</small></td>
-                                    <td>{{ orden.payload.doc.data()['producto']}}</td>
-                                    <td><span class="label label-success label-rounded">{{ orden.payload.doc.data()['categoria']}}</span></td>
-                                    <td>{{ orden.payload.doc.data()['sat']}}</td>
+                                        <h6>{{ producto.payload.doc.id }}</h6>
+                                    </td>
+                                    <td>{{ producto.payload.doc.data()['producto']}}</td>
+                                    <td>{{ producto.payload.doc.data()['sku']}}</td>
+                                    <td>{{ producto.payload.doc.data()['sat']}}</td>
+                                    <td>{{ producto.payload.doc.data()['inventario']}}</td>
                                     <td>
-                                    <button (click)="borrar(orden.payload.doc.id)" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                                    <button (click)="borrar(producto.payload.doc.id)" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                                    <button (click)="editar(producto.payload.doc.id)" class="btn btn-info"><i class="fa fa-pencil"></i></button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -128,6 +54,8 @@
         </div>
     </div>
 </div>
+<!-- Row -->
+
 <!-- ============================================================== -->
 <!-- Tabla de productos -->
 <!-- ============================================================== -->

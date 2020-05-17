@@ -14,7 +14,7 @@ export class FrutasServices {
 
 
 
-  cargarTabla(){
+  cargarProductos(){
     this.itemsCollection = this.afs.collection<producto>('productos');
     return this.itemsCollection.snapshotChanges().pipe(map(actions => {
       return actions.map(a => {
@@ -23,26 +23,17 @@ export class FrutasServices {
       }));
   }
 
-  agregarPedido(idInterno: string,
-                sku: string,
-                // tslint:disable-next-line: no-shadowed-variable
-                producto: string,
-                categoria: string,
-                sat: string,)
+  agregarProducto(idProducto: string, producto: producto)
   {
-    const fruta: producto = {
-      idInterno,
-      sku,
-      producto,
-      categoria,
-      sat,
+    const enviarProductos: producto = {
+      ...producto
     }
-    return this.itemsCollection.add(fruta);
+    return this.afs.collection('productos').doc(idProducto).set(enviarProductos);
   }
 
-  borrarPedido(id:string){
+  borrarProducto(id:string){
     return this.afs
-    .collection("productos")
+    .collection('productos')
     .doc(id)
     .delete();
   }

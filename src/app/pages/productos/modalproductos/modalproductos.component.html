@@ -1,0 +1,81 @@
+<div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title text-left"></h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+        </div>
+        <div class="modal-body">
+            <form  (ngSubmit)="agregarProducto(F)" #F="ngForm">
+                <div class="form-body">
+                    <div class="row p-t-20">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">ID</label>
+                                <input type="text" 
+                                class="form-control"
+                                placeholder="mensaje"
+                                [(ngModel)]="id" 
+                                name="mensaje"
+                                required>
+                            </div>
+                        </div>   
+                        <!--/span-->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">SKU</label>
+                                <input type="text" 
+                                class="form-control"
+                                placeholder="mensaje"
+                                [(ngModel)]="producto.sku"  
+                                name="mensaje"
+                                required>
+                            </div>
+                        </div>   
+                        <!--/span-->
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label">Producto</label>
+                                <input type="text" 
+                                class="form-control"
+                                placeholder="mensaje"
+                                [(ngModel)]="producto.producto"  
+                                name="mensaje"
+                                required>
+                            </div>
+                        </div>   
+                        <!--/span-->
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label">Clave SAT</label>
+                                <input type="text"
+                                class="form-control"
+                                placeholder="mensaje"
+                                [(ngModel)]="producto.sat"  
+                                name="mensaje"
+                                required>
+                            </div>
+                        </div> 
+                        <!--/span-->
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label">Inventario</label>
+                                <input type="number"
+                                class="form-control"
+                                placeholder="mensaje"
+                                [(ngModel)]="producto.inventario"  
+                                name="mensaje"
+                                required>
+                            </div>
+                        </div> 
+                    </div>
+                    
+                </div>
+            </form>
+
+        </div>
+        <div class="modal-footer">
+            <button  type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button  (click)="agregarProducto(F)" type="submit" class="btn btn-success">Submit</button>
+        </div>
+    </div>
+</div>

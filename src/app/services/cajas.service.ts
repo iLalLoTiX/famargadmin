@@ -37,10 +37,6 @@ export class CajasService {
                       .doc(id).update({adentro: adentro,
                                       afuera: afuera});
     });
-
-      
-
-    
    }  
 
   agregarCaja(cajaItem: caja)

@@ -1,21 +1,47 @@
 <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
         <div class="modal-header">
-            <h4 class="modal-title text-left">12 de mayo</h4>
+            <h4 class="modal-title text-left">{{fecha}}</h4>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
         </div>
         <div class="modal-body">
-            <form [formGroup]="formEntrada" (ngSubmit)="altaEntrada()" class="form-material">
+            
+            <div *ngIf="proveedorIdSeleccionado == undefined" ngClass="fadeInLeft: proveedorIdSeleccionado == undefined" class="table-responsive m-t-20 no-wrap">
+                <table class="table vm no-th-brd pro-of-month">
+                    <thead>
+                        <tr>
+                            <!-- <th>Assigned</th> -->
+                            <th>Nombre</th>
+                            <th>Factura</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngFor="let proveedor of mostrarProveedores">
+                        
+                        <tr class="active">
+                            <!-- <td><span class="round"><img src="https://scontent.fcjs3-2.fna.fbcdn.net/v/t1.0-9/p960x960/94155547_2847826151937499_7846451808619724800_o.jpg?_nc_cat=100&_nc_sid=85a577&_nc_eui2=AeGjyzfHB99DaOSW76vXvQ_CQhUI45zcr-1CFQjjnNyv7X8CLF64u09HQ2KvkPpx5-vHM2aW3HjfkG2qaxWYlLqr&_nc_ohc=J6mAkDIs34IAX9YkK3T&_nc_ht=scontent.fcjs3-2.fna&_nc_tp=6&oh=420ed9f081bad71f40b7bea4f6a98b09&oe=5EE576EE" alt="user" width="50"></span></td> -->
+                            <td>
+                                <h6>{{ proveedor.payload.doc.data()['nombreProveedor']}}</h6><small class="text-muted">{{ proveedor.payload.doc.data()['rfc']}}</small></td>
+                            <td><span class="label label-info label-rounded">{{ proveedor.payload.doc.data()['factura']}}</span></td>
+                            <td>
+                                <button (click)="seleccionarProveedor(proveedor.payload.doc.id, proveedor.payload.doc.data()['nombreProveedor'])" type="button" class="btn btn-info"><i class="fa fa-arrow-right"></i></button></td>
+                        </tr>
+                    </tbody>
+                    <!-- <tr>
+                        <td style="width:50px;"><span class="round">S</span></td>
+                        <td>
+                            <h6>Sunil Joshi</h6><small class="text-muted">Web Designer</small></td>
+                        <td>Elite Admin</td>
+                        <td><span class="label label-success label-rounded">Low</span></td>
+                        <td>$3.9K</td>
+                    </tr> -->
+                </table>
+            </div>
+
+            <form *ngIf="proveedorIdSeleccionado != undefined" [formGroup]="formEntrada" (ngSubmit)="altaEntrada()" class="form-material">
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-md-3 col-sm-3">
-                            <div class="form-group">
-                                <label>Proveedor</label>
-                                <input type="text" class="form-control"
-                                placeholder="Proveedor"
-                                name="proveedor"
-                                formControlName="proveedor">
-                            </div>
+                        <div class="col-md-3 col-sm-3"><button (click)="regresar()" type="button" class="btn btn-info"><i class="fa fa-arrow-left"></i></button>
                         </div>
                         <div class="col-md-3 col-sm-3">
                             <div class="form-group">
@@ -137,34 +163,23 @@
                         </div>
                         <div class="col-md-2 col-sm-2">
                             
-                            <div *ngIf="formEntrada.get('CoKg').value" class="form-group">
-                                <label >$ Kg</label>
+                            <div class="form-group">
+                                <label *ngIf="formEntrada.get('CoKg').value">$ Kg</label>
+                                <label *ngIf="!formEntrada.get('CoKg').value">$ C</label>
                                 <input type="number" class="form-control" 
                                 placeholder="$"
-                                name="pagoKg"
-                                formControlName="pagoKg">
-                            </div>
-
-                            <div *ngIf="!formEntrada.get('CoKg').value" class="form-group">
-                                <label>$ Caja</label>
-                                <input type="number" class="form-control" 
-                                placeholder="$"
-                                name="pagoC"
-                                formControlName="pagoC">
+                                name="pago"
+                                formControlName="pago">
                             </div>
 
                         </div>
                         <div class="col-md-2 col-sm-2">
                             <div class="form-group">
                                 <label>$ Total</label>
-                                <input *ngIf="formEntrada.get('CoKg').value" 
+                                <input
                                 type="number" class="form-control" 
                                 placeholder="$"
-                                value="{{pagoTotalKg}}">
-                                <input *ngIf="!formEntrada.get('CoKg').value"
-                                type="number" class="form-control" 
-                                placeholder="$"
-                                value="{{pagoTotalC}}">
+                                value="{{pagoTotal}}">
                             </div>
                         </div>
                         <div class="col-md-2">
@@ -189,8 +204,8 @@
                             <ng-container *ngFor="let producto of arrayProducto; let i = index;">
                             <tr>
                                 <td>{{i + 1}}</td>
+                                <td>{{producto[0]}}</td>
                                 <td>{{producto[1]}}</td>
-                                <td>{{producto[2]}}</td>
                                 <td>{{producto[10]}}</td>
                                 <td>
                                     <button (click)="borrarProducto(i)" type="button" class="btn btn-danger ml-2"><i class="fa fa-trash"></i></button>
@@ -200,15 +215,14 @@
                             </ng-container>
                         </tbody>
                     </table>
+                    <h3>Total: {{TotalProveedor}}</h3>
                 </div>
                 
             </form>
         </div>
         <div class="modal-footer">
-            <button (click)="reiniciarFormEntrada()"type="button" class="btn btn-secondary">Close</button>
-            <button (click)="altaEntrada()" type="submit" class="btn btn-success">Submit</button>
+            <button (click)="reiniciarFormEntrada()" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button *ngIf="proveedorIdSeleccionado != undefined" (click)="altaEntrada()" type="submit" class="btn btn-success">Submit</button>
         </div>
     </div>
-    <!-- /.modal-content -->
 </div>
-<!-- /.modal-dialog -->
