@@ -1,0 +1,203 @@
+<div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title text-left"></h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+        </div>
+        <div class="modal-body">
+
+            <form (ngSubmit)="agregarProveedor(f)" #f="ngForm">
+                <div class="form-body">
+                    <!--/row-->
+                    <div class="row">
+                        <div class="col-md-2" >
+                            <!-- <div class="form-group" [class.has-danger]="id.invalid && id.touched">
+                                <label class="control-label">ID</label>
+
+                                <input type="text" 
+                                class="form-control" 
+                                [class.form-control-danger]="id.touched"
+                                #id="ngModel"  name="ID"
+                                required
+                                minlength="4"
+                                maxlength="4">
+                                <small *ngIf="id.invalid && id.touched"
+                                class="form-text text-danger">4 Digitos</small>
+
+                                <input type="hidden" 
+                                class="form-control"
+                                [(ngModel)]="idproveedor"  
+                                name="idproveedor">
+
+                            </div> -->
+                        </div>   
+                        <div class="col-md-5">
+                            <div class="form-group" [class.has-danger]="nombreProveedor.invalid && nombreProveedor.touched">
+                                <label class="control-label">Nombre Completo</label>
+                                <input type="text"
+                                class="form-control"
+                                #nombreProveedor="ngModel"
+                                [class.form-control-danger]="nombreProveedor.touched"
+                                [(ngModel)]="proveedor.nombreProveedor"
+                                name="nombreProveedor"
+                                required
+                                minlength="4">
+                                <small *ngIf="nombreProveedor.invalid && nombreProveedor.touched"
+                                class="form-text text-danger">Minimo 4 letras</small>
+                            </div>
+                        </div>   
+                        <!--/span-->
+                        <div class="col-md-5">
+                            <div class="form-group" [class.has-danger]="rfc.invalid && rfc.touched">
+                                <label class="control-label">RFC</label>
+                                <input type="text"
+                                class="form-control"
+                                #rfc="ngModel"
+                                [class.form-control-danger]="rfc.touched"
+                                [(ngModel)]="proveedor.rfc"
+                                name="RFC"
+                                required
+                                minlength="12"
+                                maxlength="13">
+                                <small *ngIf="rfc.invalid && rfc.touched"
+                                class="form-text text-danger">12 - 13 Caracteres</small>
+                            </div>
+                        </div>   
+                        <!--/span-->
+                    </div>
+                    <div class="row p-t-20">
+
+                        <div class="col-md-3">
+                            <div class="form-group" [class.has-danger]="pais.invalid && pais.touched">
+                                <label class="control-label">Pais</label>
+                                <input type="text" 
+                                class="form-control" 
+                                #pais="ngModel"
+                                [class.form-control-danger]="pais.touched"
+                                [(ngModel)]="proveedor.pais"
+                                name="pais"
+                                required>
+                                <small *ngIf="pais.invalid && pais.touched"
+                                class="form-text text-danger">Ingresa el Pais</small>
+                            </div>
+                        </div>   
+                        <!--/span-->
+                        <div class="col-md-3">
+                            <div class="form-group" [class.has-danger]="estado.invalid && estado.touched">
+                                <label class="control-label">Estado</label>
+                                <input type="text" 
+                                class="form-control"
+                                #estado="ngModel"
+                                [class.form-control-danger]="pais.touched"
+                                [(ngModel)]="proveedor.estado"  
+                                name="estado"
+                                required>
+                                <small *ngIf="estado.invalid && estado.touched"
+                                class="form-text text-danger">Ingresa el Estado</small>
+                            </div>
+                        </div>   
+                        <!--/span-->
+                        <div class="col-md-3">
+                            <div class="form-group" [class.has-danger]="ciudad.invalid && ciudad.touched">
+                                <label class="control-label">Ciudad</label>
+                                <input type="text" 
+                                class="form-control"
+                                #ciudad="ngModel"
+                                [class.form-control-danger]="ciudad.touched"
+                                [(ngModel)]="proveedor.ciudad"  
+                                name="ciudad"
+                                required>
+                                <small *ngIf="ciudad.invalid && ciudad.touched"
+                                class="form-text text-danger">Ingresa la Ciudad</small>
+                            </div>
+                        </div>   
+                        <!--/span-->
+                        <div class="col-md-3">
+                            <div class="form-group" [class.has-danger]="direccion.invalid && direccion.touched">
+                                <label class="control-label">Dirección</label>
+                                <input type="text" 
+                                class="form-control"
+                                #direccion="ngModel"
+                                [class.form-control-danger]="direccion.touched"
+                                [(ngModel)]="proveedor.direccion"  
+                                name="direccion"
+                                required>
+                                <small *ngIf="ciudad.invalid && ciudad.touched"
+                                class="form-text text-danger">Ingresa la Direccion</small>
+                            </div>
+                        </div>   
+                        <!--/span-->
+                    </div>
+                    
+                    <div class="row p-t-20">
+                        <div class="col-md-3">
+                            <div class="form-group" [class.has-danger]="colonia.invalid && colonia.touched">
+                                <label class="control-label">Colonia</label>
+                                <input type="text" 
+                                class="form-control"
+                                #colonia="ngModel"
+                                [class.form-control-danger]="colonia.touched"
+                                [(ngModel)]="proveedor.colonia"  
+                                name="colonia"
+                                required>
+                                <small *ngIf="colonia.invalid && colonia.touched"
+                                class="form-text text-danger">Ingresa la colonia</small>
+                            </div>
+                        </div>   
+                        <!--/span-->
+                        <div class="col-md-3">
+                            <div class="form-group" [class.has-danger]="cp.invalid && cp.touched">
+                                <label class="control-label">CP</label>
+                                <input type="text" 
+                                class="form-control"
+                                #cp="ngModel"
+                                [class.form-control-danger]="cp.touched"
+                                [(ngModel)]="proveedor.cp"  
+                                name="cp"
+                                required
+                                >
+                                <small *ngIf="cp.invalid && cp.touched"
+                                class="form-text text-danger">Ingresa el codigo postal</small>
+                            </div>
+                        </div>   
+                        <!--/span-->
+                        <div class="col-md-3">
+                            <label class="control-label">Factura</label>
+                                <div class="switch">
+                                    
+                                    <label class="control-label">No</label>
+                                    <label>
+                                    <input class="form-control custom-select"
+                                    type="checkbox"
+                                    #factura="ngModel"
+                                    [class.form-control-danger]="factura.touched"
+                                    [(ngModel)]="proveedor.factura"  
+                                    name="factura"><span class="lever switch-col-deep-orange"></span></label>
+                                    <label class="control-label">Sí</label>
+                                    <small *ngIf="!proveedor.factura"
+                                    class="form-text text-danger">El proveedor factura?</small>
+                                </div>
+                        </div>
+                        
+                        <div class="col-md-3">
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-success"> <i class="fa fa-check"></i> Save</button>
+                                <div (click)="limpiar(f)"
+                                class="btn btn-inverse"><i class="fa fa-leaf"></i> Limpiar</div>
+                            </div>
+                        </div>
+                        <!--/span-->
+                        <div class="col-md-3">
+
+                        </div>
+                    </div>
+                    <!--/row-->
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button  (click)="agregarProveedor(f)" type="submit" class="btn btn-success" data-dismiss="modal">Submit</button>
+        </div>
+    </div>
+</div>

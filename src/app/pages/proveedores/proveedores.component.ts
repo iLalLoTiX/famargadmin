@@ -25,30 +25,7 @@ export class ProveedoresComponent{
 
   
 
-  agregarProveedor(form: NgForm){
-    if(form.invalid){
-      Object.values(form.controls).forEach(control => {control.markAsTouched();});
-      return;
-    }
-    if(this.idproveedor==null){
-      this.ps_.agregarProveedor(this.proveedor);
-      this.limpiar(form);
-      return;
-    }
-    else{
-      this.ps_.actualizarProveedor(this.idproveedor, this.proveedor);
-      this.limpiar(form);
-      return;
-    }
-  }
-
-  limpiar(form: NgForm){
-    form.reset({
-      pais: 'Mexíco',
-      estado: 'Yucatán',
-      factura: true
-    });
-  }
+  
 
 
   borrarProveedor(id: string){

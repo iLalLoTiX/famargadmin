@@ -51,8 +51,10 @@ export class ModalEntradaComponent{
 
   // Array
   public arrayProducto: any [] = [];
+  public verificarProducto: any [] = [];
   public buscarProveedor;
   public mostrarProveedores;
+  public unicos;
 
 
   constructor(private fb: FormBuilder, 
@@ -69,6 +71,7 @@ export class ModalEntradaComponent{
     this.escucharPago();
     this.escucharCoKg();
     this.ps_.cargarProveeores().subscribe(a => { this.mostrarProveedores = a; });
+
   }
 
   reiniciarFormEntrada(){
@@ -77,9 +80,10 @@ export class ModalEntradaComponent{
     this.totalEsperado = 0 ;
     this.difDestTotlEsp = 0 ;
     this.pagoTotal = 0 ;
+    this.TotalProveedor = 0;
     this.formEntrada.reset({
       nuestrasCajas : false,
-      CoKg          : false
+      CoKg          : false,
     }, {emitEvent: false});
   }
 
@@ -177,7 +181,6 @@ export class ModalEntradaComponent{
 
   escucharCoKg(){
     this.formEntrada.get('CoKg').valueChanges.subscribe( CoKg => {
-      console.log(CoKg);
       if (!CoKg){
         this.pagoTotal = this.formEntrada.get('cajas').value * this.formEntrada.get('pago').value;
       }else{
@@ -218,6 +221,41 @@ export class ModalEntradaComponent{
 
   // Cambios en la base de datos
   altaEntrada(){
+    this.verificarProducto = [];
+
+    this.unicos.forEach( a => {
+      this.verificarProducto.push(a);
+    });
+
+    console.log(this.verificarProducto);
+
+    this.verificarProducto.forEach(a => {
+      const b = this.verificarProducto.indexOf(a);
+      console.log(b);
+      this.verificarProducto.splice(b, 1, [a, 0, 0, 0]);
+    });
+
+    this.unicos = [];
+
+    this.arrayProducto.forEach(a => {
+      this.verificarProducto.forEach(b => {
+        console.log(b[0]);
+        if (a[0] === b[0])
+        {
+          console.log(b[0], b[1], b[2], b[3]);
+          b.splice(1 , 1, a[1] + b[1]);
+          b.splice(2 , 1, a[2] + b[2]);
+          b.splice(3 , 1, a[10] + b[3]);
+        }
+        else{
+          console.log('no es:' + a[0] + '=' + b);
+        }
+      });
+    });
+    console.log(this.verificarProducto);
+    
+    this.arrayProducto = [];
+
 
     this.es_.recuperar().subscribe();
 
@@ -226,11 +264,15 @@ export class ModalEntradaComponent{
     this.enviarProveedor.idNombreProveedor = this.proveedorIdSeleccionado;
     this.enviarProveedor.total = this.TotalProveedor;
 
-    this.es_.agregarEntradaProveedor(this.enviarProveedor, this.arrayProducto);
+    this.es_.agregarEntradaProveedor(this.enviarProveedor, this.verificarProducto);
+    this.reiniciarFormEntrada();
 
   }
 
+
   agregarProducto(){
+
+
     this.arrayProducto.push([
       this.formEntrada.get('producto').value,
       this.destarado,
@@ -244,8 +286,16 @@ export class ModalEntradaComponent{
       this.formEntrada.get('CoKg').value,
       this.pagoTotal
     ]);
+
+    this.verificarProducto.push(
+      this.formEntrada.get('producto').value
+    );
+
+
+    this.unicos = new Set(this.verificarProducto);
     this.reiniciarFormEntrada();
     this.sumarProductosProveedor();
+
   }
 
   sumarProductosProveedor(){

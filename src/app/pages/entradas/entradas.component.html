@@ -31,6 +31,22 @@
                             </div>
                         </li>
                     </ul>
+                    <table class="table vm no-th-brd pro-of-month">
+                        <thead>
+                            <tr>
+                                <th >ID</th>
+                                <th>Nombre</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngFor="let entrada of entradasRecientes; let i = index;">
+                            <tr>
+                                <td>{{i + 1}}</td>
+                                <td>{{entrada.payload.doc.data()['nombreProveedor']}}</td>
+                                <td>{{entrada.payload.doc.data()['total']}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

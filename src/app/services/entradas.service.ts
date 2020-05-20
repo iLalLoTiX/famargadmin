@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 // Modelos
 import { EntradaProducto } from '../interfaces/entradaProducto.interface';
 import { EntradaProveedor } from '../interfaces/entradaProveedor.interface';
+import { async } from '@angular/core/testing';
 
 @Injectable({
   providedIn: 'root'
@@ -34,13 +35,14 @@ export class EntradasService {
 
   recuperar(){
 
-    this.entradasCollection = this.fb_.collection<EntradaProveedor>('entradas', ref => ref.where('nombreProveedor', '==', 'levi'));
+    this.entradasCollection = this.fb_.collection<EntradaProveedor>('entradas', ref => ref.where('nombreProveedor', '==', 'Eduardo V'));
     return this.entradasCollection.snapshotChanges().pipe(map(action => {
       return action.map(a => {
         console.log(a.payload.doc.data()['nombreProveedor']);
         return a;
       });
     }));
+
   }
 
   agregarEntradaProveedor(proveedorEntrante: EntradaProveedor, arrayProducto: any [])
@@ -49,6 +51,7 @@ export class EntradasService {
     const enviarProveedor: EntradaProveedor = { ...proveedorEntrante };
     return this.fb_.collection('entradas').add(enviarProveedor)
     .then( docRef => {
+
       arrayProducto.forEach( a =>
         {
           const enviarProducto: EntradaProducto =
@@ -56,18 +59,17 @@ export class EntradasService {
             producto : a[0],
             idProducto : a[0],
             peso : a[1],
-            precio : a[10]
+            precio : a[3]
           };
-
           let total = 0;
           this.fb_.collection('productos').doc(enviarProducto.idProducto).get().subscribe( a => {
 
           total = a.data()['inventario'] + enviarProducto.peso;
-          console.log(total);
+
           this.fb_.collection('productos').doc(enviarProducto.idProducto).update({inventario : total});
 
           });
-          return this.fb_.collection('entradas').doc(docRef.id).collection('entradaProductos').add(enviarProducto);
+          this.fb_.collection('entradas').doc(docRef.id).collection('entradaProductos').add(enviarProducto);
       });
     })
     .catch( error => {

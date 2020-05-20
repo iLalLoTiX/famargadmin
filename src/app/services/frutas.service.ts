@@ -31,10 +31,22 @@ export class FrutasServices {
     return this.afs.collection('productos').doc(idProducto).set(enviarProductos);
   }
 
+  editarProducto(id: string)
+  {
+    return this.afs.collection('productos').doc(id).get();
+  }
+
   borrarProducto(id:string){
     return this.afs
     .collection('productos')
     .doc(id)
     .delete();
+  }
+
+  actualizarProducto(id: string, producto: producto){
+    let enviarActProd: producto = {
+      ...producto
+    }
+    return this.afs.collection('productos').doc(id).set(enviarActProd);
   }
 }

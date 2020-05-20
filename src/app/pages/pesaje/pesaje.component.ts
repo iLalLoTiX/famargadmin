@@ -42,7 +42,7 @@ export class PesajeComponent implements OnInit {
     this.escucharPedido();
     this.escucharKgEx();
     this.escucharTarimas();
-    this.fs_.cargarTabla().subscribe(a => this.llenarProductosSelect = a);
+    this.fs_.cargarProductos().subscribe(a => this.llenarProductosSelect = a);
     this.cs_.cargarCajas().subscribe(a => this.llenarCajasSelect = a);
   }
 

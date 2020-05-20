@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { EntradasService } from 'src/app/services/entradas.service';
 
 @Component({
   selector: 'app-entradas',
@@ -6,7 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EntradasComponent implements OnInit {
 
-  constructor() { }
+  // Array Entradas recientes
+  public entradasRecientes;
+
+  constructor( public es_: EntradasService) { 
+    this.es_.entradasRecientes().subscribe( a => {
+      this.entradasRecientes = a;
+    });
+  }
 
   ngOnInit(): void {
   }

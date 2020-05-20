@@ -1,265 +1,70 @@
 
                     <!-- Column -->
-                    <div class="col-lg-12">
-                        <div class="card">
-                            <!-- Nav tabs -->
-                            <ul class="nav nav-tabs profile-tab" role="tablist">
-                                <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#agregar" role="tab">Agregar</a> </li>
-                                <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#productos" role="tab">Productos</a> </li>
-                            </ul>
-                            <!-- Tab panes -->
-                            <div class="tab-content">
-                                <div class="tab-pane active" id="agregar" role="tabpanel">
-                                    <div class="card-body">
-                                        <!-- Row -->
-                                        <div class="row">
-                                            <div class="col-lg-12">
-                                                <div class="card">
-                                                    <div class="card-header bg-info">
-                                                        <h4 class="m-b-0 text-white">Agregar un Proveedor</h4>
-                                                    </div>
-                                                    <div class="card-body">
-                                                        <form (ngSubmit)="agregarProveedor(f)" #f="ngForm">
-                                                            <div class="form-body">
-                                                                <!--/row-->
-                                                                <div class="row">
-                                                                    <div class="col-md-2" >
-                                                                        <!-- <div class="form-group" [class.has-danger]="id.invalid && id.touched">
-                                                                            <label class="control-label">ID</label>
-
-                                                                            <input type="text" 
-                                                                            class="form-control" 
-                                                                            [class.form-control-danger]="id.touched"
-                                                                            #id="ngModel"  name="ID"
-                                                                            required
-                                                                            minlength="4"
-                                                                            maxlength="4">
-                                                                            <small *ngIf="id.invalid && id.touched"
-                                                                            class="form-text text-danger">4 Digitos</small>
-
-                                                                            <input type="hidden" 
-                                                                            class="form-control"
-                                                                            [(ngModel)]="idproveedor"  
-                                                                            name="idproveedor">
-
-                                                                        </div> -->
-                                                                    </div>   
-                                                                    <div class="col-md-5">
-                                                                        <div class="form-group" [class.has-danger]="nombreProveedor.invalid && nombreProveedor.touched">
-                                                                            <label class="control-label">Nombre Completo</label>
-                                                                            <input type="text"
-                                                                            class="form-control"
-                                                                            #nombreProveedor="ngModel"
-                                                                            [class.form-control-danger]="nombreProveedor.touched"
-                                                                            [(ngModel)]="proveedor.nombreProveedor"
-                                                                            name="nombreProveedor"
-                                                                            required
-                                                                            minlength="4">
-                                                                            <small *ngIf="nombreProveedor.invalid && nombreProveedor.touched"
-                                                                            class="form-text text-danger">Minimo 4 letras</small>
-                                                                        </div>
-                                                                    </div>   
-                                                                    <!--/span-->
-                                                                    <div class="col-md-5">
-                                                                        <div class="form-group" [class.has-danger]="rfc.invalid && rfc.touched">
-                                                                            <label class="control-label">RFC</label>
-                                                                            <input type="text"
-                                                                            class="form-control"
-                                                                            #rfc="ngModel"
-                                                                            [class.form-control-danger]="rfc.touched"
-                                                                            [(ngModel)]="proveedor.rfc"
-                                                                            name="RFC"
-                                                                            required
-                                                                            minlength="12"
-                                                                            maxlength="13">
-                                                                            <small *ngIf="rfc.invalid && rfc.touched"
-                                                                            class="form-text text-danger">12 - 13 Caracteres</small>
-                                                                        </div>
-                                                                    </div>   
-                                                                    <!--/span-->
-                                                                </div>
-                                                                <div class="row p-t-20">
-
-                                                                    <div class="col-md-3">
-                                                                        <div class="form-group" [class.has-danger]="pais.invalid && pais.touched">
-                                                                            <label class="control-label">Pais</label>
-                                                                            <input type="text" 
-                                                                            class="form-control" 
-                                                                            #pais="ngModel"
-                                                                            [class.form-control-danger]="pais.touched"
-                                                                            [(ngModel)]="proveedor.pais"
-                                                                            name="pais"
-                                                                            required>
-                                                                            <small *ngIf="pais.invalid && pais.touched"
-                                                                            class="form-text text-danger">Ingresa el Pais</small>
-                                                                        </div>
-                                                                    </div>   
-                                                                    <!--/span-->
-                                                                    <div class="col-md-3">
-                                                                        <div class="form-group" [class.has-danger]="estado.invalid && estado.touched">
-                                                                            <label class="control-label">Estado</label>
-                                                                            <input type="text" 
-                                                                            class="form-control"
-                                                                            #estado="ngModel"
-                                                                            [class.form-control-danger]="pais.touched"
-                                                                            [(ngModel)]="proveedor.estado"  
-                                                                            name="estado"
-                                                                            required>
-                                                                            <small *ngIf="estado.invalid && estado.touched"
-                                                                            class="form-text text-danger">Ingresa el Estado</small>
-                                                                        </div>
-                                                                    </div>   
-                                                                    <!--/span-->
-                                                                    <div class="col-md-3">
-                                                                        <div class="form-group" [class.has-danger]="ciudad.invalid && ciudad.touched">
-                                                                            <label class="control-label">Ciudad</label>
-                                                                            <input type="text" 
-                                                                            class="form-control"
-                                                                            #ciudad="ngModel"
-                                                                            [class.form-control-danger]="ciudad.touched"
-                                                                            [(ngModel)]="proveedor.ciudad"  
-                                                                            name="ciudad"
-                                                                            required>
-                                                                            <small *ngIf="ciudad.invalid && ciudad.touched"
-                                                                            class="form-text text-danger">Ingresa la Ciudad</small>
-                                                                        </div>
-                                                                    </div>   
-                                                                    <!--/span-->
-                                                                    <div class="col-md-3">
-                                                                        <div class="form-group" [class.has-danger]="direccion.invalid && direccion.touched">
-                                                                            <label class="control-label">Dirección</label>
-                                                                            <input type="text" 
-                                                                            class="form-control"
-                                                                            #direccion="ngModel"
-                                                                            [class.form-control-danger]="direccion.touched"
-                                                                            [(ngModel)]="proveedor.direccion"  
-                                                                            name="direccion"
-                                                                            required>
-                                                                            <small *ngIf="ciudad.invalid && ciudad.touched"
-                                                                            class="form-text text-danger">Ingresa la Direccion</small>
-                                                                        </div>
-                                                                    </div>   
-                                                                    <!--/span-->
-                                                                </div>
-                                                                
-                                                                <div class="row p-t-20">
-                                                                    <div class="col-md-3">
-                                                                        <div class="form-group" [class.has-danger]="colonia.invalid && colonia.touched">
-                                                                            <label class="control-label">Colonia</label>
-                                                                            <input type="text" 
-                                                                            class="form-control"
-                                                                            #colonia="ngModel"
-                                                                            [class.form-control-danger]="colonia.touched"
-                                                                            [(ngModel)]="proveedor.colonia"  
-                                                                            name="colonia"
-                                                                            required>
-                                                                            <small *ngIf="colonia.invalid && colonia.touched"
-                                                                            class="form-text text-danger">Ingresa la colonia</small>
-                                                                        </div>
-                                                                    </div>   
-                                                                    <!--/span-->
-                                                                    <div class="col-md-3">
-                                                                        <div class="form-group" [class.has-danger]="cp.invalid && cp.touched">
-                                                                            <label class="control-label">CP</label>
-                                                                            <input type="text" 
-                                                                            class="form-control"
-                                                                            #cp="ngModel"
-                                                                            [class.form-control-danger]="cp.touched"
-                                                                            [(ngModel)]="proveedor.cp"  
-                                                                            name="cp"
-                                                                            required
-                                                                            >
-                                                                            <small *ngIf="cp.invalid && cp.touched"
-                                                                            class="form-text text-danger">Ingresa el codigo postal</small>
-                                                                        </div>
-                                                                    </div>   
-                                                                    <!--/span-->
-                                                                    <div class="col-md-3">
-                                                                        <label class="control-label">Factura</label>
-                                                                            <div class="switch">
-                                                                                
-                                                                                <label class="control-label">No</label>
-                                                                                <label>
-                                                                                <input class="form-control custom-select"
-                                                                                type="checkbox"
-                                                                                #factura="ngModel"
-                                                                                [class.form-control-danger]="factura.touched"
-                                                                                [(ngModel)]="proveedor.factura"  
-                                                                                name="factura"><span class="lever switch-col-deep-orange"></span></label>
-                                                                                <label class="control-label">Sí</label>
-                                                                                <small *ngIf="!proveedor.factura"
-                                                                                class="form-text text-danger">El proveedor factura?</small>
-                                                                            </div>
-                                                                    </div>
-                                                                    
-                                                                    <div class="col-md-3">
-                                                                        <div class="form-actions">
-                                                                            <button type="submit" class="btn btn-success"> <i class="fa fa-check"></i> Save</button>
-                                                                            <div (click)="limpiar(f)"
-                                                                            class="btn btn-inverse"><i class="fa fa-leaf"></i> Limpiar</div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <!--/span-->
-                                                                    <div class="col-md-3">
-
-                                                                    </div>
-                                                                </div>
-                                                                <!--/row-->
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div class="tab-pane active" id="agregar" role="tabpanel">
+                    <div class="card-body">
+                        <!-- Row -->
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="card">
+                                    <div class="card-header bg-info">
+                                        
+                                        <div class="ml-auto">
+                                            <h4 class="m-b-0 text-white">Agregar un Proveedor</h4>
+                                            <button class="pull-right btn btn-circle btn-success" data-toggle="modal" data-target="#myModal"><i class="ti-plus"></i></button>
                                         </div>
-                                        <!-- Row -->
+                                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+                                            <!-- <app-modal-entrada></app-modal-entrada> -->
+                                            <app-modal-proveedores></app-modal-proveedores>
+                                        </div>
                                     </div>
-                                </div>
-                                <!--second tab-->
-                                <div class="tab-pane" id="productos" role="tabpanel">
+                                    
                                     <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="card">
-                                                    <div class="card-body">
-                                                        <div class="d-flex">
-                                                            <div class="table-responsive m-t-20 no-wrap">
-                                                                <table class="table vm no-th-brd pro-of-month">
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th >ID</th>
-                                                                            <th>Nombre</th>
-                                                                            <th>RFC</th>
-                                                                            <th>Ciudad</th>
-                                                                            <th>Factura</th>
-                                                                            <th>Acción</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody *ngFor="let proveedor of proveedores; let i = index">
-                                                                        <tr>
-                                                                            <td style="width:50px;"><span class="round">{{ proveedor.payload.doc.data()['id']}}</span></td>
-                                                                            <td>{{ proveedor.payload.doc.data()['nombreProveedor']}}</td>
-                                                                            <td>{{ proveedor.payload.doc.data()['rfc']}}</td>
-                                                                            <td>{{ proveedor.payload.doc.data()['ciudad']}}</td>
-                                                                            <td *ngIf="proveedor.payload.doc.data()['factura']==true">Si</td>
-                                                                            <td *ngIf="proveedor.payload.doc.data()['factura']==false">No</td>
-                                                                            <td>
-                                                                            <button (click)="borrarProveedor(proveedor.payload.doc.id)" class="btn btn-danger"><i class="fa fa-trash"></i></button>
-                                                                            <button  (click)="mostrarProveedor(proveedor.payload.doc.id)" class="btn btn-info"><i class="fa fa-pencil"></i></button>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                        <div class="d-flex">
+                                            <div class="table-responsive m-t-20 no-wrap">
+                                                <table class="table vm no-th-brd pro-of-month">
+                                                    <thead>
+                                                        <tr>
+                                                            <th >ID</th>
+                                                            <th>Nombre</th>
+                                                            <th>RFC</th>
+                                                            <th>Ciudad</th>
+                                                            <th>Factura</th>
+                                                            <th>Acción</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody *ngFor="let proveedor of proveedores; let i = index">
+                                                        <tr>
+                                                            <td style="width:50px;"><span class="round">{{ proveedor.payload.doc.data()['id']}}</span></td>
+                                                            <td>{{ proveedor.payload.doc.data()['nombreProveedor']}}</td>
+                                                            <td>{{ proveedor.payload.doc.data()['rfc']}}</td>
+                                                            <td>{{ proveedor.payload.doc.data()['ciudad']}}</td>
+                                                            <td *ngIf="proveedor.payload.doc.data()['factura']==true">Si</td>
+                                                            <td *ngIf="proveedor.payload.doc.data()['factura']==false">No</td>
+                                                            <td>
+                                                            <button (click)="borrarProveedor(proveedor.payload.doc.id)" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                                                            <button  (click)="mostrarProveedor(proveedor.payload.doc.id)" class="btn btn-info"><i class="fa fa-pencil"></i></button>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <!-- Row -->
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
                     <!-- Column -->
 
 

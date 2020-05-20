@@ -2,7 +2,7 @@
     <div class="modal-content">
         <div class="modal-header">
             <h4 class="modal-title text-left"></h4>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+            <button (click)="salir()" type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
         </div>
         <div class="modal-body">
             <form  (ngSubmit)="agregarProducto(F)" #F="ngForm">
@@ -13,10 +13,16 @@
                                 <label class="control-label">ID</label>
                                 <input type="text" 
                                 class="form-control"
-                                placeholder="mensaje"
-                                [(ngModel)]="id" 
-                                name="mensaje"
+                                placeholder="id"
+                                [(ngModel)]="producto.id" 
+                                name="id"
+                                value="{{editarProducto.id}}"
                                 required>
+
+                                <input type="hidden" 
+                                [(ngModel)]="idProducto" 
+                                name="idProducto"
+                                value="{{idProducto}}">
                             </div>
                         </div>   
                         <!--/span-->
@@ -25,9 +31,10 @@
                                 <label class="control-label">SKU</label>
                                 <input type="text" 
                                 class="form-control"
-                                placeholder="mensaje"
+                                placeholder="sku"
                                 [(ngModel)]="producto.sku"  
-                                name="mensaje"
+                                name="sku"
+                                value="{{editarProducto.sku}}"
                                 required>
                             </div>
                         </div>   
@@ -37,9 +44,10 @@
                                 <label class="control-label">Producto</label>
                                 <input type="text" 
                                 class="form-control"
-                                placeholder="mensaje"
+                                placeholder="producto"
                                 [(ngModel)]="producto.producto"  
-                                name="mensaje"
+                                name="producto"
+                                value="{{editarProducto.producto}}"
                                 required>
                             </div>
                         </div>   
@@ -49,9 +57,10 @@
                                 <label class="control-label">Clave SAT</label>
                                 <input type="text"
                                 class="form-control"
-                                placeholder="mensaje"
+                                placeholder="sat"
                                 [(ngModel)]="producto.sat"  
-                                name="mensaje"
+                                name="sat"
+                                value="{{editarProducto.sat}}"
                                 required>
                             </div>
                         </div> 
@@ -61,9 +70,10 @@
                                 <label class="control-label">Inventario</label>
                                 <input type="number"
                                 class="form-control"
-                                placeholder="mensaje"
+                                placeholder="inventario"
                                 [(ngModel)]="producto.inventario"  
-                                name="mensaje"
+                                name="inventario"
+                                value="{{editarProducto.inventario}}"
                                 required>
                             </div>
                         </div> 
@@ -74,8 +84,8 @@
 
         </div>
         <div class="modal-footer">
-            <button  type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button  (click)="agregarProducto(F)" type="submit" class="btn btn-success">Submit</button>
+            <button (click)="salir()" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button  (click)="agregarProducto(F)" type="submit" class="btn btn-success" data-dismiss="modal">Submit</button>
         </div>
     </div>
 </div>

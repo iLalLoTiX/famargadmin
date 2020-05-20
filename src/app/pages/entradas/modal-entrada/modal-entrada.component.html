@@ -202,16 +202,18 @@
                         </thead>
                         <tbody>
                             <ng-container *ngFor="let producto of arrayProducto; let i = index;">
-                            <tr>
-                                <td>{{i + 1}}</td>
-                                <td>{{producto[0]}}</td>
-                                <td>{{producto[1]}}</td>
-                                <td>{{producto[10]}}</td>
-                                <td>
-                                    <button (click)="borrarProducto(i)" type="button" class="btn btn-danger ml-2"><i class="fa fa-trash"></i></button>
-                                    <button (click)="editarProducto(i)" type="button" class="btn btn-info"><i class="fa fa-pencil"></i></button>
-                                </td>
-                            </tr>
+                            
+                                <tr>
+                                    <td>{{i + 1}}</td>
+                                    <td>{{producto[0]}}</td>
+                                    <td>{{producto[1]}}</td>
+                                    <td>{{producto[10]}}</td>
+                                    <td>
+                                        <button (click)="borrarProducto(i)" type="button" class="btn btn-danger ml-2"><i class="fa fa-trash"></i></button>
+                                        <button (click)="editarProducto(i)" type="button" class="btn btn-info"><i class="fa fa-pencil"></i></button>
+                                    </td>
+                                </tr>
+                                
                             </ng-container>
                         </tbody>
                     </table>
@@ -222,7 +224,7 @@
         </div>
         <div class="modal-footer">
             <button (click)="reiniciarFormEntrada()" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button *ngIf="proveedorIdSeleccionado != undefined" (click)="altaEntrada()" type="submit" class="btn btn-success">Submit</button>
+            <button *ngIf="proveedorIdSeleccionado != undefined" (click)="altaEntrada()" type="submit" class="btn btn-success" data-dismiss="modal">Submit</button>
         </div>
     </div>
 </div>
