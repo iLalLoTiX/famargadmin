@@ -16,6 +16,7 @@ import { SharedModule } from '../shared/shared.module';
 import { PagesRoutingModule } from './pages-routing.module';
 import { ModalproductosComponent } from './productos/modalproductos/modalproductos.component';
 import { ModalProveedoresComponent } from './proveedores/modal-proveedores/modal-proveedores.component';
+import { PrintComponent } from './print/print.component';
 
 
 
@@ -31,7 +32,8 @@ import { ModalProveedoresComponent } from './proveedores/modal-proveedores/modal
         EntradasComponent,
         ModalEntradaComponent,
         ModalproductosComponent,
-        ModalProveedoresComponent
+        ModalProveedoresComponent,
+        PrintComponent
     ],
     exports: [
         DashboardComponent,

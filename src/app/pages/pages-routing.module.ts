@@ -9,6 +9,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { PesajeComponent } from './pesaje/pesaje.component';
 import { CajasComponent } from './cajas/cajas.component';
 import { EntradasComponent } from './entradas/entradas.component';
+import { PrintComponent } from './print/print.component';
 
 const pagesRoutes: Routes = [
   {
@@ -16,6 +17,7 @@ const pagesRoutes: Routes = [
     component: PagesComponent ,
     children: [
       {  path: 'proveedores', component: ProveedoresComponent },
+      {  path: 'print', component: PrintComponent },
       {  path: 'productos', component: ProductosComponent },
       {  path: 'pesaje', component: PesajeComponent },
       {  path: 'cajas', component: CajasComponent },

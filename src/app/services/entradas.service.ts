@@ -33,6 +33,16 @@ export class EntradasService {
       }));
   }
 
+  productoEntrante(id: string){
+    return this.fb_.collection('entradas').doc(id).collection('entradaProductos').snapshotChanges().pipe(map(actions => {
+      return actions.map(a => {
+
+        return a;
+
+        });
+      }));
+  }
+
   recuperar(){
 
     this.entradasCollection = this.fb_.collection<EntradaProveedor>('entradas', ref => ref.where('nombreProveedor', '==', 'Eduardo V'));
