@@ -11,37 +11,32 @@ import { ProveedoresService } from 'src/app/services/proveedores.service';
 })
 export class ModalProveedoresComponent{
 
-  @Input() editarProveedor: proveedor = {
-    nombreProveedor: null,
-    rfc: null,
-    pais: null,
-    estado: null,
-    ciudad: null,
-    direccion: null,
-    colonia: null,
-    cp: null,
-    factura: null,
-  };
-  @Input() idProveedor: string;
+  @Input() closeModal;
+  
+  @Input() idProveedor;
 
+  @Input() public proveedor: proveedor = new proveedor();
 
-  proveedor = new proveedor;
 
   constructor(public ps_: ProveedoresService) { }
 
   agregarProveedor(form: NgForm){
     if (form.invalid){
       Object.values(form.controls).forEach(control => { control.markAsTouched(); });
+      console.log(this.proveedor);
+      console.log(this.idProveedor);
       return;
     }
     if (this.idProveedor === null){
+      console.log(this.proveedor);
+      console.log(this.idProveedor);
       this.ps_.agregarProveedor(this.proveedor);
-      this.limpiar(form);
       return;
     }
     else{
+      console.log(this.proveedor);
+      console.log(this.idProveedor);
       this.ps_.actualizarProveedor(this.idProveedor, this.proveedor);
-      this.limpiar(form);
       return;
     }
   }
@@ -52,6 +47,10 @@ export class ModalProveedoresComponent{
       estado: 'Yucatán',
       factura: true
     });
+  }
+
+  salir(){
+    this.closeModal.hide();
   }
 
 }

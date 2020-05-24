@@ -41,13 +41,14 @@ export class ModalEntradaComponent{
   difDestTotlEsp: number;
   pagoTotal: number;
   idProducto: number;
-  fecha: Date;
+  fecha: Date = new Date();
 
   // Variables temporales Proveedor
 
   proveedorIdSeleccionado: string;
   proveedorNombre: string;
   TotalProveedor: number;
+  idGen: number;
 
   // Array
   public arrayProducto: any [] = [];
@@ -57,11 +58,11 @@ export class ModalEntradaComponent{
   public unicos;
 
 
-  constructor(private fb: FormBuilder, 
+  constructor(private fb: FormBuilder,
               private es_: EntradasService,
-              private ps_: ProveedoresService,){
+              private ps_: ProveedoresService){
 
-    this.fecha = new Date();
+    
     this.crearFormulario();
     this.escucharNumeroCajas();
     this.escucharPesoCajas();
@@ -227,11 +228,8 @@ export class ModalEntradaComponent{
       this.verificarProducto.push(a);
     });
 
-    console.log(this.verificarProducto);
-
     this.verificarProducto.forEach(a => {
       const b = this.verificarProducto.indexOf(a);
-      console.log(b);
       this.verificarProducto.splice(b, 1, [a, 0, 0, 0]);
     });
 
@@ -239,10 +237,8 @@ export class ModalEntradaComponent{
 
     this.arrayProducto.forEach(a => {
       this.verificarProducto.forEach(b => {
-        console.log(b[0]);
         if (a[0] === b[0])
         {
-          console.log(b[0], b[1], b[2], b[3]);
           b.splice(1 , 1, a[1] + b[1]);
           b.splice(2 , 1, a[2] + b[2]);
           b.splice(3 , 1, a[10] + b[3]);
@@ -252,19 +248,17 @@ export class ModalEntradaComponent{
         }
       });
     });
-    console.log(this.verificarProducto);
-    
+
     this.arrayProducto = [];
 
 
-    this.es_.recuperar().subscribe();
-
-    this.enviarProveedor.fecha = new Date();
+    this.enviarProveedor.fecha = this.fecha.getTime();
     this.enviarProveedor.nombreProveedor = this.proveedorNombre;
     this.enviarProveedor.idNombreProveedor = this.proveedorIdSeleccionado;
     this.enviarProveedor.total = this.TotalProveedor;
 
     this.es_.agregarEntradaProveedor(this.enviarProveedor, this.verificarProducto);
+    this.verificarProducto = [];
     this.reiniciarFormEntrada();
 
   }

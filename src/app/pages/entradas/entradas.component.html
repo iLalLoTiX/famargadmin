@@ -3,7 +3,7 @@
 <!-- ============================================================== -->
 <div class="row">
     <div class="col-md-12">
-        <div class="card">
+        <div class="card animated fadeInLeft">
             <div class="card-body">
                 <h4 class="card-title">Support Ticket List</h4>
                 <h6 class="card-subtitle">List of ticket opend by customers</h6>
@@ -78,24 +78,14 @@
                         </thead>
                         <tbody class="accordion" id="accordionExample">
                             <ng-container *ngFor="let entrada of entradasRecientes; let i = index;">
-                            <div>
                             <tr>
-                                <td>{{entrada.payload.doc.id}}</td>
+                                <td>OC-{{entrada.payload.doc.id}}</td>
                                 <td>{{entrada.payload.doc.data()['nombreProveedor']}}</td>
                                 <td>{{entrada.payload.doc.data()['total']}}</td>
                                 <td>
-                                    <a (click)="hola(entrada.payload.doc.id)" class="btn btn-info" data-toggle="collapse" href="#collapse{{i}}"><i class=" fa fa-eye"></i></a>
+                                    <a (click)="hola(entrada.payload.doc.id)" class="btn btn-info" target="_blank" [routerLink]="['/entrada', entrada.payload.doc.id]"><i class=" fa fa-eye"></i></a>
                                 </td>
                             </tr>
-                            <tr id="collapse{{i}}" class="collapse" data-parent="#accordionExample">
-                                <ng-container *ngFor="let producto of productosRecientes; let i = index;">
-                                    <td>{{producto.payload.doc.id}}</td>
-                                    <td>{{producto.payload.doc.data()['producto']}}</td>
-                                    <td>{{producto.payload.doc.data()['peso']}}</td>
-                                    <td>{{producto.payload.doc.data()['precio']}}</td>
-                                </ng-container>
-                            </tr>
-                            </div>
                             </ng-container>
                         </tbody>
                     </table>

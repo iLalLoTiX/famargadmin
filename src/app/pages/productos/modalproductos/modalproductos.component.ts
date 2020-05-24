@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, } from '@angular/core';
 import { NgForm} from '@angular/forms';
 import { producto } from '../../../interfaces/producto.interface';
 import { FrutasServices } from '../../../services/frutas.service';
@@ -11,18 +11,20 @@ import { FrutasServices } from '../../../services/frutas.service';
 })
 export class ModalproductosComponent{
 
-  @Input() editarProducto: producto = {
-    id : null,
-    producto: null,
-    sat: null,
-    inventario: null,
-  };
-  @Input() idProducto: string;
+  @Input() closeModal;
+  
+  @Input() idProductoRef;
 
-  producto = new producto;
+  @Input() public productoRef: producto = new producto();
+
+  idProducto: string;
+
 
   constructor( public fs_: FrutasServices ) {
     
+    console.log(this.idProductoRef);
+    console.log(this.productoRef);
+    this.idProducto = this.idProductoRef;
   }
 
   agregarProducto(form: NgForm){
@@ -31,25 +33,19 @@ export class ModalproductosComponent{
       return;
     }
     if (this.idProducto == null){
-      this.fs_.agregarProducto(this.producto.id, this.producto);
+      this.fs_.agregarProducto(this.productoRef.id, this.productoRef);
       this.salir();
       return;
     }
     else{
-      this.fs_.actualizarProducto(this.idProducto, this.producto);
+      this.fs_.actualizarProducto(this.idProducto, this.productoRef);
       this.salir();
       return;
     }
   }
 
   salir(){
-    this.editarProducto = {
-      id : null,
-      producto: null,
-      sat: null,
-      inventario: null,
-    };
-    this.idProducto = null;
+    this.closeModal.hide();
   }
 
 }

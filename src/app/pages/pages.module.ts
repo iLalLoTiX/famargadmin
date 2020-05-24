@@ -17,6 +17,7 @@ import { PagesRoutingModule } from './pages-routing.module';
 import { ModalproductosComponent } from './productos/modalproductos/modalproductos.component';
 import { ModalProveedoresComponent } from './proveedores/modal-proveedores/modal-proveedores.component';
 import { PrintComponent } from './print/print.component';
+import { DetalleEntradaComponent } from './entradas/detalle-entrada/detalle-entrada.component';
 
 
 
@@ -33,7 +34,8 @@ import { PrintComponent } from './print/print.component';
         ModalEntradaComponent,
         ModalproductosComponent,
         ModalProveedoresComponent,
-        PrintComponent
+        PrintComponent,
+        DetalleEntradaComponent
     ],
     exports: [
         DashboardComponent,

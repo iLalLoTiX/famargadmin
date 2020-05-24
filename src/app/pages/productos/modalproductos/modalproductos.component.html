@@ -1,8 +1,7 @@
-<div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
+
         <div class="modal-header">
             <h4 class="modal-title text-left"></h4>
-            <button (click)="salir()" type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+            <button (click)="salir()"> <span aria-hidden="true">&times;</span> </button>
         </div>
         <div class="modal-body">
             <form  (ngSubmit)="agregarProducto(F)" #F="ngForm">
@@ -14,15 +13,13 @@
                                 <input type="text" 
                                 class="form-control"
                                 placeholder="id"
-                                [(ngModel)]="producto.id" 
+                                [(ngModel)]="productoRef.id" 
                                 name="id"
-                                value="{{editarProducto.id}}"
                                 required>
 
-                                <input type="hidden" 
-                                [(ngModel)]="idProducto" 
-                                name="idProducto"
-                                value="{{idProducto}}">
+                                <input type="text" 
+                                [(ngModel)]="idProductoRef" 
+                                name="idProducto">
                             </div>
                         </div>   
                         <!--/span-->
@@ -32,9 +29,8 @@
                                 <input type="text" 
                                 class="form-control"
                                 placeholder="sku"
-                                [(ngModel)]="producto.sku"  
+                                [(ngModel)]="productoRef.sku"  
                                 name="sku"
-                                value="{{editarProducto.sku}}"
                                 required>
                             </div>
                         </div>   
@@ -45,9 +41,8 @@
                                 <input type="text" 
                                 class="form-control"
                                 placeholder="producto"
-                                [(ngModel)]="producto.producto"  
+                                [(ngModel)]="productoRef.producto"  
                                 name="producto"
-                                value="{{editarProducto.producto}}"
                                 required>
                             </div>
                         </div>   
@@ -58,9 +53,8 @@
                                 <input type="text"
                                 class="form-control"
                                 placeholder="sat"
-                                [(ngModel)]="producto.sat"  
+                                [(ngModel)]="productoRef.sat"  
                                 name="sat"
-                                value="{{editarProducto.sat}}"
                                 required>
                             </div>
                         </div> 
@@ -71,9 +65,8 @@
                                 <input type="number"
                                 class="form-control"
                                 placeholder="inventario"
-                                [(ngModel)]="producto.inventario"  
+                                [(ngModel)]="productoRef.inventario"  
                                 name="inventario"
-                                value="{{editarProducto.inventario}}"
                                 required>
                             </div>
                         </div> 
@@ -87,5 +80,3 @@
             <button (click)="salir()" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             <button  (click)="agregarProducto(F)" type="submit" class="btn btn-success" data-dismiss="modal">Submit</button>
         </div>
-    </div>
-</div>

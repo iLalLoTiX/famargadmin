@@ -25,7 +25,7 @@ export class ProveedoresService {
   {
       // tslint:disable-next-line: no-shadowed-variable
       const enviarNuevoProveedor: proveedor = {...proveedor}
-      return this.afs.collection('proveedores').add(enviarNuevoProveedor);
+      return this.afs.collection('proveedores').doc(enviarNuevoProveedor.id).set(enviarNuevoProveedor);
   }
 
   borrarProveedor(id: string){

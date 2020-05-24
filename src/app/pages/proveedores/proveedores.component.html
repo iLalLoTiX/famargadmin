@@ -14,13 +14,13 @@
                                     <div class="card-header bg-info">
                                         
                                         <div class="ml-auto">
-                                            <h4 class="m-b-0 text-white">Agregar un Proveedor</h4>
-                                            <button class="pull-right btn btn-circle btn-success" data-toggle="modal" data-target="#myModal"><i class="ti-plus"></i></button>
+                                            <h4 class="m-b-0 text-white">Proveedores</h4>
+                                            <button class="pull-right btn btn-circle btn-success" (click)="openModal(template)"><i class="ti-plus"></i></button>
                                         </div>
-                                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
-                                            <!-- <app-modal-entrada></app-modal-entrada> -->
-                                            <app-modal-proveedores></app-modal-proveedores>
-                                        </div>
+                                        <ng-template #template>
+                                            <app-modal-proveedores [proveedor]="proveedor" [closeModal]="modalRef" [idProveedor]="idProveedor"></app-modal-proveedores>
+                                        </ng-template>
+                                            
                                     </div>
                                     
                                     <div class="card-body">
@@ -47,7 +47,7 @@
                                                             <td *ngIf="proveedor.payload.doc.data()['factura']==false">No</td>
                                                             <td>
                                                             <button (click)="borrarProveedor(proveedor.payload.doc.id)" class="btn btn-danger"><i class="fa fa-trash"></i></button>
-                                                            <button  (click)="mostrarProveedor(proveedor.payload.doc.id)" class="btn btn-info"><i class="fa fa-pencil"></i></button>
+                                                            <button  (click)="editarProveedor(template, proveedor.payload.doc.data(), proveedor.payload.doc.id)" class="btn btn-info"><i class="fa fa-pencil"></i></button>
                                                             </td>
                                                         </tr>
                                                     </tbody>

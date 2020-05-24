@@ -10,6 +10,7 @@ import { PesajeComponent } from './pesaje/pesaje.component';
 import { CajasComponent } from './cajas/cajas.component';
 import { EntradasComponent } from './entradas/entradas.component';
 import { PrintComponent } from './print/print.component';
+import { DetalleEntradaComponent } from './entradas/detalle-entrada/detalle-entrada.component';
 
 const pagesRoutes: Routes = [
   {
@@ -22,6 +23,7 @@ const pagesRoutes: Routes = [
       {  path: 'pesaje', component: PesajeComponent },
       {  path: 'cajas', component: CajasComponent },
       {  path: 'entradas', component: EntradasComponent },
+      {  path: 'entrada/:id', component: DetalleEntradaComponent },
       {  path: 'dashboard', component: DashboardComponent  },
       {  path: '', redirectTo: '/dashboard', pathMatch: 'full'},
     ]

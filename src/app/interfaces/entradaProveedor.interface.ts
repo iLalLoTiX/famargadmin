@@ -1,5 +1,5 @@
 export class EntradaProveedor{
-    fecha: Date;
+    fecha: number;
     nombreProveedor: string;
     idNombreProveedor: string;
     total: number;

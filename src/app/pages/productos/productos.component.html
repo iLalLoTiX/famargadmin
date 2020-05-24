@@ -10,13 +10,15 @@
                 </div>
                 
                 <div class="ml-auto">
-                    <button class="pull-right btn btn-circle btn-success" data-toggle="modal" data-target="#myModal"><i class="ti-plus"></i></button>
+                    <button class="pull-right btn btn-circle btn-success" (click)="openModal(template)"><i class="ti-plus"></i></button>
                 </div>
             </div>
-            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
-                <!-- <app-modal-entrada></app-modal-entrada> -->
-                <app-modalproductos [editarProducto]="editarProducto" [idProducto]="idProducto"></app-modalproductos>
-            </div>
+
+            <ng-template #template>
+                
+                <app-modalproductos [productoRef]="producto" [closeModal]="modalRef" [idProductoRef]="idProducto"></app-modalproductos>
+        
+            </ng-template>
             
             <div class="card-body">
                 <div class="d-flex">
@@ -43,7 +45,7 @@
                                     <td>{{ producto.payload.doc.data()['inventario']}}</td>
                                     <td>
                                     <button (click)="borrar(producto.payload.doc.id)" class="btn btn-danger"><i class="fa fa-trash"></i></button>
-                                    <button (click)="editar(producto.payload.doc.id)" class="btn btn-info" data-toggle="modal" data-target="#myModal"><i class="fa fa-pencil"></i></button>
+                                    <button (click)="editar(template, producto.payload.doc.data(), producto.payload.doc.id)" class="btn btn-info" data-toggle="modal" data-target="#myModal"><i class="fa fa-pencil"></i></button>
                                     </td>
                                 </tr>
                             </tbody>

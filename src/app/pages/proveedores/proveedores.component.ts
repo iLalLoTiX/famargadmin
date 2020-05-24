@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, TemplateRef } from '@angular/core';
 import { proveedor } from '../../interfaces/proveedores.interface';
-import { NgForm} from '@angular/forms';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ProveedoresService } from 'src/app/services/proveedores.service';
+import swal from 'sweetalert';
 
 @Component({
   selector: 'app-proveedores',
@@ -11,36 +12,56 @@ export class ProveedoresComponent{
 
   proveedor = new proveedor;
   public proveedores;
-  idproveedor: string;
+  idProveedor: string;
   opcionSeleccionado: any[] = [];
   facturados: boolean;
 
-  constructor(public ps_: ProveedoresService) {
+  // Modal
+  
+  public closeResult = '';
+  public modalRef: BsModalRef;
+
+  constructor(public ps_: ProveedoresService, private modalService: BsModalService) {
     this.ps_.cargarProveeores().subscribe( a => {this.proveedores = a;});
-    this.idproveedor=null;
+    this.idProveedor=null;
     this.proveedor.pais = 'Mexíco';
     this.proveedor.estado = 'Yucatán';
     this.proveedor.factura = true;
   }
 
-  
-
-  
-
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template);
+    this.proveedor = new proveedor();
+    this.idProveedor = null;
+  }
 
   borrarProveedor(id: string){
-    this.ps_.borrarProveedor(id);
+    swal({
+      title: 'Atencion?',
+      text: 'Quieres eliminar este producto?',
+      icon: 'warning',
+      buttons: ['Cancelar', true],
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+
+        this.ps_.borrarProveedor(id);
+        swal('Listo!', {
+          icon: 'success',
+        });
+
+      } else {
+        swal('No han habido cambios...');
+      }
+    });
     return;
   }
 
-  mostrarProveedor(id: string){
-    this.ps_.ponerProveedor(id).subscribe((a: any) => 
-    {
-      this.proveedor = a.data(),
-      this.idproveedor = a.id;
-    }
-    );
-    return;
+  editarProveedor(template: TemplateRef<any>, _proveedor: proveedor, id: string){
+    this.proveedor = _proveedor;
+    this.idProveedor = id;
+    this.modalRef = this.modalService.show(template);
   }
 
 }

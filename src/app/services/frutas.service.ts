@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore' ;
 import { producto } from '../interfaces/producto.interface';
 import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -17,9 +18,13 @@ export class FrutasServices {
   cargarProductos(){
     this.itemsCollection = this.afs.collection<producto>('productos');
     return this.itemsCollection.snapshotChanges().pipe(map(actions => {
+
       return actions.map(a => {
+
         return a;
+
         });
+
       }));
   }
 
@@ -31,7 +36,7 @@ export class FrutasServices {
     return this.afs.collection('productos').doc(idProducto).set(enviarProductos);
   }
 
-  editarProducto(id: string)
+  editarProducto(id: string): Observable<any>
   {
     return this.afs.collection('productos').doc(id).get();
   }

@@ -17,9 +17,12 @@ export class EntradasService {
   // Modelo
   public enviarProducto = new EntradaProducto;
 
+  // variables temporales
+  public idGen: number;
+
 
   constructor( public fb_: AngularFirestore) {
-
+    this.generarId();
   }
 
   entradasRecientes(){
@@ -33,14 +36,28 @@ export class EntradasService {
       }));
   }
 
+  generarId(){
+    return this.fb_.collection('idGen').doc('generateIdEntradas').get()
+    .subscribe(a => {
+      this.idGen = a.data()['id'] + 1; });
+  }
+
   productoEntrante(id: string){
-    return this.fb_.collection('entradas').doc(id).collection('entradaProductos').snapshotChanges().pipe(map(actions => {
+    return this.fb_.collection('entradas').doc(id)
+    .collection('entradaProductos').snapshotChanges()
+    .pipe(map(actions => {
       return actions.map(a => {
-
         return a;
-
         });
       }));
+  }
+
+  recuperarEntrada(id: string){
+    return this.fb_.collection('entradas').doc(id).get();
+  }
+
+  recuperarProveedor(id: string){
+    return this.fb_.collection('proveedores').doc(id).get();
   }
 
   recuperar(){
@@ -57,34 +74,33 @@ export class EntradasService {
 
   agregarEntradaProveedor(proveedorEntrante: EntradaProveedor, arrayProducto: any [])
   {
-    // tslint:disable-next-line: no-shadowed-variable
     const enviarProveedor: EntradaProveedor = { ...proveedorEntrante };
-    return this.fb_.collection('entradas').add(enviarProveedor)
-    .then( docRef => {
 
-      arrayProducto.forEach( a =>
+    this.fb_.collection('entradas').doc(this.idGen.toString()).set(enviarProveedor);
+
+    arrayProducto.forEach( a =>
+      {
+        const enviarProducto: EntradaProducto =
         {
-          const enviarProducto: EntradaProducto =
-          {
-            producto : a[0],
-            idProducto : a[0],
-            peso : a[1],
-            precio : a[3]
-          };
-          let total = 0;
-          this.fb_.collection('productos').doc(enviarProducto.idProducto).get().subscribe( a => {
+          producto : a[0],
+          idProducto : a[0],
+          peso : a[1],
+          precio : a[3]
+        };
+        let total = 0;
+        this.fb_.collection('productos').doc(enviarProducto.idProducto).get().subscribe( a => {
 
-          total = a.data()['inventario'] + enviarProducto.peso;
+        total = a.data()['inventario'] + enviarProducto.peso;
 
-          this.fb_.collection('productos').doc(enviarProducto.idProducto).update({inventario : total});
+        this.fb_.collection('productos').doc(enviarProducto.idProducto).update({inventario : total});
 
-          });
-          this.fb_.collection('entradas').doc(docRef.id).collection('entradaProductos').add(enviarProducto);
-      });
-    })
-    .catch( error => {
-        return console.error( 'Error adding document: ', error);
+        });
+
+        this.fb_.collection('idGen').doc('generateIdEntradas').update({id: this.idGen});
+
+        this.fb_.collection('entradas').doc(this.idGen.toString()).collection('entradaProductos').add(enviarProducto);
     });
+    this.generarId();
   }
 
 }
