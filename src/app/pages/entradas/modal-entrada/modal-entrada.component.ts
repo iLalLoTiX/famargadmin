@@ -9,6 +9,8 @@ import { ProveedoresService } from '../../../services/proveedores.service';
 import { EntradaProducto } from 'src/app/interfaces/entradaProducto.interface';
 import { EntradaProveedor } from 'src/app/interfaces/entradaProveedor.interface';
 import { proveedor } from '../../../interfaces/proveedores.interface';
+import { FrutasServices } from 'src/app/services/frutas.service';
+import { producto } from '../../../interfaces/producto.interface';
 
 @Component({
   selector: 'app-modal-entrada',
@@ -49,6 +51,8 @@ export class ModalEntradaComponent{
   proveedorNombre: string;
   TotalProveedor: number;
   idGen: number;
+  banderaProducto = 0;
+  public obtenerProducto;
 
   // Array
   public arrayProducto: any [] = [];
@@ -60,10 +64,13 @@ export class ModalEntradaComponent{
 
   constructor(private fb: FormBuilder,
               private es_: EntradasService,
-              private ps_: ProveedoresService){
+              private ps_: ProveedoresService,
+              private productosS_: FrutasServices){
 
     
     this.crearFormulario();
+    this.escucharProductoId();
+    this.escucharProductoNombre();
     this.escucharNumeroCajas();
     this.escucharPesoCajas();
     this.escucharPesoTarima();
@@ -76,11 +83,11 @@ export class ModalEntradaComponent{
   }
 
   reiniciarFormEntrada(){
-    this.destarado = 0 ;
-    this.pesoPorCaja = 0 ;
-    this.totalEsperado = 0 ;
+    this.destarado      = 0 ;
+    this.pesoPorCaja    = 0 ;
+    this.totalEsperado  = 0 ;
     this.difDestTotlEsp = 0 ;
-    this.pagoTotal = 0 ;
+    this.pagoTotal      = 0 ;
     this.TotalProveedor = 0;
     this.formEntrada.reset({
       nuestrasCajas : false,
@@ -91,6 +98,7 @@ export class ModalEntradaComponent{
   crearFormulario(){
     this.formEntrada = this.fb.group({
       producto      : [],
+      productoNombre: [],
       cajas         : [],
       pesoEsperado  : [],
       nuestrasCajas : [false],
@@ -103,6 +111,38 @@ export class ModalEntradaComponent{
   }
 
   // Calculos Dinamicos para destarar
+  escucharProductoId(){
+
+    this.formEntrada.get('producto').valueChanges.subscribe(producto =>
+    {
+      this.productosS_.buscarProductoId(producto).subscribe( (a: any) => {
+        this.banderaProducto = a.length;
+        if (a.length !== 0){
+          this.obtenerProducto = a;
+          this.formEntrada.patchValue({
+            productoNombre: this.obtenerProducto[0]['producto']
+          }, {emitEvent: false});
+        }
+      });
+    });
+  }
+
+  escucharProductoNombre(){
+
+    this.formEntrada.get('productoNombre').valueChanges.subscribe(producto =>
+    {
+      this.productosS_.buscarProductoNombre(producto).subscribe( (a: any) => {
+        this.banderaProducto = a.length;
+        if (a.length !== 0){
+          this.obtenerProducto = a;
+          this.formEntrada.patchValue({
+            producto: this.obtenerProducto[0]['id']
+          }, {emitEvent: false});
+        }
+      });
+    });
+  }
+
   escucharNumeroCajas() {
     this.formEntrada.get('cajas').valueChanges.subscribe( cantidadCajas => {
       this.destarado = 0;
@@ -230,7 +270,7 @@ export class ModalEntradaComponent{
 
     this.verificarProducto.forEach(a => {
       const b = this.verificarProducto.indexOf(a);
-      this.verificarProducto.splice(b, 1, [a, 0, 0, 0]);
+      this.verificarProducto.splice(b, 1, [a, 0, 0, 0, 0]);
     });
 
     this.unicos = [];
@@ -242,13 +282,15 @@ export class ModalEntradaComponent{
           b.splice(1 , 1, a[1] + b[1]);
           b.splice(2 , 1, a[2] + b[2]);
           b.splice(3 , 1, a[10] + b[3]);
+          b.splice(4 , 1, a[11]);
+          console.log(b);
         }
         else{
           console.log('no es:' + a[0] + '=' + b);
         }
       });
     });
-
+    console.log(this.arrayProducto);
     this.arrayProducto = [];
 
 
@@ -278,7 +320,8 @@ export class ModalEntradaComponent{
       this.formEntrada.get('pesoBascula').value,
       this.formEntrada.get('pago').value,
       this.formEntrada.get('CoKg').value,
-      this.pagoTotal
+      this.pagoTotal,
+      this.formEntrada.get('productoNombre').value,
     ]);
 
     this.verificarProducto.push(

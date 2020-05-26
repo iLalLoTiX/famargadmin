@@ -1,7 +1,7 @@
 
         <div class="modal-header">
             <h4 class="modal-title text-left"></h4>
-            <button (click)="salir()"> <span aria-hidden="true">&times;</span> </button>
+            <button (click)="salir()" class="close"> <span aria-hidden="true">&times;</span> </button>
         </div>
         <div class="modal-body">
             <form  (ngSubmit)="agregarProducto(F)" #F="ngForm">
@@ -17,7 +17,7 @@
                                 name="id"
                                 required>
 
-                                <input type="text" 
+                                <input type="hidden" 
                                 [(ngModel)]="idProductoRef" 
                                 name="idProducto">
                             </div>

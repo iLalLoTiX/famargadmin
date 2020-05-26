@@ -1,11 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-//Servicios
+// Servicios
 import { OrdenServicio } from './servicios/ordenes.service'
 import { FormsModule } from '@angular/forms';
 
-//modulos
+// Modulos
 import { PagesModule } from './pages/pages.module';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -16,6 +16,8 @@ import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireStorageModule } from 'angularfire2/storage';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { environment } from '../environments/environment';
+
+// Ngx Bootstrap
 import { ModalModule } from 'ngx-bootstrap/modal';
 
 import { LoginComponent } from './login/login.component';
@@ -34,7 +36,7 @@ import { LoginComponent } from './login/login.component';
     AngularFireAuthModule,
     PagesModule,
     FormsModule,
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
   ],
   providers: [
     OrdenServicio

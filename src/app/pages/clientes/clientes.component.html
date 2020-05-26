@@ -14,39 +14,28 @@
                                     <div class="table-responsive m-t-20 no-wrap">
                                         
                                         <div class="ml-auto">
+                                            <h4 class="m-b-0 text-white">Proveedores</h4>
                                             <button class="pull-right btn btn-circle btn-success" (click)="openModal(template)"><i class="ti-plus"></i></button>
                                         </div>
-
                                         <ng-template #template>
-                
-                                            <app-modal-cajas [caja]="caja" [closeModal]="modalRef" [idCaja]="idCaja"></app-modal-cajas>
-                                    
+                                            <app-modal-clientes [clienteRef]="cliente" [closeModal]="modalRef" [idClienteRef]="idCliente"></app-modal-clientes>
                                         </ng-template>
 
                                         <table class="table vm no-th-brd pro-of-month">
                                             <thead>
                                                 <tr>
                                                     <th >ID</th>
-                                                    <th>Tipo</th>
-                                                    <th>Cantidad</th>
-                                                    <th>Afuera</th>
-                                                    <th>Adentro</th>
-                                                    <th>Precio</th>
-                                                    <th>Rotas</th>
+                                                    <th>Nombre</th>
+                                                    <th>Acción</th>
                                                 </tr>
                                             </thead>
-                                            <tbody *ngFor="let caja of cajas; let i = index">
+                                            <tbody *ngFor="let cliente of tablaClientes; let i = index">
                                                 <tr>
-                                                    <td style="width:50px;"><span class="round">{{ caja.payload.doc.data()['id']}}</span></td>
-                                                    <td>{{ caja.payload.doc.data()['tipo']}}</td>
-                                                    <td>{{ caja.payload.doc.data()['cantidad']}}</td>
-                                                    <td>{{ caja.payload.doc.data()['afuera']}}</td>
-                                                    <td>{{ caja.payload.doc.data()['adentro']}}</td>
-                                                    <td>{{ caja.payload.doc.data()['precio']}}</td>
-                                                    <td>{{ caja.payload.doc.data()['rotas']}}</td>
+                                                    <td style="width:50px;"><span class="round">{{ cliente.payload.doc.data()['id']}}</span></td>
+                                                    <td>{{ cliente.payload.doc.data()['nombreCliente']}}</td>
                                                     <td>
-                                                    <button type="button" (click)="borrarCaja(caja.payload.doc.id)"  class="btn btn-danger"><i class="fa fa-trash"></i></button>
-                                                    <button type="button" (click)="editarCaja(template, caja.payload.doc.data(), caja.payload.doc.id)"  class="btn btn-info"><i class="fa fa-pencil"></i></button>
+                                                    <button (click)="borrarCliente(cliente.payload.doc.id)" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                                                    <button  (click)="editarCliente(template, cliente.payload.doc.data(), cliente.payload.doc.id)" class="btn btn-info"><i class="fa fa-pencil"></i></button>
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -61,4 +50,3 @@
         </tabset>
     </div>
 </div>
-

@@ -1,0 +1,131 @@
+
+        <div class="modal-header">
+            <h4 class="modal-title text-left"></h4>
+            <button (click)="salir()" class="close"> <span aria-hidden="true">&times;</span> </button>
+        </div>
+        <div class="modal-body">
+
+            
+            <form (ngSubmit)="agregarCaja(F)" #F="ngForm">
+                <div class="form-body">
+                    <div class="row">
+                        <div class="col-md-4" >
+                            <div class="form-group" [class.has-danger]="id.invalid && id.touched">
+                                <label class="control-label">ID</label>
+
+                                <input type="text"
+                                class="form-control" 
+                                [class.form-control-danger]="id.touched"
+                                #id="ngModel" [(ngModel)]="caja.id" name="ID"
+                                required>
+
+                                <input type="hidden" 
+                                class="form-control"
+                                [(ngModel)]="idCaja"
+                                name="idCaja">
+
+                            </div>
+                        </div>   
+                        <div class="col-md-4">
+                            <div class="form-group" [class.has-danger]="tipo.invalid && tipo.touched">
+
+                                <label class="control-label">Tipo</label>
+                                <input type="text"
+                                class="form-control"
+                                #tipo="ngModel"
+                                [class.form-control-danger]="tipo.touched"
+                                [(ngModel)]="caja.tipo"
+                                name="tipo"
+                                required
+                                minlength="4">
+
+                                <small *ngIf="tipo.invalid && tipo.touched"
+                                class="form-text text-danger">Indique el tipo</small>
+
+                            </div>
+                        </div>  
+                        <div class="col-md-4">
+                            <div class="form-group" [class.has-danger]="precio.invalid && precio.touched">
+                                <label class="control-label">Precio</label>
+                                <input type="number" 
+                                class="form-control" 
+                                #precio="ngModel"
+                                [class.form-control-danger]="precio.touched"
+                                [(ngModel)]="caja.precio"
+                                name="precio"
+                                required>
+                                <small *ngIf="precio.invalid && precio.touched"
+                                class="form-text text-danger">Ingresa el precio</small>
+                            </div>
+                        </div>  
+                        <div class="col-md-3">
+                            <div class="form-group" [class.has-danger]="cantidad.invalid &&cantidad.touched">
+                                <label class="control-label">Cantidad</label>
+                                <input type="number"
+                                class="form-control"
+                                #cantidad="ngModel"
+                                [class.form-control-danger]="cantidad.touched"
+                                [(ngModel)]="caja.cantidad"
+                                name="cantidad"
+                                required>
+                                <small *ngIf="cantidad.invalid && cantidad.touched"
+                                class="form-text text-danger">Cuantos hay?</small>
+                            </div>
+                        </div>   
+
+                        <div class="col-md-3">
+                            <div class="form-group" [class.has-danger]="afuera.invalid && afuera.touched">
+                                <label class="control-label">De viaje</label>
+                                <input type="number" 
+                                class="form-control" 
+                                #afuera="ngModel"
+                                [class.form-control-danger]="afuera.touched"
+                                [(ngModel)]="caja.afuera"
+                                name="afuera"
+                                min="0"
+                                required>
+                                <small *ngIf="afuera.invalid && afuera.touched"
+                                class="form-text text-danger">Si no hay cajas de viaje ingresa 0</small>
+                            </div>
+                        </div> 
+
+                        <div class="col-md-3">
+                            <div class="form-group" [class.has-danger]="adentro.invalid && adentro.touched">
+                                <label class="control-label">En inventario</label>
+                                <input type="number" 
+                                class="form-control" 
+                                #adentro="ngModel"
+                                [class.form-control-danger]="afuera.touched"
+                                [(ngModel)]="caja.adentro"
+                                name="adentro"
+                                min="0"
+                                required>
+                                <small *ngIf="adentro.invalid && adentro.touched"
+                                class="form-text text-danger">Si no hay cajas en el inventario ingresa 0</small>
+                            </div>
+                        </div> 
+
+                        
+                        <div class="col-md-3">
+                            <div class="form-group" [class.has-danger]="rotas.invalid && rotas.touched">
+                                <label class="control-label">Rotas</label>
+                                <input type="number"
+                                class="form-control"
+                                #rotas="ngModel"
+                                [class.form-control-danger]="cantidad.touched"
+                                [(ngModel)]="caja.rotas"
+                                name="rotas"
+                                required>
+                                <small *ngIf="rotas.invalid && rotas.touched"
+                                class="form-text text-danger">Si no hay cajas rotas ingresa 0</small>
+                            </div>
+                        </div> 
+                    </div>
+                </div>
+            </form>
+
+        </div>
+        <div class="modal-footer">
+            <button (click)="salir()" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button  (click)="agregarCaja(F)" type="submit" class="btn btn-success" data-dismiss="modal">Submit</button>
+        </div>

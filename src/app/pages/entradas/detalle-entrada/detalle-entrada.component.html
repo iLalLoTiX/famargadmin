@@ -33,6 +33,7 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
+                                    <th>Producto</th>
                                     <th>Peso</th>
                                     <th>Precio</th>
                                 </tr>
@@ -41,6 +42,7 @@
                                 <ng-container *ngFor="let entrada of productoProveedor; let i = index;">
                                 <tr>
                                     <td>{{entrada.payload.doc.data()['idProducto']}}</td>
+                                    <td>{{entrada.payload.doc.data()['producto']}}</td>
                                     <td>{{entrada.payload.doc.data()['peso']}}</td>
                                     <td>{{entrada.payload.doc.data()['precio']}}</td>
                                 </tr>

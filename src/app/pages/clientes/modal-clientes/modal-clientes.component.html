@@ -1,0 +1,46 @@
+<div class="modal-header">
+    <h4 class="modal-title text-left"></h4>
+    <button (click)="salir()" class="close"> <span aria-hidden="true">&times;</span> </button>
+</div>
+<div class="modal-body">
+    <form  #F="ngForm">
+        <div class="form-body">
+            <div class="row p-t-20">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label">ID</label>
+                        <input type="text" 
+                        class="form-control"
+                        placeholder="id"
+                        [(ngModel)]="clienteRef.id" 
+                        name="id"
+                        required>
+
+                        <input type="hidden" 
+                        [(ngModel)]="idClienteRef" 
+                        name="idProducto">
+                    </div>
+                </div>   
+                <!--/span-->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label">SKU</label>
+                        <input type="text" 
+                        class="form-control"
+                        placeholder="Nombre"
+                        [(ngModel)]="clienteRef.nombreCliente"  
+                        name="nombre"
+                        required>
+                    </div>
+                </div>   
+                
+            </div>
+            
+        </div>
+    </form>
+
+</div>
+<div class="modal-footer">
+    <button (click)="salir()" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    <button  (click)="agregarCliente(F)" type="submit" class="btn btn-success" data-dismiss="modal">Submit</button>
+</div>

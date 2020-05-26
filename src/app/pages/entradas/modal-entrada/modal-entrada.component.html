@@ -41,18 +41,27 @@
             <form *ngIf="proveedorIdSeleccionado != undefined" [formGroup]="formEntrada" (ngSubmit)="altaEntrada()" class="form-material">
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-md-3 col-sm-3"><button (click)="regresar()" type="button" class="btn btn-info"><i class="fa fa-arrow-left"></i></button>
+                        <div class="col-md-2 col-sm-2"><button (click)="regresar()" type="button" class="btn btn-info"><i class="fa fa-arrow-left"></i></button>
                         </div>
                         <div class="col-md-3 col-sm-3">
                             <div class="form-group">
                                 <label>Producto</label>
                                 <input type="text" class="form-control" 
-                                placeholder="Producto"
+                                placeholder="Id"
                                 name="producto"
                                 formControlName="producto">
                             </div>
                         </div>
                         <div class="col-md-3 col-sm-3">
+                            <div class="form-group">
+                                <label>Producto</label>
+                                <input type="text" class="form-control" 
+                                placeholder="Nombre"
+                                name="productoNombre"
+                                formControlName="productoNombre">
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-sm-2">
                             <label class="control-label">$ por</label>
                             <div class="switch">
                                 <label class="control-label">C</label>
@@ -64,7 +73,7 @@
                                 <label class="control-label">Kg</label>
                             </div>
                         </div>
-                        <div class="col-md-3 col-sm-3">
+                        <div class="col-md-2 col-sm-2">
                             <label class="control-label">Nuestras</label>
                             <div class="switch">
                                 <label class="control-label">Sí</label>

@@ -46,4 +46,12 @@ export class ProveedoresService {
     .doc(id)
     .set(enviarActProv);
   }
+
+  // Querys
+  buscarProveedorId(buscar: string){
+
+    return this.afs.collection('clientes', ref => ref.where('id', '==', buscar)).valueChanges();
+
+  }
+
 }

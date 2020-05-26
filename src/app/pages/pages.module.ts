@@ -19,11 +19,16 @@ import { ModalProveedoresComponent } from './proveedores/modal-proveedores/modal
 import { PrintComponent } from './print/print.component';
 import { DetalleEntradaComponent } from './entradas/detalle-entrada/detalle-entrada.component';
 
+// Tabs NGX
+import { TabsModule } from 'ngx-bootstrap/tabs';
 
+import { ModalCajasComponent } from './cajas/modal-cajas/modal-cajas.component';
+import { ClientesComponent } from './clientes/clientes.component';
+import { ModalClientesComponent } from './clientes/modal-clientes/modal-clientes.component';
 
 
 @NgModule({
-    declarations:[
+    declarations: [
         DashboardComponent,
         ProveedoresComponent,
         ProductosComponent,
@@ -35,7 +40,10 @@ import { DetalleEntradaComponent } from './entradas/detalle-entrada/detalle-entr
         ModalproductosComponent,
         ModalProveedoresComponent,
         PrintComponent,
-        DetalleEntradaComponent
+        DetalleEntradaComponent,
+        ModalCajasComponent,
+        ClientesComponent,
+        ModalClientesComponent
     ],
     exports: [
         DashboardComponent,
@@ -47,6 +55,7 @@ import { DetalleEntradaComponent } from './entradas/detalle-entrada/detalle-entr
         BrowserModule,
         SharedModule,
         ReactiveFormsModule,
+        TabsModule.forRoot(),
         PagesRoutingModule
     ]
 })

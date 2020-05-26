@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 
 // Modelos
 import { EntradaProducto } from '../interfaces/entradaProducto.interface';
 import { EntradaProveedor } from '../interfaces/entradaProveedor.interface';
 import { async } from '@angular/core/testing';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class EntradasService {
   public entradasCollection: AngularFirestoreCollection<any>;
 
   // Modelo
-  public enviarProducto = new EntradaProducto;
+  public enviarProducto = new EntradaProducto();
 
   // variables temporales
   public idGen: number;
@@ -60,18 +61,6 @@ export class EntradasService {
     return this.fb_.collection('proveedores').doc(id).get();
   }
 
-  recuperar(){
-
-    this.entradasCollection = this.fb_.collection<EntradaProveedor>('entradas', ref => ref.where('nombreProveedor', '==', 'Eduardo V'));
-    return this.entradasCollection.snapshotChanges().pipe(map(action => {
-      return action.map(a => {
-        console.log(a.payload.doc.data()['nombreProveedor']);
-        return a;
-      });
-    }));
-
-  }
-
   agregarEntradaProveedor(proveedorEntrante: EntradaProveedor, arrayProducto: any [])
   {
     const enviarProveedor: EntradaProveedor = { ...proveedorEntrante };
@@ -82,7 +71,7 @@ export class EntradasService {
       {
         const enviarProducto: EntradaProducto =
         {
-          producto : a[0],
+          producto : a[4],
           idProducto : a[0],
           peso : a[1],
           precio : a[3]

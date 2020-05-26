@@ -1,41 +1,48 @@
 
 <div class="card">
     <div class="card-body">
-        <div class="row p-t-20">
-            <div class="col-md-3">
-                <div class="form-group">
-                    <label class="control-label">Tienda</label>
-                    <input type="Text" 
-                    class="form-control"
-                    placeholder="Tienda"
-                    name="tienda"
-                    [(ngModel)]="tienda">
+            <form [formGroup]="formaDos">
+                <div class="row p-t-20">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="control-label">Tienda</label>
+                            <input type="Text" 
+                            class="form-control"
+                            placeholder="Tienda"
+                            name="tienda"
+                            formControlName="tienda">
+                            <small *ngIf="banderaCliente > 0"
+                                class="form-text text-success">Existe
+                                <ng-container *ngFor="let cliente of obtenerCliente">
+                                    {{cliente.nombreCliente}}
+                                </ng-container>
+                            </small>
+                            <small *ngIf="banderaCliente == 0"
+                                class="form-text text-danger">No Existe</small>
+                        </div>
+                    </div>   
+                    <!--/span-->
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="control-label">Producto</label>
+                            <input type="Text" 
+                            class="form-control"
+                            placeholder="Producto"
+                            name="producto"
+                            formControlName="producto">
+                        </div>  
+                    </div>   
+                    <!--/span-->
+                    <div class="col-md-1">
+                        <label for="">Listo</label>
+                        <button (click)="altaCajas()" type="button" class="btn btn-success mb-3"><i class="fa fa-check"></i> Listo</button>
+                    </div> 
+                    <div class="col-md-1">
+                        <label for="">Imprimir</label>
+                        <button (click)="imprimir()" type="button" class="btn btn-success mb-3"><i class="fa fa-print"></i> Imprimir</button>
+                    </div>  
                 </div>
-            </div>   
-            <!--/span-->
-            <div class="col-md-3">
-                <div class="form-group">
-                    <label class="control-label">Producto</label>
-                    <select type="number" 
-                        class="form-control"
-                        placeholder="Tipo de Caja"
-                        [(ngModel)]="producto">
-                        <ng-container *ngFor="let producto of llenarProductosSelect; let j = index;">
-                            <option value="{{producto.payload.doc.data()['producto']}}">{{producto.payload.doc.data()['producto']}}</option>
-                        </ng-container>
-                    </select>
-                </div>  
-                <div class="col-md-1">
-                    <label for="">Listo</label>
-                    <button (click)="altaCajas()" type="button" class="btn btn-success mb-3"><i class="fa fa-check"></i> Listo</button>
-                </div> 
-                <div class="col-md-1">
-                    <label for="">Imprimir</label>
-                    <button (click)="imprimir()" type="button" class="btn btn-success mb-3"><i class="fa fa-print"></i> Imprimir</button>
-                </div>  
-            </div>   
-            <!--/span-->
-        </div>
+            </form>
         <div class="table-responsive">
             <form  [formGroup]="forma" class="form-material m-t-40">
                 <div class="form-body">
@@ -189,7 +196,7 @@
         </div>
         <div>
             <div class="col-6">
-                <button (click)="agregarTarima()" type="button" class="btn  btn-info mt-3"><i class="fa fa-plus"></i> Tarima</button>
+                <button (click)="agregarTarima()" type="button" class="btn btn-info mt-3"><i class="fa fa-plus"></i> Tarima</button>
             </div>
         </div>
     </div>

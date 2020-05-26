@@ -42,8 +42,9 @@ export class CajasService {
   agregarCaja(cajaItem: caja)
   {
     // tslint:disable-next-line: no-shadowed-variable
-    const enviarNuevaCaja: caja = {...cajaItem}
-    return this.afs.collection('cajasData').doc('inventarioCajas').collection('cajas').add(enviarNuevaCaja);
+    const enviarNuevaCaja: caja = {...cajaItem};
+    console.log(enviarNuevaCaja.id);
+    return this.afs.collection('cajasData').doc('inventarioCajas').collection('cajas').doc(enviarNuevaCaja.id).set(enviarNuevaCaja);
   }
 
   borrarCaja(id: string){

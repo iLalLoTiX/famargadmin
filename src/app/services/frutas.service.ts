@@ -54,4 +54,17 @@ export class FrutasServices {
     }
     return this.afs.collection('productos').doc(id).set(enviarActProd);
   }
+
+  // Querys
+  buscarProductoId(buscar: string){
+
+    return this.afs.collection('productos', ref => ref.where('id', '==', buscar)).valueChanges();
+
+  }
+
+  buscarProductoNombre(buscar: string){
+
+    return this.afs.collection('productos', ref => ref.where('producto', '==', buscar)).valueChanges();
+
+  }
 }

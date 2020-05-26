@@ -16,8 +16,7 @@ export class ProveedoresComponent{
   opcionSeleccionado: any[] = [];
   facturados: boolean;
 
-  // Modal
-  
+  // Ngx 
   public closeResult = '';
   public modalRef: BsModalRef;
 

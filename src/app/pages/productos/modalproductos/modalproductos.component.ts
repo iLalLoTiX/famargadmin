@@ -17,28 +17,21 @@ export class ModalproductosComponent{
 
   @Input() public productoRef: producto = new producto();
 
-  idProducto: string;
 
-
-  constructor( public fs_: FrutasServices ) {
-    
-    console.log(this.idProductoRef);
-    console.log(this.productoRef);
-    this.idProducto = this.idProductoRef;
-  }
+  constructor( public fs_: FrutasServices ) { }
 
   agregarProducto(form: NgForm){
     if (form.invalid){
       Object.values(form.controls).forEach(control => {control.markAsTouched();});
       return;
     }
-    if (this.idProducto == null){
+    if (this.idProductoRef == null){
       this.fs_.agregarProducto(this.productoRef.id, this.productoRef);
       this.salir();
       return;
     }
     else{
-      this.fs_.actualizarProducto(this.idProducto, this.productoRef);
+      this.fs_.actualizarProducto(this.idProductoRef, this.productoRef);
       this.salir();
       return;
     }

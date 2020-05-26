@@ -33,7 +33,7 @@ export class ProductosComponent {
 
   borrar(id: string){
     swal({
-      title: 'Atencion?',
+      title: 'Atencion',
       text: 'Quieres eliminar este producto?',
       icon: 'warning',
       buttons: ['Cancelar', true],

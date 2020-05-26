@@ -21,8 +21,8 @@ export class EntradasComponent implements OnInit {
     this.productosRecientes = null;
     this.es_.productoEntrante(id).subscribe( a => { 
       this.productosRecientes = a;
-  });
-    
+    });
+
   }
 
   ngOnInit(): void {
