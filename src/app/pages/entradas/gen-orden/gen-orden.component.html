@@ -1,0 +1,95 @@
+<div class="row">
+    <div class="col-md-1">
+        <button (click)="regresar()" type="button" class="btn btn-info"><i class="fa fa-arrow-left"></i></button>
+    </div>
+    <div class="col-md-2">
+        <h5><b>Id: </b>{{proveedorIdR}}</h5>
+    </div>
+    <div class="col-md-7">
+        <h5><b>Nombre: </b>{{proveedorNombreR}}</h5>
+    </div>
+    <div class="col-md-2">
+    </div>
+</div>
+<form [formGroup]="formOrden">
+
+    <div class="row">
+        <!--/span-->
+        <div class="col-md-2">
+            <div class="form-group">
+                <input type="Text" autocomplete="off"
+                class="form-control"
+                placeholder="Producto"
+                name="producto"
+                formControlName="producto">
+            </div>  
+        </div>   
+        <!--/span-->
+        <div class="col-md-4">
+            <div class="form-group">
+                <input type="Text" autocomplete="off"
+                class="form-control"
+                placeholder="Producto"
+                name="productoNombre"
+                formControlName="productoNombre">
+            </div>  
+        </div>   
+        <!--/span-->
+        <div class="col-md-2">
+            <div class="form-group">
+                <input type="number" autocomplete="off"
+                class="form-control"
+                placeholder="Kg"
+                name="kg"
+                formControlName="kg">
+            </div>  
+        </div>   
+        <!--/span-->
+        <div class="col-md-2">
+            <div class="form-group">
+                <input type="number" autocomplete="off"
+                class="form-control"
+                placeholder="Precio"
+                name="precio"
+                formControlName="precio">
+            </div>  
+        </div>   
+        <!--/span-->
+        <div class="col-md-2">
+            <button *ngIf="iProducto != undefined" (click)="actualizarProducto()"type="button" class="btn btn-success"><i class="fa fa-pencil"></i></button>
+            
+            <button *ngIf="iProducto == undefined" (click)="agregarProducto()" type="button" class="btn btn-info"><i class="fa fa-plus"></i></button>       
+        </div>   
+        <!--/span-->
+    </div>
+    
+    <div class="table-responsive m-t-20 no-wrap" >
+        <table class="table vm no-th-brd pro-of-month">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Producto</th>
+                    <th>Kg</th>
+                    <th>Precio</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let producto of arrayProducto; let i = index;">
+                    <tr>
+                        <td>{{producto[0]}}</td>
+                        <td>{{producto[1]}}</td>
+                        <td>{{producto[2]}}</td>
+                        <td>{{producto[3]}}</td>
+                        <td>
+                            <button (click)="borrarProducto(i)" type="button" class="btn btn-danger ml-2"><i class="fa fa-trash"></i></button>
+                            <button (click)="editarProducto(i)" type="button" class="btn btn-info"><i class="fa fa-pencil"></i></button>
+                        </td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    </div>
+    
+</form>
+            

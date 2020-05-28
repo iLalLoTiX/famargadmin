@@ -1,0 +1,184 @@
+<form [formGroup]="formEntrada" class="form-material">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2 col-sm-2"><button type="button" class="btn btn-info"><i class="fa fa-arrow-left"></i></button>
+            </div>
+            <div class="col-md-3 col-sm-3">
+                <div class="form-group">
+                    <label>Producto</label>
+                    <input type="text" class="form-control" 
+                    placeholder="Id"
+                    name="producto"
+                    formControlName="producto">
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-3">
+                <div class="form-group">
+                    <label>Producto</label>
+                    <input type="text" class="form-control" 
+                    placeholder="Nombre"
+                    name="productoNombre"
+                    formControlName="productoNombre">
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-2">
+                <label class="control-label">$ por</label>
+                <div class="switch">
+                    <label class="control-label">C</label>
+                    <label>
+                    <input class="form-control custom-select"
+                    type="checkbox"
+                    name="CoKg"
+                    formControlName="CoKg"><span class="lever switch-col-deep-orange"></span></label>
+                    <label class="control-label">Kg</label>
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-2">
+                <label class="control-label">Nuestras</label>
+                <div class="switch">
+                    <label class="control-label">Sí</label>
+                    <label>
+                    <input class="form-control custom-select"
+                    type="checkbox"
+                    name="nuestrasCajas"
+                    formControlName="nuestrasCajas"><span class="lever switch-col-deep-orange"></span></label>
+                    <label class="control-label">No</label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2 col-sm-2">
+                <div class="form-group">
+                    <label>Cajas</label>
+                    <input type="number" class="form-control" 
+                    placeholder="Cajas"
+                    name="cajas"
+                    formControlName="cajas">
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-2">
+                <div class="form-group">
+                    <label>Tipo</label>
+                    <input type="number" class="form-control" 
+                    placeholder="Tipo"
+                    name="pesoCaja"
+                    formControlName="pesoCaja">
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-2">
+                <div class="form-group">
+                    <label>Tarima</label>
+                    <input type="number" class="form-control" 
+                    placeholder="Peso"
+                    name="pesoTarima"
+                    formControlName="pesoTarima">
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-3">
+                <div class="form-group">
+                    <label>Esperado</label>
+                    <input type="number" class="form-control" 
+                    placeholder="Peso"
+                    name="pesoEsperado"
+                    formControlName="pesoEsperado">
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-3">
+                <div class="form-group">
+                    <label>Bascula</label>
+                    <input type="number" class="form-control" 
+                    placeholder="Peso"
+                    name="pesoBascula"
+                    formControlName="pesoBascula">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2 col-sm-2">
+                <div class="form-group">
+                    <label>Peso/Caja</label>
+                    <input type="number" class="form-control" 
+                    placeholder="Tipo"
+                    value="{{pesoPorCaja}}"
+                    disabled>
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-2">
+                <div class="form-group">
+                    <label>Destarado</label>
+                    <input type="number" class="form-control" 
+                    placeholder="Destarado"
+                    value="{{destarado}}"
+                    disabled>
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-2">
+                <div class="form-group">
+                    <label>TotlEsprado</label>
+                    <input type="number" class="form-control" 
+                    placeholder="Tipo"
+                    value="{{totalEsperado}}"
+                    disabled>
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-2">
+                <div class="form-group">
+                    <label>Peso/Caja</label>
+                    <input type="number" class="form-control" 
+                    placeholder="Tipo"
+                    value="{{difDestTotlEsp}}"
+                    disabled>
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-2">
+                
+                <div class="form-group">
+                    <label *ngIf="formEntrada.get('CoKg').value">$ Kg</label>
+                    <label *ngIf="!formEntrada.get('CoKg').value">$ C</label>
+                    <input type="number" class="form-control" 
+                    placeholder="$"
+                    name="pago"
+                    formControlName="pago">
+                </div>
+
+            </div>
+            <div class="col-md-2 col-sm-2">
+                <div class="form-group">
+                    <label>$ Total</label>
+                    <input
+                    type="number" class="form-control" 
+                    placeholder="$"
+                    value="{{pagoTotal}}">
+                </div>
+            </div>
+            <div class="col-md-2">
+            </div>
+        </div>
+    </div>
+    <div class="table-responsive m-t-20 no-wrap" >
+        <table class="table vm no-th-brd pro-of-month">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Producto</th>
+                    <th>Kg</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let producto of arrayProducto; let i = index;">
+                
+                    <tr>
+                        <td>{{i + 1}}</td>
+                        <td>{{producto[0]}}</td>
+                        <td>{{producto[1]}}</td>
+                        <td>{{producto[10]}}</td>
+                    </tr>
+                    
+                </ng-container>
+            </tbody>
+        </table>
+    </div>
+    
+</form>
+

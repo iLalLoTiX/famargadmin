@@ -2,15 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 
 //servicios
-import { CajasService } from 'src/app/services/cajas.service';
-import { FrutasServices } from 'src/app/services/frutas.service';
+import { CajasService } from '../../services/cajas.service';
+import { FrutasServices } from '../../services/frutas.service';
 
 //plugins
 import swal from 'sweetalert';
-import { ClientesService } from 'src/app/services/clientes.service';
-
-// Modelos
-import { Clientes } from '../../interfaces/clientes.interface';
+import { ClientesService } from '../../services/clientes.service';
 
 @Component({
   selector: 'app-pesaje',
@@ -38,15 +35,22 @@ export class PesajeComponent implements OnInit {
   public obtenerCliente;
   public banderaCliente = 0;
 
+  
+  banderaProducto = 0;
+  public obtenerProducto;
+
   constructor(private fb: FormBuilder,
               public cs_: CajasService,
               public fs_: FrutasServices,
-              public clients_: ClientesService) {
+              public clients_: ClientesService,
+              private productosS_: FrutasServices) {
 
     this.crearFormulario();
     this.crearFormularioDos();
     this.crearArreglo();
     this.escucharTienda();
+    this.escucharProductoId();
+    this.escucharProductoNombre();
     this.escucharPedido();
     this.escucharKgEx();
     this.escucharTarimas();
@@ -60,7 +64,7 @@ export class PesajeComponent implements OnInit {
   // Preparar PDF para impresion
  imprimir(){
 
-    
+
 
   }
 
@@ -84,7 +88,7 @@ export class PesajeComponent implements OnInit {
             });
           }
           else{
-            
+
             console.log    (tarima.get('tipo').value, tarima.get('cajas').value);
             this.cs_.prueba(tarima.get('tipo').value, tarima.get('cajas').value);
             swal('Listo!', {
@@ -119,6 +123,7 @@ export class PesajeComponent implements OnInit {
     this.formaDos = this.fb.group({
       tienda  : [],
       producto: [],
+      productoNombre: [],
     });
   }
 
@@ -165,7 +170,38 @@ export class PesajeComponent implements OnInit {
   }
 
   // Escuchas cambios
+// Calculos Dinamicos para destarar
+escucharProductoId(){
 
+  this.formaDos.get('producto').valueChanges.subscribe(producto =>
+  {
+    this.productosS_.buscarProductoId(producto).subscribe( (a: any) => {
+      this.banderaProducto = a.length;
+      if (a.length !== 0){
+        this.obtenerProducto = a;
+        this.formaDos.patchValue({
+          productoNombre: this.obtenerProducto[0]['producto']
+        }, {emitEvent: false});
+      }
+    });
+  });
+}
+
+escucharProductoNombre(){
+
+  this.formaDos.get('productoNombre').valueChanges.subscribe(producto =>
+  {
+    this.productosS_.buscarProductoNombre(producto).subscribe( (a: any) => {
+      this.banderaProducto = a.length;
+      if (a.length !== 0){
+        this.obtenerProducto = a;
+        this.formaDos.patchValue({
+          producto: this.obtenerProducto[0]['id']
+        }, {emitEvent: false});
+      }
+    });
+  });
+}
   escucharTienda(){
 
     this.formaDos.get('tienda').valueChanges.subscribe(tienda =>

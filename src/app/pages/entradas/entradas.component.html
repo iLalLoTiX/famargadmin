@@ -58,14 +58,15 @@
                         <h4 class="card-title"><span class="lstick"></span>Inventario</h4>
                     </div>
                     <div class="ml-auto">
-                        <button class="pull-right btn btn-circle btn-success" data-toggle="modal" data-target="#myModal"><i class="ti-plus"></i></button>
+                        <button class="pull-right btn btn-circle btn-success" (click)="openModal(template)"><i class="ti-plus"></i></button>
                     </div>
                 </div>
                 <!-- .modal for add task -->
-                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
-                    <!-- <app-modal-entrada></app-modal-entrada> -->
-                    <app-modal-entrada></app-modal-entrada>
-                </div>
+                <ng-template #template>
+                
+                    <app-modal-entrada [closeModal]="modalRef"></app-modal-entrada>
+            
+                </ng-template>
                 <div class="table-responsive">
                     <table id="demo-foo-addrow" class="table m-t-30 table-hover no-wrap contact-list" data-page-size="10">
                         <thead>

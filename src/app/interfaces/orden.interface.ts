@@ -1,6 +1,5 @@
-export class orden {
-    nombre: string;
-    mensaje:string;
-    fecha:number;
-    uid?:string;
+export class Orden {
+    id: string;
+    nombreProveedor: string;
+    fecha: number;
 }

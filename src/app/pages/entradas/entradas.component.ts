@@ -1,31 +1,38 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, TemplateRef } from '@angular/core';
 import { EntradasService } from 'src/app/services/entradas.service';
 
+// Ngx Bootstrap
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 @Component({
   selector: 'app-entradas',
   templateUrl: './entradas.component.html'
 })
-export class EntradasComponent implements OnInit {
+export class EntradasComponent {
+
+  // Modal
+  public closeResult = '';
+  public modalRef: BsModalRef;
 
   // Array Entradas recientes
   public entradasRecientes;
   public productosRecientes;
 
-  constructor( public es_: EntradasService) { 
-    this.es_.entradasRecientes().subscribe( a => {
+  constructor(public EntradasServices: EntradasService,
+              private modalService: BsModalService) { 
+    this.EntradasServices.entradasRecientes().subscribe( a => {
       this.entradasRecientes = a;
     });
   }
 
   hola(id: string){
     this.productosRecientes = null;
-    this.es_.productoEntrante(id).subscribe( a => { 
+    this.EntradasServices.productoEntrante(id).subscribe( a => { 
       this.productosRecientes = a;
     });
-
   }
 
-  ngOnInit(): void {
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template, {class: 'modal-lg'});
   }
 
 }

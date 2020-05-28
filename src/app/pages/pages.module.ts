@@ -25,6 +25,9 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ModalCajasComponent } from './cajas/modal-cajas/modal-cajas.component';
 import { ClientesComponent } from './clientes/clientes.component';
 import { ModalClientesComponent } from './clientes/modal-clientes/modal-clientes.component';
+import { GenOrdenComponent } from './entradas/gen-orden/gen-orden.component';
+import { SelectProveedorComponent } from './entradas/select-proveedor/select-proveedor.component';
+import { RecibirProdProvComponent } from './entradas/detalle-entrada/recibir-prod-prov/recibir-prod-prov.component';
 
 
 @NgModule({
@@ -43,7 +46,10 @@ import { ModalClientesComponent } from './clientes/modal-clientes/modal-clientes
         DetalleEntradaComponent,
         ModalCajasComponent,
         ClientesComponent,
-        ModalClientesComponent
+        ModalClientesComponent,
+        GenOrdenComponent,
+        SelectProveedorComponent,
+        RecibirProdProvComponent
     ],
     exports: [
         DashboardComponent,

@@ -1,8 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-// Servicios
-import { OrdenServicio } from './servicios/ordenes.service'
 import { FormsModule } from '@angular/forms';
 
 // Modulos
@@ -11,6 +9,8 @@ import { PagesModule } from './pages/pages.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+
+// Firebase Firestorage
 import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireStorageModule } from 'angularfire2/storage';
@@ -39,7 +39,6 @@ import { LoginComponent } from './login/login.component';
     ModalModule.forRoot(),
   ],
   providers: [
-    OrdenServicio
   ],
   bootstrap: [AppComponent]
 })
