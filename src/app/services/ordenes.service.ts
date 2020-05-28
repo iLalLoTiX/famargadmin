@@ -24,7 +24,7 @@ export class OrdenesService {
     this.generarId();
   }
 
-  entradasRecientes(){
+  ordenesRecientes(){
     this.entradasCollection = this.fb_.collection<any>('ordenes');
     return this.entradasCollection.snapshotChanges().pipe(map(actions => {
       return actions.map(a => {
@@ -41,14 +41,22 @@ export class OrdenesService {
       this.idGen = a.data()['id'] + 1; });
   }
 
-  productoEntrante(id: string){
-    return this.fb_.collection('entradas').doc(id)
-    .collection('entradaProductos').snapshotChanges()
+  recuperarOrdenProducto(id: string){
+    return this.fb_.collection('ordenes').doc(id)
+    .collection('ordenProductos').snapshotChanges()
     .pipe(map(actions => {
       return actions.map(a => {
         return a;
         });
       }));
+  }
+
+  recuperarOrden(id: string){
+    return this.fb_.collection('ordenes').doc(id).get();
+  }
+
+  recuperarProveedor(id: string){
+    return this.fb_.collection('proveedores').doc(id).get();
   }
 
   agregarOrden(ordenEntrante: Orden, arrayProducto: any [])

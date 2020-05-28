@@ -74,15 +74,13 @@
                                 <th >ID</th>
                                 <th>Nombre</th>
                                 <th>Total</th>
-                                <th>Ver</th>
                             </tr>
                         </thead>
                         <tbody class="accordion" id="accordionExample">
-                            <ng-container *ngFor="let entrada of entradasRecientes; let i = index;">
+                            <ng-container *ngFor="let entrada of ordenesRecientes; let i = index;">
                             <tr>
                                 <td>OC-{{entrada.payload.doc.id}}</td>
                                 <td>{{entrada.payload.doc.data()['nombreProveedor']}}</td>
-                                <td>{{entrada.payload.doc.data()['total']}}</td>
                                 <td>
                                     <a (click)="hola(entrada.payload.doc.id)" class="btn btn-info" target="_blank" [routerLink]="['/entrada', entrada.payload.doc.id]"><i class=" fa fa-eye"></i></a>
                                 </td>

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { EntradasService } from 'src/app/services/entradas.service';
 import { producto } from '../../../interfaces/producto.interface';
+import { OrdenesService } from '../../../services/ordenes.service';
 
 @Component({
   selector: 'app-detalle-entrada',
@@ -19,15 +19,14 @@ export class DetalleEntradaComponent{
   public fecha;
 
   constructor(public ar_: ActivatedRoute,
-              public es_: EntradasService) {
+              public OrdenesService: OrdenesService) {
     this.ar_.params.subscribe( a => {
-      this.es_.productoEntrante(a['id']).subscribe( b => { this.productoProveedor = b; });
-      this.es_.recuperarEntrada(a['id']).subscribe( c => 
+      this.OrdenesService.recuperarOrdenProducto(a['id']).subscribe( b => { this.productoProveedor = b;});
+      this.OrdenesService.recuperarOrden(a['id']).subscribe( c => 
         {
           this.infEntrada = c;
           this.fecha = new Date();
-          console.log(this.fecha);
-          this.es_.recuperarProveedor(c.data()['idNombreProveedor']).subscribe( d => 
+          this.OrdenesService.recuperarProveedor(c.data()['id']).subscribe( d => 
             {
               this.infProveedor = d;
             });
