@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter} from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit} from '@angular/core';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { FrutasServices } from '../../../services/frutas.service';
 
@@ -14,13 +14,16 @@ import { OrdenesService } from '../../../services/ordenes.service';
   styles: [
   ]
 })
-export class GenOrdenComponent {
+export class GenOrdenComponent implements OnInit {
 
 // Variables temporales Proveedor
 
   @Output() regresarProveedor: EventEmitter<any>  = new EventEmitter();
+  @Output() obtenerProveedor: EventEmitter<any>  = new EventEmitter();
   @Input () proveedorIdR: string;
   @Input () proveedorNombreR: string;
+  @Input () arrayProducto: any [] = [];
+  @Input () enviarOrden: Orden = new Orden();
 
   // Formularios
   public formOrden: FormGroup;
@@ -30,17 +33,16 @@ export class GenOrdenComponent {
   public obtenerProducto;
   public iProducto: number;
 
-  // Arreglos
-  public arrayProducto: any [] = [];
-
-  public enviarOrden: Orden = new Orden();
-
   constructor(private fb: FormBuilder,
               public ProductosServices: FrutasServices,
               public OrdenServices: OrdenesService){
     this.crearFormularioOrden();
     this.escucharProductoId();
     this.escucharProductoNombre();
+  }
+
+  ngOnInit(){
+    
   }
 
   regresar(){
@@ -59,12 +61,13 @@ export class GenOrdenComponent {
   }
 
   agregarProducto(){
-    this.arrayProducto.push([
-      this.formOrden.get('producto').value,
-      this.formOrden.get('productoNombre').value,
-      this.formOrden.get('kg').value,
-      this.formOrden.get('precio').value,
-    ]);
+    this.arrayProducto.push({
+      idProducto: this.formOrden.get('producto').value,
+      producto: this.formOrden.get('productoNombre').value,
+      peso: this.formOrden.get('kg').value,
+      precio: this.formOrden.get('precio').value,}
+    );
+    console.log(this.arrayProducto);
     this.reiniciarForm();
   }
 
@@ -75,18 +78,18 @@ export class GenOrdenComponent {
   editarProducto(i: number){
     this.iProducto = i;
     this.formOrden.setValue({
-      producto       : this.arrayProducto[i][0],
-      productoNombre : this.arrayProducto[i][1],
-      kg             : this.arrayProducto[i][2],
-      precio         : this.arrayProducto[i][3],
+      producto       : this.arrayProducto[i].idProducto,
+      productoNombre : this.arrayProducto[i].producto,
+      kg             : this.arrayProducto[i].peso,
+      precio         : this.arrayProducto[i].precio,
     }, {emitEvent: false});
   }
 
   actualizarProducto(){
-    this.arrayProducto[this.iProducto][0] = this.formOrden.get('producto').value;
-    this.arrayProducto[this.iProducto][1] = this.formOrden.get('productoNombre').value;
-    this.arrayProducto[this.iProducto][2] = this.formOrden.get('kg').value;
-    this.arrayProducto[this.iProducto][3] = this.formOrden.get('precio').value;
+    this.arrayProducto[this.iProducto].idProducto = this.formOrden.get('producto').value;
+    this.arrayProducto[this.iProducto].producto = this.formOrden.get('productoNombre').value;
+    this.arrayProducto[this.iProducto].peso = this.formOrden.get('kg').value;
+    this.arrayProducto[this.iProducto].precio = this.formOrden.get('precio').value;
     this.iProducto = undefined;
     this.reiniciarForm();
   }
@@ -128,13 +131,22 @@ export class GenOrdenComponent {
   }
 
   altaOrden(){
-    const fecha = new Date();
-    console.log(fecha.getTime());
-    this.enviarOrden.id = this.proveedorIdR;
-    this.enviarOrden.nombreProveedor = this.proveedorNombreR;
-    this.enviarOrden.fecha = fecha.getTime();
+    console.log(this.proveedorIdR);
+    console.log(this.proveedorNombreR);
+    if (Object.keys(this.enviarOrden).length === 0){
+      const fecha = new Date();
+      this.enviarOrden.idProveedor = this.proveedorIdR;
+      this.enviarOrden.nombreProveedor = this.proveedorNombreR;
+      this.enviarOrden.fecha = fecha.getTime();
+      this.enviarOrden.estado = false;
+      this.OrdenServices.agregarOrden(this.enviarOrden, this.arrayProducto);
+    }else{
+      this.OrdenServices.agregarOrden(this.enviarOrden, this.arrayProducto);
+    }
+  }
 
-    this.OrdenServices.agregarOrden(this.enviarOrden, this.arrayProducto);
+  editarOrdenProducto(){
+    console.log('uwu');
   }
 
 }

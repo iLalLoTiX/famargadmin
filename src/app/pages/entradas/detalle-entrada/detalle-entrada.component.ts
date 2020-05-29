@@ -20,18 +20,22 @@ export class DetalleEntradaComponent{
 
   constructor(public ar_: ActivatedRoute,
               public OrdenesService: OrdenesService) {
-    this.ar_.params.subscribe( a => {
-      this.OrdenesService.recuperarOrdenProducto(a['id']).subscribe( b => { this.productoProveedor = b;});
-      this.OrdenesService.recuperarOrden(a['id']).subscribe( c => 
-        {
-          this.infEntrada = c;
-          this.fecha = new Date();
-          this.OrdenesService.recuperarProveedor(c.data()['id']).subscribe( d => 
-            {
-              this.infProveedor = d;
-            });
-        });
+    let idParam;
+    this.ar_.params.forEach( a => {
+      idParam = a['id'];
     });
+    this.OrdenesService.recuperarOrdenProducto(idParam).forEach( b => { 
+      this.productoProveedor = b;
+    });
+    this.OrdenesService.recuperarOrden(idParam).forEach( c => 
+      {
+        this.infEntrada = c;
+        this.fecha = new Date();
+        this.OrdenesService.recuperarProveedor(c.data()['id']).subscribe( d => 
+          {
+            this.infProveedor = d;
+          });
+      });
    }
 
 

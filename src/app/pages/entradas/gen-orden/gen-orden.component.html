@@ -77,10 +77,10 @@
             <tbody>
                 <ng-container *ngFor="let producto of arrayProducto; let i = index;">
                     <tr>
-                        <td>{{producto[0]}}</td>
-                        <td>{{producto[1]}}</td>
-                        <td>{{producto[2]}}</td>
-                        <td>{{producto[3]}}</td>
+                        <td>{{producto.idProducto}}</td>
+                        <td>{{producto.producto}}</td>
+                        <td>{{producto.peso}}</td>
+                        <td>{{producto.precio}}</td>
                         <td>
                             <button (click)="borrarProducto(i)" type="button" class="btn btn-danger ml-2"><i class="fa fa-trash"></i></button>
                             <button (click)="editarProducto(i)" type="button" class="btn btn-info"><i class="fa fa-pencil"></i></button>

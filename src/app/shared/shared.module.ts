@@ -4,7 +4,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { HeaderComponent } from './header/header.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
-import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 
 
@@ -12,12 +11,10 @@ import { CollapseModule } from 'ngx-bootstrap/collapse';
   declarations: [
     HeaderComponent,
     SidebarComponent,
-    BreadcrumbsComponent,
   ],
   exports: [
     HeaderComponent,
     SidebarComponent,
-    BreadcrumbsComponent,
   ],
   imports: [
     CommonModule,

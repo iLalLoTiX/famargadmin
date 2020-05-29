@@ -1,4 +1,4 @@
-<div class="modal-dialog modal-lg" role="document">
+<div class="modal-dialog modal-lg">
     <div class="modal-content">
         <div class="modal-header">
             <h4 class="modal-title text-left">{{fecha}}</h4>
@@ -8,7 +8,7 @@
             <app-select-proveedor (ProveedorSeleccionado)="recibirProveedor($event)"></app-select-proveedor>
         </div>
         <div *ngIf="proveedorId != undefined" class="modal-body animated fadeIn">
-            <app-gen-orden [proveedorIdR]="proveedorId" [proveedorNombreR]="proveedorNombre" (regresarProveedor)="recibirProveedor($event)"></app-gen-orden>
+            <app-gen-orden [enviarOrden]="ordenR" [arrayProducto]="arrayProducto" [proveedorIdR]="proveedorId" [proveedorNombreR]="proveedorNombre" (regresarProveedor)="recibirProveedor($event)"></app-gen-orden>
         </div>
         <div class="modal-footer">
             <button (click)="salir()" type="button" class="btn btn-secondary">Close</button>

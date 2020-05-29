@@ -3,4 +3,6 @@ export class EntradaProducto{
     idProducto: string;
     peso: number;
     precio: number;
+    cantidadCajas?: number;
+    tipos?: string;
 }
