@@ -1,10 +1,11 @@
 // tslint:disable-next-line: class-name
 export class producto {
 
-    id:string;
+    id: string;
     sku?: string;
     producto: string;
     sat: string;
     inventario: number;
+    pesoEsperado: number;
 
 }

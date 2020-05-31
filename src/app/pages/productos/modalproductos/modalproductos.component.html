@@ -1,82 +1,94 @@
 
-        <div class="modal-header">
-            <h4 class="modal-title text-left"></h4>
-            <button (click)="salir()" class="close"> <span aria-hidden="true">&times;</span> </button>
-        </div>
-        <div class="modal-body">
-            <form  (ngSubmit)="agregarProducto(F)" #F="ngForm">
-                <div class="form-body">
-                    <div class="row p-t-20">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="control-label">ID</label>
-                                <input type="text" 
-                                class="form-control"
-                                placeholder="id"
-                                [(ngModel)]="productoRef.id" 
-                                name="id"
-                                required>
 
-                                <input type="hidden" 
-                                [(ngModel)]="idProductoRef" 
-                                name="idProducto">
-                            </div>
-                        </div>   
-                        <!--/span-->
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="control-label">SKU</label>
-                                <input type="text" 
-                                class="form-control"
-                                placeholder="sku"
-                                [(ngModel)]="productoRef.sku"  
-                                name="sku"
-                                required>
-                            </div>
-                        </div>   
-                        <!--/span-->
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label class="control-label">Producto</label>
-                                <input type="text" 
-                                class="form-control"
-                                placeholder="producto"
-                                [(ngModel)]="productoRef.producto"  
-                                name="producto"
-                                required>
-                            </div>
-                        </div>   
-                        <!--/span-->
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label class="control-label">Clave SAT</label>
-                                <input type="text"
-                                class="form-control"
-                                placeholder="sat"
-                                [(ngModel)]="productoRef.sat"  
-                                name="sat"
-                                required>
-                            </div>
-                        </div> 
-                        <!--/span-->
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label class="control-label">Inventario</label>
-                                <input type="number"
-                                class="form-control"
-                                placeholder="inventario"
-                                [(ngModel)]="productoRef.inventario"  
-                                name="inventario"
-                                required>
-                            </div>
-                        </div> 
-                    </div>
-                    
+    <div class="modal-header">
+        <h4 class="modal-title text-left"></h4>
+        <button (click)="salir()" class="close"> <span aria-hidden="true">&times;</span> </button>
+    </div>
+    <div class="modal-body">
+        <form  (ngSubmit)="agregarProducto(F)" #F="ngForm">
+            <div class="form-body">
+                <div class="row p-t-20">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label">ID</label>
+                            <input type="text" 
+                            class="form-control"
+                            placeholder="id"
+                            [(ngModel)]="productoRef.id" 
+                            name="id"
+                            required>
+
+                            <input type="hidden" 
+                            [(ngModel)]="idProducto" 
+                            name="idProducto">
+                        </div>
+                    </div>   
+                    <!--/span-->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label">Producto</label>
+                            <input type="text" 
+                            class="form-control"
+                            placeholder="producto"
+                            [(ngModel)]="productoRef.producto"  
+                            name="producto"
+                            required>
+                        </div>
+                    </div>  
+                    <!--/span-->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label">Esperado</label>
+                            <input type="text" 
+                            class="form-control"
+                            placeholder="Peso Esperado"
+                            [(ngModel)]="productoRef.pesoEsperado"  
+                            name="pesoEsperado"
+                            required>
+                        </div>
+                    </div>   
+                    <!--/span-->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label">Inventario</label>
+                            <input type="number"
+                            class="form-control"
+                            placeholder="inventario"
+                            [(ngModel)]="productoRef.inventario"  
+                            name="inventario"
+                            required>
+                        </div>
+                    </div> 
+                    <!--/span-->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label">SKU</label>
+                            <input type="text" 
+                            class="form-control"
+                            placeholder="sku"
+                            [(ngModel)]="productoRef.sku"  
+                            name="sku"
+                            required>
+                        </div>
+                    </div>   
+                    <!--/span-->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label">Clave SAT</label>
+                            <input type="text"
+                            class="form-control"
+                            placeholder="sat"
+                            [(ngModel)]="productoRef.sat"  
+                            name="sat"
+                            required>
+                        </div>
+                    </div> 
                 </div>
-            </form>
+            </div>
+        </form>
 
-        </div>
-        <div class="modal-footer">
-            <button (click)="salir()" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button  (click)="agregarProducto(F)" type="submit" class="btn btn-success" data-dismiss="modal">Submit</button>
-        </div>
+    </div>
+    <div class="modal-footer">
+        <button (click)="salir()" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button  (click)="agregarProducto(F)" type="submit" class="btn btn-success" data-dismiss="modal">Submit</button>
+    </div>

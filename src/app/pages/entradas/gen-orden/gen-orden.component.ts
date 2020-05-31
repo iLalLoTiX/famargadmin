@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnInit} from '@angular/core';
-import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { FrutasServices } from '../../../services/frutas.service';
 
 // Interfaces
@@ -14,11 +14,10 @@ import { OrdenesService } from '../../../services/ordenes.service';
   styles: [
   ]
 })
-export class GenOrdenComponent implements OnInit {
+export class GenOrdenComponent {
 
 // Variables temporales Proveedor
 
-  @Output() regresarProveedor: EventEmitter<any>  = new EventEmitter();
   @Output() obtenerProveedor: EventEmitter<any>  = new EventEmitter();
   @Input () proveedorIdR: string;
   @Input () proveedorNombreR: string;
@@ -32,41 +31,41 @@ export class GenOrdenComponent implements OnInit {
   public banderaProducto = 0;
   public obtenerProducto;
   public iProducto: number;
+  public total;
 
   constructor(private fb: FormBuilder,
               public ProductosServices: FrutasServices,
               public OrdenServices: OrdenesService){
     this.crearFormularioOrden();
+    this.escucharCantidadCajas();
     this.escucharProductoId();
     this.escucharProductoNombre();
-  }
-
-  ngOnInit(){
-    
-  }
-
-  regresar(){
-    this.proveedorIdR = null;
-    this.proveedorNombreR = null;
-    this.regresarProveedor.emit({id: this.proveedorIdR, nombre: this.proveedorNombreR});
+    this.escucharPrecio();
   }
 
   crearFormularioOrden(){
     this.formOrden = this.fb.group({
-      producto       : [],
-      productoNombre : [],
-      kg             : [],
-      precio         : []
+      cantidad        : [],
+      producto        : [],
+      productoNombre  : [],
+      pesoEsperado    : [],
+      peso            : [],
+      precio          : [],
+      medida          : [],
+      total           : []
     });
   }
 
   agregarProducto(){
     this.arrayProducto.push({
-      idProducto: this.formOrden.get('producto').value,
-      producto: this.formOrden.get('productoNombre').value,
-      peso: this.formOrden.get('kg').value,
-      precio: this.formOrden.get('precio').value,}
-    );
+      cantidad        : this.formOrden.get('cantidad').value,
+      producto        : this.formOrden.get('producto').value,
+      productoNombre  : this.formOrden.get('productoNombre').value,
+      peso            : this.formOrden.get('peso').value,
+      precio          : this.formOrden.get('precio').value,
+      medida          : this.formOrden.get('medida').value,
+      total           : this.formOrden.get('peso').value * this.formOrden.get('precio').value,
+    });
     console.log(this.arrayProducto);
     this.reiniciarForm();
   }
@@ -88,7 +87,7 @@ export class GenOrdenComponent implements OnInit {
   actualizarProducto(){
     this.arrayProducto[this.iProducto].idProducto = this.formOrden.get('producto').value;
     this.arrayProducto[this.iProducto].producto = this.formOrden.get('productoNombre').value;
-    this.arrayProducto[this.iProducto].peso = this.formOrden.get('kg').value;
+    this.arrayProducto[this.iProducto].peso = this.formOrden.get('peso').value;
     this.arrayProducto[this.iProducto].precio = this.formOrden.get('precio').value;
     this.iProducto = undefined;
     this.reiniciarForm();
@@ -98,17 +97,44 @@ export class GenOrdenComponent implements OnInit {
     this.arrayProducto.splice(i , 1);
   }
 
+  escucharCantidadCajas(){
+
+    this.formOrden.get('cantidad').valueChanges.subscribe(cantidad =>
+    {
+      if (this.formOrden.get('medida').value === 'caja'){
+        this.formOrden.patchValue({
+          peso  : cantidad * this.formOrden.get('pesoEsperado').value,
+          total : cantidad * this.formOrden.get('precio').value
+        }, {emitEvent: false});
+      }else{
+        this.formOrden.patchValue({
+          total : this.formOrden.get('cantidad').value * this.formOrden.get('precio').value
+        }, {emitEvent: false});
+      }
+    });
+  }
+
   escucharProductoId(){
 
     this.formOrden.get('producto').valueChanges.subscribe(producto =>
     {
       this.ProductosServices.buscarProductoId(producto).subscribe( (a: any) => {
-        this.banderaProducto = a.length;
         if (a.length !== 0){
-          this.obtenerProducto = a;
-          this.formOrden.patchValue({
-            productoNombre: this.obtenerProducto[0]['producto']
-          }, {emitEvent: false});
+          if (this.formOrden.get('medida').value === 'caja'){
+            console.log(this.formOrden.get('cantidad').value , this.formOrden.get('precio').value);
+            this.formOrden.patchValue({
+              productoNombre: a[0]['producto'],
+              pesoEsperado  : a[0]['pesoEsperado'],
+              peso          : this.formOrden.get('cantidad').value * a[0]['pesoEsperado'],
+              total         : this.formOrden.get('cantidad').value * this.formOrden.get('precio').value
+            }, {emitEvent: false});
+          }else{
+            console.log(this.formOrden.get('cantidad').value , this.formOrden.get('precio').value);
+            this.formOrden.patchValue({
+              productoNombre: a[0]['producto'],
+              total         : this.formOrden.get('cantidad').value * this.formOrden.get('precio').value
+            }, {emitEvent: false});
+          }
         }
       });
     });
@@ -119,15 +145,40 @@ export class GenOrdenComponent implements OnInit {
     this.formOrden.get('productoNombre').valueChanges.subscribe(producto =>
     {
       this.ProductosServices.buscarProductoNombre(producto).subscribe( (a: any) => {
-        this.banderaProducto = a.length;
         if (a.length !== 0){
-          this.obtenerProducto = a;
-          this.formOrden.patchValue({
-            producto: this.obtenerProducto[0]['id']
-          }, {emitEvent: false});
+          if (this.formOrden.get('medida').value === 'caja'){
+            console.log(this.formOrden.get('cantidad').value , this.formOrden.get('precio').value);
+            this.formOrden.patchValue({
+              producto      : a[0]['id'],
+              pesoEsperado  : a[0]['pesoEsperado'],
+              kg            : this.formOrden.get('cantidad').value * a[0]['pesoEsperado'],
+              total         : this.formOrden.get('cantidad').value * this.formOrden.get('precio').value
+            }, {emitEvent: false});
+          }else{
+            console.log(this.formOrden.get('cantidad').value , this.formOrden.get('precio').value);
+            this.formOrden.patchValue({
+              producto      : a[0]['id'],
+              total         : this.formOrden.get('cantidad').value * this.formOrden.get('precio').value
+            }, {emitEvent: false});
+          }
         }
       });
     });
+  }
+
+  escucharPrecio(){
+    this.formOrden.get('precio').valueChanges.subscribe(precio =>
+      {
+        if (this.formOrden.get('medida').value === 'caja'){
+          this.formOrden.patchValue({
+            total         : this.formOrden.get('cantidad').value * precio
+          }, {emitEvent: false});
+        }else{
+          this.formOrden.patchValue({
+            total         : this.formOrden.get('cantidad').value * precio
+          }, {emitEvent: false});
+        }
+      });
   }
 
   altaOrden(){

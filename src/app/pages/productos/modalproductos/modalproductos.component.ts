@@ -12,26 +12,26 @@ import { FrutasServices } from '../../../services/frutas.service';
 export class ModalproductosComponent{
 
   @Input() closeModal;
-  
-  @Input() idProductoRef;
 
-  @Input() public productoRef: producto = new producto();
+  @Input() productoRef: producto = new producto();
+
+  @Input() idProducto;
 
 
   constructor( public fs_: FrutasServices ) { }
 
   agregarProducto(form: NgForm){
     if (form.invalid){
-      Object.values(form.controls).forEach(control => {control.markAsTouched();});
+      Object.values(form.controls).forEach(control => { control.markAsTouched(); });
       return;
     }
-    if (this.idProductoRef == null){
+    if (this.idProducto == null){
       this.fs_.agregarProducto(this.productoRef.id, this.productoRef);
       this.salir();
       return;
     }
     else{
-      this.fs_.actualizarProducto(this.idProductoRef, this.productoRef);
+      this.fs_.actualizarProducto(this.idProducto, this.productoRef);
       this.salir();
       return;
     }

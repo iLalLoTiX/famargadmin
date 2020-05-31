@@ -56,7 +56,7 @@ export class EntradasComponent {
   }
 
   editarOrden(template: TemplateRef<any>) {
-    
+
     if (Object.keys(this.orden).length === 0)
     {
       swal({
@@ -70,7 +70,7 @@ export class EntradasComponent {
   }
 
   borrarOrden(){
-    if (this.orden === undefined)
+    if (Object.keys(this.orden).length === 0)
     {
       swal({
         text: 'Debes seleccionar una orden',
@@ -79,7 +79,6 @@ export class EntradasComponent {
       return;
     }
     else{
-    console.log(this.orden);
     swal({
       title: 'Atencion!',
       text: 'Quieres borrar esta orden de compra: OC-' + this.orden.id + '?',

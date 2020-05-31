@@ -34,14 +34,12 @@ export class ModalEntradaComponent implements OnInit{
     if (Object.keys(this.ordenR).length !== 0){
       this.proveedorId = this.ordenR.idProveedor;
       this.proveedorNombre = this.ordenR.nombreProveedor;
-      this.OrdenServices.recuperarOrdenProducto(this.ordenR.id).forEach( a =>{
+      this.OrdenServices.recuperarOrdenProducto(this.ordenR.id).forEach( a => {
         let i = 0;
         a.forEach( b => {
           this.arrayProducto[i] = b.payload.doc.data();
-          console.log(this.arrayProducto[i]);
           i++;
         });
-        this.arrayProducto.forEach( c => console.log(c));
       });
     }
   }

@@ -5,4 +5,6 @@ export class EntradaProducto{
     precio: number;
     cantidadCajas?: number;
     tipos?: string;
+    medida?: string;
+    total?: number;
 }
