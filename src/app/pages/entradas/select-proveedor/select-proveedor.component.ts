@@ -1,5 +1,7 @@
 import { Component, Output, EventEmitter} from '@angular/core';
 import { ProveedoresService } from '../../../services/proveedores.service';
+import { OrdenesService } from 'src/app/services/ordenes.service';
+import { proveedor } from '../../../interfaces/proveedores.interface';
 
 @Component({
   selector: 'app-select-proveedor',
@@ -11,8 +13,6 @@ export class SelectProveedorComponent{
 
   @Output() ProveedorSeleccionado: EventEmitter<any>  = new EventEmitter();
 
-  @Output() ProveedorSeleccionadoNombre: EventEmitter<string>  = new EventEmitter();
-
   public mostrarProveedores;
 
   constructor(private Ps: ProveedoresService) {
@@ -20,9 +20,9 @@ export class SelectProveedorComponent{
     this.Ps.cargarProveeores().subscribe(a => { this.mostrarProveedores = a; });
   }
 
-  seleccionarProveedor(id_: string, nombre_: string){
+  seleccionarProveedor(proveedor_: proveedor){
 
-    this.ProveedorSeleccionado.emit({id: id_, nombre: nombre_});
+    this.ProveedorSeleccionado.emit(proveedor_);
 
   }
 

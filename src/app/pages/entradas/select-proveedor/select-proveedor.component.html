@@ -10,13 +10,11 @@
         </thead>
         <tbody *ngFor="let proveedor of mostrarProveedores">
             
-            <tr class="active">
+            <tr (dblclick)="seleccionarProveedor(proveedor.payload.doc.data())">
                 <!-- <td><span class="round"><img src="https://scontent.fcjs3-2.fna.fbcdn.net/v/t1.0-9/p960x960/94155547_2847826151937499_7846451808619724800_o.jpg?_nc_cat=100&_nc_sid=85a577&_nc_eui2=AeGjyzfHB99DaOSW76vXvQ_CQhUI45zcr-1CFQjjnNyv7X8CLF64u09HQ2KvkPpx5-vHM2aW3HjfkG2qaxWYlLqr&_nc_ohc=J6mAkDIs34IAX9YkK3T&_nc_ht=scontent.fcjs3-2.fna&_nc_tp=6&oh=420ed9f081bad71f40b7bea4f6a98b09&oe=5EE576EE" alt="user" width="50"></span></td> -->
                 <td>
                     <h6>{{ proveedor.payload.doc.data()['nombreProveedor']}}</h6><small class="text-muted">{{ proveedor.payload.doc.data()['rfc']}}</small></td>
                 <td><span class="label label-info label-rounded">{{ proveedor.payload.doc.data()['factura']}}</span></td>
-                <td>
-                    <button (click)="seleccionarProveedor(proveedor.payload.doc.id, proveedor.payload.doc.data()['nombreProveedor'])" type="button" class="btn btn-info"><i class="fa fa-arrow-right"></i></button></td>
             </tr>
         </tbody>
         <!-- <tr>

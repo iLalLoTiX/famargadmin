@@ -4,15 +4,8 @@
             <h4 class="modal-title text-left">{{fecha | date: 'short'}}</h4>
             <button type="button" class="close" (click)="salir()"> <span aria-hidden="true">&times;</span> </button>
         </div>
-        <div *ngIf="proveedorId == undefined" class="modal-body animated fadeIn">
+        <div class="modal-body animated fadeIn">
             <app-select-proveedor (ProveedorSeleccionado)="recibirProveedor($event)"></app-select-proveedor>
-        </div>
-        <div *ngIf="proveedorId != undefined" class="modal-body animated fadeIn">
-            <app-gen-orden [enviarOrden]="ordenR" [arrayProducto]="arrayProducto" [proveedorIdR]="proveedorId" [proveedorNombreR]="proveedorNombre" (regresarProveedor)="recibirProveedor($event)"></app-gen-orden>
-        </div>
-        <div class="modal-footer">
-            <button (click)="salir()" type="button" class="btn btn-secondary">Close</button>
-            <button  (click)="altaOrden()" *ngIf="proveedorId != undefined" class="btn btn-success animated fadeIn">Submit</button>
         </div>
     </div>
 </div>

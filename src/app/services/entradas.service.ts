@@ -69,15 +69,15 @@ export class EntradasService {
       {
         const enviarProducto: EntradaProducto =
         {
-          producto : a[4],
+          productoNombre : a[4],
           idProducto : a[0],
-          peso : a[1],
+          pesoEsperado : a[1],
           precio : a[3]
         };
         let total = 0;
         this.fb_.collection('productos').doc(enviarProducto.idProducto).get().subscribe( a => {
 
-        total = a.data()['inventario'] + enviarProducto.peso;
+        total = a.data()['inventario'] + enviarProducto.pesoEsperado;
 
         this.fb_.collection('productos').doc(enviarProducto.idProducto).update({inventario : total});
 

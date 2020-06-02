@@ -1,0 +1,131 @@
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <ng-template #template>
+                <app-modal-entrada [closeModal]="modalRef" (ProveedorSeleccionado)="recibirProveedor($event)"></app-modal-entrada>
+            </ng-template>
+        </div>
+        <form class="form-material m-t-40">
+            <div class="row p-t-20">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <b>ID: </b><p>{{proveedor.id}}</p>
+                    </div>  
+                </div>   
+                <!--span-->
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <b>Nombre: </b><p>{{proveedor.nombreProveedor}}</p>
+                    </div>  
+                </div>     
+            </div>
+            <div class="row">
+                    <button (click)="modalProveedores(template)" type="button" class="btn btn-warning mr-3">Proveedor <i class="fa fa-user"></i></button>
+                    <button (click)="agregarProducto()" type="button" class="btn btn-info mr-3">Producto <i class="fa fa-plus"></i></button>
+                    <button (click)="crearOrden()" type="button" class="pull-right btn btn-success">Alta <i class="fa fa-check"></i></button>
+            </div>
+            <div class="table-responsive m-t-20 no-wrap" >
+                    <table class="table vm no-th-brd pro-of-month">
+                        <thead>
+                            <tr>
+                                <td>#           </td>
+                                <td>Cantidad    </td>
+                                <td>ID          </td>
+                                <td>Nombre      </td>
+                                <td>Medida      </td>
+                                <td>Esperado    </td>
+                                <td>Peso Total  </td>
+                                <td>Precio      </td>
+                                <td>Total       </td>
+                                <td>Borrar      </td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngFor="let producto_ of productos; let i = index;">
+                            <tr>
+                                <td>
+                                    {{ i + 1 }}
+                                </td>
+                                <td>
+                                    <input type="number" 
+                                    class="form-control"
+                                    placeholder="Cantidad"
+                                    [(ngModel)]="productos[i].cantidad"
+                                    (ngModelChange)="cantidad(i, productos[i].cantidad)"
+                                    [ngModelOptions]="{standalone: true}">
+                                </td>
+                                <!--Columna-->
+                                <td>
+                                    <input type="text" 
+                                    class="form-control"
+                                    placeholder="ID"
+                                    [(ngModel)]="productos[i].idProducto"
+                                    (ngModelChange)="idProducto(i, productos[i].idProducto)"
+                                    [ngModelOptions]="{standalone: true}">
+                                </td>
+                                <!--Columna-->
+                                <td>
+                                    <input type="text" 
+                                    class="form-control"
+                                    placeholder="Producto"
+                                    [(ngModel)]="productos[i].productoNombre"
+                                    (ngModelChange)="productoNombre(i, productos[i].productoNombre)"
+                                    [ngModelOptions]="{standalone: true}">
+                                </td>
+                                <!--Columna-->
+                                <td>
+                                    <select class="form-control"
+                                    [(ngModel)]="productos[i].medida"
+                                    (ngModelChange)="medida(i, productos[i].medida)"
+                                    [ngModelOptions]="{standalone: true}" value='cajas'>
+                                        <option [value]="medida.id" *ngFor="let medida of medidas">{{medida.id}}</option>
+                                    </select>
+                                </td>
+                                <!--Columna-->
+                                <td>
+                                    <ng-container *ngIf="productos[i].medida == 'cajas' || productos[i].medida == undefined">
+                                        {{ productos[i].pesoEsperado }}
+                                    </ng-container>
+                                    <ng-container *ngIf="productos[i].medida == 'kilos' || productos[i].medida == 'pieza'">
+                                        Sin Cajas
+                                    </ng-container>
+                                </td>
+                                <!--Columna-->
+                                <td>
+                                    {{ productos[i].pesoTotal }}Kg
+                                </td>
+                                <!--Columna-->
+                                <td>
+                                    <input type="number" 
+                                    class="form-control"
+                                    placeholder="Precio"
+                                    [(ngModel)]="productos[i].precio"
+                                    (ngModelChange)="precio(i, productos[i].precio)"
+                                    [ngModelOptions]="{standalone: true}">
+                                </td>
+                                <!--Columna-->
+                                <td>
+                                    <ng-container *ngIf="productos[i].total > 0">
+                                        {{ productos[i].total }}$
+                                    </ng-container>
+                                    <ng-container *ngIf="productos[i].total <= 0">
+                                        Sin especificar
+                                    </ng-container>
+                                </td>
+                                <td>
+                                    <button (click)="borrarProducto(i)" type="button" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+               
+                                </td>
+                            </tr>  
+                            </ng-container>
+                        </tbody>
+                    </table>
+            </div>
+            <div class="row">
+                <div>
+                    <b>Total: </b><p>{{ total }}</p>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

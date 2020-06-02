@@ -1,5 +1,4 @@
-import { Component, Input, ViewChild, OnInit } from '@angular/core';
-import { GenOrdenComponent } from '../gen-orden/gen-orden.component';
+import { Component, Input, ViewChild, OnInit, EventEmitter, Output} from '@angular/core';
 
 // Sweetalert
 import swal from 'sweetalert';
@@ -14,7 +13,7 @@ import { Orden } from '../../../interfaces/orden.interface';
 })
 export class ModalEntradaComponent implements OnInit{
 
-  @ViewChild(GenOrdenComponent) compGenOrd: GenOrdenComponent;
+  @Output() ProveedorSeleccionado: EventEmitter<any>  = new EventEmitter();
 
   @Input() public closeModal;
 
@@ -45,35 +44,12 @@ export class ModalEntradaComponent implements OnInit{
   }
 
   recibirProveedor($event){
-    this.proveedorId = $event.id;
-    this.proveedorNombre = $event.nombre;
+    this.ProveedorSeleccionado.emit($event);
+    this.salir();
   }
 
   salir(){
     this.closeModal.hide();
-  }
-
-  altaOrden(){
-    swal({
-      title: 'Atencion',
-      text: 'Quieres crear esta orden de compra?',
-      icon: 'warning',
-      buttons: ['Cancelar', true],
-      dangerMode: true,
-    })
-    .then((willDelete) => {
-      if (willDelete) {
-
-        this.compGenOrd.altaOrden();
-        this.salir();
-        swal('Listo!', {
-          icon: 'success',
-        });
-
-      } else {
-        swal('No han habido cambios...');
-      }
-    });
   }
 
 }

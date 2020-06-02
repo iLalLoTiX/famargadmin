@@ -63,23 +63,20 @@ export class OrdenesService {
     return this.fb_.collection('proveedores').doc(id).get();
   }
 
-  agregarOrden(ordenEntrante: Orden, arrayProducto: any [])
+  agregarOrden(ordenEntrante: Orden, productos: any [])
   {
-    
+    console.log('owo');
     const enviarOrden: Orden = { ...ordenEntrante };
     if (enviarOrden.id === undefined){
       enviarOrden.id = this.idGen.toString();
     }
     this.fb_.collection('ordenes').doc(enviarOrden.id).set(enviarOrden);
 
-    arrayProducto.forEach( a =>
+    productos.forEach( a =>
       {
         const enviarProducto: EntradaProducto =
         {
-          idProducto : a.idProducto,
-          producto : a.producto,
-          peso : a.peso,
-          precio : a.precio
+          ...a
         };
 
         this.fb_.collection('idGen').doc('generateIdEntradas').update({id: this.idGen});

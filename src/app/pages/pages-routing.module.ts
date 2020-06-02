@@ -12,6 +12,7 @@ import { EntradasComponent } from './entradas/entradas.component';
 import { PrintComponent } from './print/print.component';
 import { DetalleEntradaComponent } from './entradas/detalle-entrada/detalle-entrada.component';
 import { ClientesComponent } from './clientes/clientes.component';
+import { OrdenComponent } from './entradas/orden/orden.component';
 
 const pagesRoutes: Routes = [
   {
@@ -26,6 +27,7 @@ const pagesRoutes: Routes = [
       {  path: 'cajas', component: CajasComponent },
       {  path: 'entradas', component: EntradasComponent },
       {  path: 'entrada/:id', component: DetalleEntradaComponent },
+      {  path: 'orden/:id', component: OrdenComponent },
       {  path: 'dashboard', component: DashboardComponent  },
       {  path: '', redirectTo: '/dashboard', pathMatch: 'full'},
     ]

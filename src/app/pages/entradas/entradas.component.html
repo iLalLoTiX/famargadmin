@@ -61,18 +61,12 @@
 
                         <button class="btn btn-danger mr-2" (click)="borrarOrden()"><i class="fa fa-trash"></i></button>
                        
-                        <button class="btn btn-info mr-2" (click)="editarOrden(template)"><i class="fa fa-pencil"></i></button>
+                        <button class="btn btn-info mr-2" (click)="editarOrden()"><i class="fa fa-pencil"></i></button>
                     
-                        <button class="btn btn-success" (click)="openModal(template)"><i class="ti-plus"></i></button>
+                        <button class="btn btn-success" (click)="crearOrden()"><i class="ti-plus"></i></button>
                     
                     </div>
                 </div>
-                <!-- .modal for add task -->
-                <ng-template #template>
-                
-                    <app-modal-entrada [ordenR]="orden" [closeModal]="modalRef"></app-modal-entrada>
-            
-                </ng-template>
                 <div class="table-responsive">
                     <table id="demo-foo-addrow" class="table m-t-30 table-hover no-wrap contact-list" data-page-size="10">
                         <thead>
@@ -85,7 +79,7 @@
                         </thead>
                         <tbody class="accordion" id="accordionExample">
                             <ng-container *ngFor="let orden of ordenesRecientes; let i = index;">
-                            <tr (click)="obtenerOrden(orden.payload.doc.data())" (dblclick)="verOrden(orden)">
+                            <tr (click)="obtenerOrden(orden.payload.doc.data())" (dblclick)="verOrden(orden.payload.doc.data())">
                                 <td>OC-{{orden.payload.doc.data()['id']}}</td>
                                 <td>{{orden.payload.doc.data()['nombreProveedor']}}</td>
                                 <td>{{orden.payload.doc.data()['fecha'] | date: 'short'}}</td>

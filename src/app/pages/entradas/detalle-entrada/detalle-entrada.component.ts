@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { producto } from '../../../interfaces/producto.interface';
 import { OrdenesService } from '../../../services/ordenes.service';
+import { proveedor } from '../../../interfaces/proveedores.interface';
+import { Orden } from '../../../interfaces/orden.interface';
+import { newArray } from '@angular/compiler/src/util';
 
 @Component({
   selector: 'app-detalle-entrada',
@@ -12,8 +14,8 @@ import { OrdenesService } from '../../../services/ordenes.service';
 export class DetalleEntradaComponent{
 
   public productoProveedor;
-  public infProveedor;
-  public infEntrada;
+  public infProveedor = new Array();
+  public infOrden: Orden = new Orden();
   public idGen;
   public cosa: string;
   public fecha;
@@ -24,16 +26,22 @@ export class DetalleEntradaComponent{
     this.ar_.params.forEach( a => {
       idParam = a['id'];
     });
-    this.OrdenesService.recuperarOrdenProducto(idParam).forEach( b => { 
+    this.OrdenesService.recuperarOrdenProducto(idParam).forEach( b => {
       this.productoProveedor = b;
     });
-    this.OrdenesService.recuperarOrden(idParam).forEach( c => 
+    this.OrdenesService.recuperarOrden(idParam).forEach( c =>
       {
-        this.infEntrada = c;
-        this.fecha = new Date();
-        this.OrdenesService.recuperarProveedor(c.data()['id']).subscribe( d => 
+        this.infOrden.id              = c.data()['id'];
+        this.infOrden.nombreProveedor = c.data()['nombreProveedor'];
+        this.infOrden.idProveedor     = c.data()['idProveedor'];
+        this.infOrden.estado          = c.data()['estado'];
+        this.infOrden.fecha           = c.data()['fecha'];
+
+        this.fecha = new Date().getTime();
+
+        this.OrdenesService.recuperarProveedor(this.infOrden.idProveedor).subscribe( d => 
           {
-            this.infProveedor = d;
+            this.infProveedor.push(d.data());
           });
       });
    }
