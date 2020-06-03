@@ -4,7 +4,6 @@ import { map } from 'rxjs/operators';
 
 // Modelos
 import { EntradaProducto } from '../interfaces/entradaProducto.interface';
-import { EntradaProveedor } from '../interfaces/entradaProveedor.interface';
 
 @Injectable({
   providedIn: 'root'

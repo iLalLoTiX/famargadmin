@@ -16,12 +16,8 @@ export class OrdenesService {
   // Modelo
   public enviarProducto = new EntradaProducto();
 
-  // variables temporales
-  public idGen: number;
-
-
   constructor( public fb_: AngularFirestore) {
-    this.generarId();
+
   }
 
   ordenesRecientes(){
@@ -37,9 +33,7 @@ export class OrdenesService {
 
   // Aumenta en 1 cada vez que agregamos una orden
   generarId(){
-    return this.fb_.collection('idGen').doc('generateIdEntradas').get()
-    .subscribe(a => {
-      this.idGen = a.data()['id'] + 1; });
+    return this.fb_.collection('idGen').doc('generateIdEntradas').get();
   }
 
   // Sirve para mostrar las ordenes en el ordenes.component.ts
@@ -63,12 +57,12 @@ export class OrdenesService {
     return this.fb_.collection('proveedores').doc(id).get();
   }
 
-  agregarOrden(ordenEntrante: Orden, productos: any [])
+  agregarOrden(ordenEntrante: Orden, productos: any [], idGen: number)
   {
     console.log('owo');
     const enviarOrden: Orden = { ...ordenEntrante };
     if (enviarOrden.id === undefined){
-      enviarOrden.id = this.idGen.toString();
+      enviarOrden.id = idGen.toString();
     }
     this.fb_.collection('ordenes').doc(enviarOrden.id).set(enviarOrden);
 
@@ -79,12 +73,11 @@ export class OrdenesService {
           ...a
         };
 
-        this.fb_.collection('idGen').doc('generateIdEntradas').update({id: this.idGen});
+        this.fb_.collection('idGen').doc('generateIdEntradas').update({id: idGen});
         
         this.fb_.collection('ordenes').doc(enviarOrden.id).collection('ordenProductos')
         .doc(enviarProducto.idProducto).set(enviarProducto);
     });
-    this.generarId();
   }
 
   borrarOrden(id: string){

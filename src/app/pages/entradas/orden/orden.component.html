@@ -7,22 +7,30 @@
         </div>
         <form class="form-material m-t-40">
             <div class="row p-t-20">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <p><b>Orden de compra: </b>{{idGen}}</p>
+                    </div>  
+                </div>      
+            </div>
+            <div class="row p-t-20">
                 <div class="col-md-2">
                     <div class="form-group">
-                        <b>ID: </b><p>{{proveedor.id}}</p>
+                        <p><b>ID: </b>{{proveedor.id}}</p>
                     </div>  
                 </div>   
                 <!--span-->
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="form-group">
-                        <b>Nombre: </b><p>{{proveedor.nombreProveedor}}</p>
+                        <p><b>Nombre: </b>{{proveedor.nombreProveedor}}</p>
                     </div>  
                 </div>     
             </div>
             <div class="row">
                     <button (click)="modalProveedores(template)" type="button" class="btn btn-warning mr-3">Proveedor <i class="fa fa-user"></i></button>
                     <button (click)="agregarProducto()" type="button" class="btn btn-info mr-3">Producto <i class="fa fa-plus"></i></button>
-                    <button (click)="crearOrden()" type="button" class="pull-right btn btn-success">Alta <i class="fa fa-check"></i></button>
+                    <button (click)="crearOrden()" type="button" class="pull-right btn btn-success mr-3">Alta <i class="fa fa-check"></i></button>
+                    <button (click)="reiniciarLocalStorage()" type="button" class="pull-right btn btn-danger">Cancelar <i class="fa fa-ban"></i></button>
             </div>
             <div class="table-responsive m-t-20 no-wrap" >
                     <table class="table vm no-th-brd pro-of-month">
